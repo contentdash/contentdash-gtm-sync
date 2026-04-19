@@ -6,6 +6,7 @@ ENV_FILE="$SCRIPT_DIR/airtable_sync.env"
 PYTHON_SCRIPT="$SCRIPT_DIR/sync_airtable_leads_to_sheet.py"
 LOG_FILE="$SCRIPT_DIR/airtable_sync.log"
 DEFAULT_STATE_PATH="$SCRIPT_DIR/airtable_sync_state.json"
+LOCK_DIR="$SCRIPT_DIR/.airtable_sync.lock"
 
 if [[ ! -f "$ENV_FILE" ]]; then
   if [[ -f "$SCRIPT_DIR/airtable_sync.env.example" ]]; then
@@ -24,6 +25,19 @@ if [[ -z "${AIRTABLE_PAT:-}" || -z "${WEBHOOK_URL:-}" ]]; then
   exit 1
 fi
 STATE_PATH="${STATE_PATH:-$DEFAULT_STATE_PATH}"
+
+if ! mkdir "$LOCK_DIR" 2>/dev/null; then
+  {
+    echo "[$(date '+%Y-%m-%d %H:%M:%S')] skipped airtable sync; another run is already in progress"
+  } >> "$LOG_FILE" 2>&1
+  exit 0
+fi
+
+cleanup() {
+  rmdir "$LOCK_DIR" >/dev/null 2>&1 || true
+}
+
+trap cleanup EXIT INT TERM
 
 {
   echo "[$(date '+%Y-%m-%d %H:%M:%S')] starting airtable sync"

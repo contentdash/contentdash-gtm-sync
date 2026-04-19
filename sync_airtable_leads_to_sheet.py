@@ -176,7 +176,11 @@ def load_state(state_path: str) -> Dict[str, str]:
 
 
 def save_state(state_path: str, state: Dict[str, str]) -> None:
-    tmp_path = f"{state_path}.tmp"
+    state_dir = os.path.dirname(state_path)
+    if state_dir:
+        os.makedirs(state_dir, exist_ok=True)
+
+    tmp_path = f"{state_path}.{os.getpid()}.tmp"
     with open(tmp_path, "w", encoding="utf-8") as handle:
         json.dump(state, handle, indent=2, sort_keys=True)
         handle.flush()
