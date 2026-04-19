@@ -1,0 +1,12 @@
+.DS_Store
+__pycache__/
+*.pyc
+*.pyo
+*.log
+airtable_sync.env
+airtable_sync_state.json
+airtable_sync.launchd.out
+airtable_sync.launchd.err
+contentdash-sheets-key.json
+launchd-airtable-sync.out
+launchd-airtable-sync.err

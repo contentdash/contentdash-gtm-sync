@@ -1,0 +1,4 @@
+Call #,Type,Status,Score,Hypothesis,Goal,Pain Points,Observations,Relevance (1-10)
+1,Intro,Completed,7,Teams need faster campaign reporting,Validate reporting demand,Manual reporting and poor visibility,Strong pain around fragmented data,8
+2,Follow-up,Scheduled,,Founder-led reporting workflow is a bottleneck,Test urgency and budget fit,Slow decision cycles and inconsistent metrics,Prospect asked for sample outputs,7
+3,Pilot Review,Completed,9,Shared dashboards improve retention,Confirm product value in live workflow,Low trust in current process,High engagement with actionable summaries,9
