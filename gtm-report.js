@@ -3,10 +3,44 @@ import 'dotenv/config';
 const AIRTABLE_BASE = 'appdOhglYCp56PrrY';
 const AIRTABLE_TABLE = 'tblbQbb5l9ygvbEFS';
 
+function parseCSV(text) {
+  const lines = text.trim().split('\n');
+  if (lines.length < 2) return [];
+  const headers = lines[0].split(',').map(h => h.replace(/^"|"$/g, '').trim());
+  return lines.slice(1).map(line => {
+    // Handle quoted fields (may contain commas)
+    const fields = [];
+    let current = '';
+    let inQuotes = false;
+    for (let i = 0; i < line.length; i++) {
+      const ch = line[i];
+      if (ch === '"') { inQuotes = !inQuotes; }
+      else if (ch === ',' && !inQuotes) { fields.push(current); current = ''; }
+      else { current += ch; }
+    }
+    fields.push(current);
+    const row = {};
+    headers.forEach((h, i) => { row[h] = (fields[i] || '').trim(); });
+    return row;
+  });
+}
+
 async function fetchPipelineRows() {
+  // Primary: Google Sheet CSV export (set SHEET_ID + SHEET_TAB env vars)
+  const sheetId = process.env.SHEET_ID;
+  if (sheetId) {
+    const tab = encodeURIComponent(process.env.SHEET_TAB || 'Pipeline Ops');
+    const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${tab}`;
+    const res = await fetch(csvUrl);
+    if (!res.ok) throw new Error(`Sheet CSV HTTP ${res.status} — make sure the sheet is shared as "Anyone with the link can view"`);
+    const text = await res.text();
+    return parseCSV(text);
+  }
+
+  // Fallback: Apps Script doGet endpoint
   const url = process.env.APPS_SCRIPT_URL;
   const token = process.env.APPS_SCRIPT_TOKEN;
-  if (!url || !token) throw new Error('APPS_SCRIPT_URL or APPS_SCRIPT_TOKEN not set');
+  if (!url || !token) throw new Error('Set SHEET_ID (preferred) or APPS_SCRIPT_URL + APPS_SCRIPT_TOKEN');
 
   const res = await fetch(`${url}?token=${encodeURIComponent(token)}`);
   if (!res.ok) throw new Error(`Apps Script HTTP ${res.status}`);
