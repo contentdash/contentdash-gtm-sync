@@ -147,9 +147,64 @@ async function postCancellationsToSlack(cancellations) {
   console.log(`✓ Slack cancellation alert: ${cancellations.length}`);
 }
 
-const [failures, cancellations] = await Promise.all([getRecentFailures(), getRecentCancellations()]);
-console.log(`Checked last ${LOOKBACK_SECONDS / 60}min — ${failures.length} failure(s), ${cancellations.length} cancellation(s)`);
+async function getNewSubscriptions() {
+  const since = Math.floor(Date.now() / 1000) - LOOKBACK_SECONDS;
+  const events = await stripe.events.list({ type: 'customer.subscription.created', created: { gte: since }, limit: 50 });
 
+  const subs = [];
+  for (const ev of events.data) {
+    const sub = ev.data.object;
+    let customerEmail = null;
+    if (sub.customer) {
+      try {
+        const cus = await stripe.customers.retrieve(sub.customer);
+        customerEmail = cus.email;
+      } catch { /* ignore */ }
+    }
+    const amount = sub.items?.data?.[0]?.price?.unit_amount;
+    const currency = sub.currency?.toUpperCase() || sub.items?.data?.[0]?.price?.currency?.toUpperCase();
+    const interval = sub.items?.data?.[0]?.price?.recurring?.interval || 'month';
+    subs.push({
+      customer: customerEmail || sub.customer || 'Unknown',
+      amount: amount ? `${(amount / 100).toFixed(2)} ${currency}/${interval}` : '?',
+      at: new Date(ev.created * 1000).toLocaleTimeString('en-SG', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Singapore' }),
+      dashUrl: `https://dashboard.stripe.com/subscriptions/${sub.id}`,
+    });
+  }
+  return subs;
+}
+
+async function postNewSubsToSlack(subs) {
+  const webhookUrl = process.env.SLACK_WEBHOOK_URL;
+  if (!webhookUrl) { console.log('⚠ SLACK_WEBHOOK_URL not set'); return; }
+
+  const lines = subs.map(s =>
+    `• *${s.customer}* — ${s.amount} · <${s.dashUrl}|View in Stripe> · ${s.at} SGT`
+  );
+
+  await fetch(webhookUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      blocks: [
+        { type: 'header', text: { type: 'plain_text', text: `🎉 New Subscriber${subs.length !== 1 ? 's' : ''}! (${subs.length})` } },
+        { type: 'section', text: { type: 'mrkdwn', text: lines.join('\n') } },
+        { type: 'context', elements: [{ type: 'mrkdwn', text: 'Send a welcome message and make them feel at home 🙌' }] },
+      ],
+    }),
+  });
+  console.log(`✓ Slack new sub alert: ${subs.length}`);
+}
+
+const [failures, cancellations, newSubs] = await Promise.all([
+  getRecentFailures(), getRecentCancellations(), getNewSubscriptions(),
+]);
+console.log(`Checked last ${LOOKBACK_SECONDS / 60}min — ${failures.length} failure(s), ${cancellations.length} cancellation(s), ${newSubs.length} new sub(s)`);
+
+if (newSubs.length > 0) {
+  newSubs.forEach(s => console.log(`  new sub: ${s.customer} ${s.amount}`));
+  await postNewSubsToSlack(newSubs);
+}
 if (failures.length > 0) {
   failures.forEach(f => console.log(`  payment: ${f.customer} ${f.amount} — ${f.error}`));
   await postToSlack(failures);
@@ -158,6 +213,6 @@ if (cancellations.length > 0) {
   cancellations.forEach(c => console.log(`  cancel: ${c.customer} ${c.amount}`));
   await postCancellationsToSlack(cancellations);
 }
-if (failures.length === 0 && cancellations.length === 0) {
-  console.log('✓ No failures or cancellations — Slack silent');
+if (newSubs.length === 0 && failures.length === 0 && cancellations.length === 0) {
+  console.log('✓ Nothing to report — Slack silent');
 }
