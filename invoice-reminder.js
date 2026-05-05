@@ -74,7 +74,7 @@ const html = `<!DOCTYPE html>
 <h2>💸 Weekly Invoice & AR Chase — ${weekLabel}</h2>
 <p style="color:#666">Hi Charlene — here's your weekly collections and billing checklist.</p>
 
-${ar?.overdue?.length > 0 ? `
+${ar ? (ar.overdue.length > 0 ? `
 <div class="section">
   <div class="section-title">🔴 Overdue Invoices — Chase These This Week</div>
   <table>
@@ -86,7 +86,7 @@ ${ar?.overdue?.length > 0 ? `
 <div class="section">
   <div class="section-title">✅ Overdue Invoices</div>
   <p style="color:#16a34a">No overdue invoices in Xero this week.</p>
-</div>`}
+</div>`) : ''}
 
 ${renewingRows.length > 0 ? `
 <div class="section">
@@ -124,8 +124,7 @@ if (appPassword) {
   const to = testing ? process.env.EMAIL_FLEIRE : process.env.EMAIL_CHARLENE;
   const cc = testing ? undefined : process.env.EMAIL_FLEIRE;
   const overdueCount = ar?.overdue?.length || 0;
-  const stripeNote = stripe ? '' : ' · ⚠ Stripe unavailable';
-  const subject = `${testing ? '[TEST] ' : ''}Weekly Invoice Chase — ${overdueCount} overdue${stripeNote} · ${weekLabel}`;
+  const subject = `${testing ? '[TEST] ' : ''}Weekly Invoice Chase — ${ar ? `${overdueCount} overdue` : 'collections checklist'} · ${weekLabel}`;
   await transporter.sendMail({
     from: `"DashoContent Ops" <${process.env.GMAIL_USER}>`,
     to, cc, subject, html,
@@ -145,7 +144,7 @@ if (webhookUrl) {
       : ar.overdue.sort((a,b) => b.daysOverdue - a.daysOverdue).slice(0, 5)
           .map(i => `• *${i.contact}* — ${i.currency} ${i.amountDue} · ${i.daysOverdue}d overdue`).join('\n')
           + (overdueCount > 5 ? `\n_…and ${overdueCount - 5} more_` : ''))
-    : '_Xero unavailable_';
+    : null;
 
   const stripeCtx = stripe
     ? `MRR: *$${stripe.totalMRR}* · ${stripe.subscriberCount} subs · ${stripe.failedPayments > 0 ? `⚠ ${stripe.failedPayments} failed payment${stripe.failedPayments > 1 ? 's' : ''}` : '✅ no failed payments'}`
@@ -162,7 +161,7 @@ if (webhookUrl) {
       blocks: [
         { type: 'header', text: { type: 'plain_text', text: `💸 Weekly Invoice Chase — ${weekLabel}${testing ? ' [TEST]' : ''}` } },
         { type: 'section', fields: [
-          { type: 'mrkdwn', text: `📋 *Overdue (${overdueCount}):*\n${overdueSlack}` },
+          ...(overdueSlack ? [{ type: 'mrkdwn', text: `📋 *Overdue (${overdueCount}):*\n${overdueSlack}` }] : []),
           { type: 'mrkdwn', text: `💳 *Stripe:*\n${stripeCtx}` },
         ]},
         renewalList

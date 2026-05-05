@@ -180,7 +180,7 @@ async function buildReport() {
       }
       if (!alertRows) alertRows = '<tr><td colspan="3" style="color:#16a34a;text-align:center">✓ No urgent pipeline alerts</td></tr>';
 
-      const inboundNote = ib ? `${ib.newThisWeek} new this week` : 'Airtable unavailable';
+      const inboundNote = ib ? `${ib.newThisWeek} new this week` : '—';
 
       gtmSection = `
         <div class="section">
@@ -232,10 +232,10 @@ async function buildReport() {
           </table>` : ''}
         </div>`;
     } else {
-      gtmSection = `<div class="section"><div class="section-title">📈 GTM</div><p style="color:#d97706">⚠ Pipeline data unavailable — set APPS_SCRIPT_URL + APPS_SCRIPT_TOKEN</p></div>`;
+      gtmSection = '';
     }
   } catch (e) {
-    gtmSection = `<div class="section"><div class="section-title">📈 GTM</div><p style="color:#dc2626">Error: ${e.message}</p></div>`;
+    gtmSection = '';
   }
 
   // ── Xero AR ──
@@ -273,16 +273,7 @@ async function buildReport() {
         </table>
       </div>`;
   } catch (e) {
-    const authNote = `<code>cd ~/Projects/xero-datapull && npm run auth</code>`;
-    const tokenWarn = xeroTokenAge && xeroTokenAge.daysLeft <= 14
-      ? `<p style="color:#dc2626;font-size:12px;font-weight:600">⚠ Xero token expires in ${xeroTokenAge.daysLeft} days — re-auth required</p>`
-      : '';
-    arSection = `
-      <div class="section">
-        <div class="section-title">📋 Xero — Accounts Receivable</div>
-        ${tokenWarn}
-        <p style="color:#d97706;font-size:12px">⚠ Xero not connected. Run: ${authNote}</p>
-      </div>`;
+    arSection = ''; // Xero unavailable — token expiry warning surfaces in action items if applicable
   }
 
   // ── Action Items (auto-generated from real data) ──
@@ -441,7 +432,7 @@ async function sendSlack(stripe, ar, gtm, mrrTrend, milestone, xeroTokenAge) {
   }
 
   // GTM
-  let gtmText = '_Pipeline unavailable_';
+  let gtmText = null;
   if (gtm?.pipeline) {
     const p = gtm.pipeline;
     const alerts = p.overdueNextSteps.length + p.stuckDeals.length;
@@ -452,7 +443,7 @@ async function sendSlack(stripe, ar, gtm, mrrTrend, milestone, xeroTokenAge) {
   }
 
   // AR
-  let arText = '_Xero not connected_';
+  let arText = null;
   if (ar) {
     arText = ar.overdue.length === 0
       ? '✅ No overdue invoices'
@@ -460,17 +451,15 @@ async function sendSlack(stripe, ar, gtm, mrrTrend, milestone, xeroTokenAge) {
         + (ar.overdue.length > 5 ? `\n_…and ${ar.overdue.length - 5} more_` : '');
   }
 
-  blocks.push({
-    type: 'section', fields: [
-      { type: 'mrkdwn', text: `💳 *Stripe*\n${mrrText}` },
-      { type: 'mrkdwn', text: `📈 *GTM Pipeline*\n${gtmText}` },
-    ]
-  });
-  blocks.push({
-    type: 'section', fields: [
-      { type: 'mrkdwn', text: `📋 *Overdue AR*\n${arText}` },
-    ]
-  });
+  const mainFields = [
+    { type: 'mrkdwn', text: `💳 *Stripe*\n${mrrText}` },
+    gtmText ? { type: 'mrkdwn', text: `📈 *GTM Pipeline*\n${gtmText}` } : null,
+  ].filter(Boolean);
+  blocks.push({ type: 'section', fields: mainFields });
+
+  if (arText) {
+    blocks.push({ type: 'section', fields: [{ type: 'mrkdwn', text: `📋 *Overdue AR*\n${arText}` }] });
+  }
 
   // Xero token expiry warning
   if (xeroTokenAge && xeroTokenAge.daysLeft <= 14) {
