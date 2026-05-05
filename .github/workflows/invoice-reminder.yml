@@ -2,7 +2,7 @@ name: Weekly Invoice Chase
 
 on:
   schedule:
-    - cron: '10 0 * * 1'  # Monday 8:10am PHT (UTC+8 = Monday 00:10 UTC)
+    - cron: '10 0 * * 1'  # Monday 8:10am PHT
   workflow_dispatch:
 
 jobs:
@@ -30,5 +30,6 @@ jobs:
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          AIRTABLE_PAT: ${{ secrets.AIRTABLE_PAT }}
           TESTING_MODE: 'true'
         run: node invoice-reminder.js
