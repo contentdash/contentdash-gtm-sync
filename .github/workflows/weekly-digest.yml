@@ -5,6 +5,9 @@ on:
     - cron: '3 0 * * 1'  # Monday 8:03am PHT (UTC+8 = Monday 00:03 UTC)
   workflow_dispatch:       # Manual trigger from GitHub UI
 
+permissions:
+  contents: write          # needed to commit mrr-history.json back to repo
+
 jobs:
   digest:
     runs-on: ubuntu-latest
@@ -18,6 +21,9 @@ jobs:
 
       - run: npm ci
 
+      - name: Run unit tests
+        run: node test.js
+
       - name: Run weekly digest
         env:
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
@@ -30,8 +36,21 @@ jobs:
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          APPS_SCRIPT_URL: ${{ secrets.APPS_SCRIPT_URL }}
+          APPS_SCRIPT_TOKEN: ${{ secrets.APPS_SCRIPT_TOKEN }}
+          AIRTABLE_PAT: ${{ secrets.AIRTABLE_PAT }}
           TESTING_MODE: 'true'
         run: node weekly-digest.js
+
+      - name: Commit MRR history
+        run: |
+          git config user.email "github-actions@github.com"
+          git config user.name "GitHub Actions"
+          git add mrr-history.json
+          git diff --staged --quiet || git commit -m "chore: update MRR history [skip ci]"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Upload report artifact
         uses: actions/upload-artifact@v4
