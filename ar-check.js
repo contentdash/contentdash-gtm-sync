@@ -41,9 +41,15 @@ async function buildClient() {
     saved.tokenSet.refresh_token,
   );
   await xero.setTokenSet(fresh);
-  // Only write tokens back locally — skip in CI where the path doesn't exist
-  if (!process.env.XERO_TOKENS_JSON) {
-    writeFileSync(TOKENS_PATH, JSON.stringify({ ...saved, tokenSet: fresh, savedAt: new Date().toISOString() }, null, 2));
+
+  const updatedTokens = { ...saved, tokenSet: fresh, savedAt: new Date().toISOString() };
+
+  if (process.env.XERO_TOKENS_JSON) {
+    // CI: write fresh tokens to temp file so the workflow step can rotate the GitHub secret
+    writeFileSync('/tmp/xero-tokens-fresh.json', JSON.stringify(updatedTokens, null, 2));
+  } else {
+    // Local: write directly to the tokens file
+    writeFileSync(TOKENS_PATH, JSON.stringify(updatedTokens, null, 2));
   }
   return xero;
 }
