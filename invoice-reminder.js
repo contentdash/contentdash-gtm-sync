@@ -1,6 +1,17 @@
 import 'dotenv/config';
 import nodemailer from 'nodemailer';
+import { readFileSync } from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 import { getStripeSnapshot } from './stripe-report.js';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+
+function loadManualClients() {
+  try {
+    return JSON.parse(readFileSync(path.join(__dirname, 'manual-clients.json'), 'utf8'));
+  } catch { return []; }
+}
 
 const testing = process.env.TESTING_MODE !== 'false';
 const weekLabel = new Date().toLocaleDateString('en-SG', { month: 'short', day: 'numeric', year: 'numeric' });
@@ -89,8 +100,7 @@ ${renewingRows.length > 0 ? `
 <div class="section">
   <div class="section-title">📝 Manual Invoices to Generate This Week (Xero)</div>
   <ol>
-    <li>PRWorks Inc. — PHP 45,000 monthly retainer</li>
-    <li>Nick Chapleau / Dodon.ai — USD $750 managed service</li>
+    ${loadManualClients().map(c => `<li><strong>${c.name}</strong> — ${c.amount} ${c.description}</li>`).join('')}
     <li>Any new enterprise clients onboarded this week</li>
   </ol>
 </div>
@@ -131,15 +141,26 @@ if (webhookUrl) {
           + (overdueCount > 5 ? `\n_…and ${overdueCount - 5} more_` : ''))
     : '_Xero unavailable_';
 
+  const stripeCtx = stripe
+    ? `MRR: *$${stripe.totalMRR}* · ${stripe.subscriberCount} subs · ${stripe.failedPayments > 0 ? `⚠ ${stripe.failedPayments} failed payment${stripe.failedPayments > 1 ? 's' : ''}` : '✅ no failed payments'}`
+    : '_Stripe unavailable_';
+  const renewalList = stripe?.subscriptions
+    .filter(s => { const d = Math.ceil((new Date(s.currentPeriodEnd) - new Date()) / 86400000); return d >= 0 && d <= 14; })
+    .map(s => `${s.customerName} (${s.currentPeriodEnd})`)
+    .join(' · ') || null;
+
   await fetch(webhookUrl, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       blocks: [
         { type: 'header', text: { type: 'plain_text', text: `💸 Weekly Invoice Chase — ${weekLabel}${testing ? ' [TEST]' : ''}` } },
-        { type: 'section', text: { type: 'mrkdwn', text: `*Overdue invoices (${overdueCount}):*\n${overdueSlack}` }},
-        renewingRows.length > 0
-          ? { type: 'section', text: { type: 'mrkdwn', text: `*Stripe renewals (14d):* ${stripe.subscriptions.filter(s => Math.ceil((new Date(s.currentPeriodEnd)-new Date())/86400000) <= 14).map(s => `${s.customerName} ${s.currentPeriodEnd}`).join(' · ')}` }}
+        { type: 'section', fields: [
+          { type: 'mrkdwn', text: `📋 *Overdue (${overdueCount}):*\n${overdueSlack}` },
+          { type: 'mrkdwn', text: `💳 *Stripe:*\n${stripeCtx}` },
+        ]},
+        renewalList
+          ? { type: 'section', text: { type: 'mrkdwn', text: `🔄 *Renewals in 14 days:* ${renewalList}` }}
           : null,
         { type: 'context', elements: [{ type: 'mrkdwn', text: 'Full checklist emailed · Chase all overdue → log in Trello → generate manual invoices in Xero' }]},
       ].filter(Boolean)

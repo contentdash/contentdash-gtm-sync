@@ -9,7 +9,8 @@
     "invoice": "node invoice-reminder.js",
     "ar": "node ar-check.js",
     "stripe": "node stripe-report.js",
-    "gtm": "node gtm-report.js"
+    "gtm": "node gtm-report.js",
+    "test": "node test.js"
   },
   "dependencies": {
     "csv-writer": "^1.6.0",

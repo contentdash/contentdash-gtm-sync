@@ -26,9 +26,17 @@ async function fetchAirtableLeads() {
   return data.records || [];
 }
 
+// Stage order for funnel display (top of funnel → bottom)
+const FUNNEL_STAGES = [
+  'ICP Fit', 'Outreach Sent', 'Replied', 'Qualification Booked', 'Qualified',
+  'Discovery Booked', 'Discovery Done', 'Proposal Sent', 'Negotiation', 'Won',
+];
+const CLOSED_STAGES = new Set(['Won', 'Lost']);
+
 export async function getGTMSnapshot() {
   const today = new Date();
   const sevenDaysAgo = new Date(today - 7 * 86400000);
+  const thirtyDaysAgo = new Date(today - 30 * 86400000);
 
   const [rows, airtableRecords] = await Promise.all([
     fetchPipelineRows().catch(e => { console.warn('⚠ Pipeline sheet unavailable:', e.message); return null; }),
@@ -37,8 +45,8 @@ export async function getGTMSnapshot() {
 
   let pipeline = null;
   if (rows) {
-    const CLOSED_STAGES = ['Won', 'Lost'];
-    const active = rows.filter(r => r['Account'] && !CLOSED_STAGES.includes(r['Stage']));
+    const active = rows.filter(r => r['Account'] && !CLOSED_STAGES.has(r['Stage']));
+    const all = rows.filter(r => r['Account']);
 
     const stageCounts = {};
     const stageValues = {};
@@ -77,19 +85,41 @@ export async function getGTMSnapshot() {
       if (row['Created Date'] && new Date(row['Created Date']) >= sevenDaysAgo) newThisWeek++;
     });
 
-    const wonThisWeek = rows.filter(r => r['Stage'] === 'Won' && r['Created Date'] && new Date(r['Created Date']) >= sevenDaysAgo);
+    // Funnel: count deals at each stage (active + closed Won in last 30d)
+    const funnel = FUNNEL_STAGES.map(stage => {
+      const count = (stage === 'Won')
+        ? all.filter(r => r['Stage'] === 'Won' && r['Created Date'] && new Date(r['Created Date']) >= thirtyDaysAgo).length
+        : stageCounts[stage] || 0;
+      return { stage, count, value: stageValues[stage] || 0 };
+    }).filter(f => f.count > 0);
+
+    // Conversion rate: leads that reached Proposal Sent / total active+won(30d)
+    const proposalReached = (stageCounts['Proposal Sent'] || 0)
+      + (stageCounts['Negotiation'] || 0)
+      + all.filter(r => r['Stage'] === 'Won').length;
+    const totalEntered = active.length + all.filter(r => r['Stage'] === 'Won').length;
+    const proposalConvRate = totalEntered > 0
+      ? +((proposalReached / totalEntered) * 100).toFixed(1)
+      : 0;
+
+    const wonThisWeek = all.filter(r =>
+      r['Stage'] === 'Won' && r['Created Date'] && new Date(r['Created Date']) >= sevenDaysAgo
+    );
 
     pipeline = {
       totalDeals: active.length,
       totalPipelineValue: +Object.values(stageValues).reduce((s, v) => s + v, 0).toFixed(2),
       stageCounts,
       stageValues,
+      funnel,
+      proposalConvRate,
       staleDeals: staleDeals.sort((a, b) => b.daysSince - a.daysSince).slice(0, 8),
       overdueNextSteps: overdueNextSteps.slice(0, 8),
       stuckDeals: stuckDeals.slice(0, 8),
       health: { red: healthRed, yellow: healthYellow, green: healthGreen },
       newThisWeek,
       wonThisWeek: wonThisWeek.length,
+      wonThisWeekDetails: wonThisWeek.map(r => ({ account: r['Account'], value: r['Value'] })),
     };
   }
 
@@ -118,13 +148,13 @@ if (process.argv[1].endsWith('gtm-report.js')) {
   console.log('\n=== GTM SNAPSHOT ===');
   console.log(`As of: ${snap.asOf}`);
   if (snap.pipeline) {
-    console.log(`Active deals: ${snap.pipeline.totalDeals} | Pipeline value: $${snap.pipeline.totalPipelineValue}`);
-    console.log('Stages:', JSON.stringify(snap.pipeline.stageCounts));
-    console.log(`Stale (>5d no contact): ${snap.pipeline.staleDeals.length}`);
-    console.log(`Overdue next steps: ${snap.pipeline.overdueNextSteps.length}`);
-    console.log(`Stuck deals: ${snap.pipeline.stuckDeals.length}`);
-    console.log(`Health — 🔴 ${snap.pipeline.health.red} | 🟡 ${snap.pipeline.health.yellow} | 🟢 ${snap.pipeline.health.green}`);
-    console.log(`New this week: ${snap.pipeline.newThisWeek} | Won this week: ${snap.pipeline.wonThisWeek}`);
+    const p = snap.pipeline;
+    console.log(`Active deals: ${p.totalDeals} | Pipeline value: $${p.totalPipelineValue}`);
+    console.log(`Proposal conversion rate: ${p.proposalConvRate}%`);
+    console.log('Funnel:', p.funnel.map(f => `${f.stage}(${f.count})`).join(' → '));
+    console.log(`Stale (>5d): ${p.staleDeals.length} | Overdue next steps: ${p.overdueNextSteps.length} | Stuck: ${p.stuckDeals.length}`);
+    console.log(`Health — 🔴 ${p.health.red} | 🟡 ${p.health.yellow} | 🟢 ${p.health.green}`);
+    console.log(`New this week: ${p.newThisWeek} | Won this week: ${p.wonThisWeek}`);
   } else {
     console.log('Pipeline: unavailable (set APPS_SCRIPT_URL + APPS_SCRIPT_TOKEN)');
   }
