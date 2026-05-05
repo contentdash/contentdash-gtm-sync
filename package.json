@@ -1,0 +1,20 @@
+{
+  "name": "contentdash-gtm-sync",
+  "version": "1.0.0",
+  "description": "DashoContent ops automation — GTM sync, weekly digest, reminders",
+  "type": "module",
+  "scripts": {
+    "digest": "node weekly-digest.js",
+    "eow": "node eow-reminder.js",
+    "invoice": "node invoice-reminder.js",
+    "ar": "node ar-check.js",
+    "stripe": "node stripe-report.js"
+  },
+  "dependencies": {
+    "csv-writer": "^1.6.0",
+    "dotenv": "^16.3.1",
+    "nodemailer": "^6.9.9",
+    "stripe": "^14.21.0",
+    "xero-node": "^15.0.1"
+  }
+}

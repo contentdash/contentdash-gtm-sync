@@ -1,0 +1,40 @@
+name: Weekly Ops Digest
+
+on:
+  schedule:
+    - cron: '3 0 * * 1'  # Monday 8:03am PHT (UTC+8 = Monday 00:03 UTC)
+  workflow_dispatch:       # Manual trigger from GitHub UI
+
+jobs:
+  digest:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - run: npm ci
+
+      - name: Run weekly digest
+        env:
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+          XERO_CLIENT_ID: ${{ secrets.XERO_CLIENT_ID }}
+          XERO_CLIENT_SECRET: ${{ secrets.XERO_CLIENT_SECRET }}
+          XERO_REDIRECT_URI: ${{ secrets.XERO_REDIRECT_URI }}
+          XERO_TOKENS_JSON: ${{ secrets.XERO_TOKENS_JSON }}
+          EMAIL_FLEIRE: ${{ secrets.EMAIL_FLEIRE }}
+          EMAIL_CHARLENE: ${{ secrets.EMAIL_CHARLENE }}
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+        run: node weekly-digest.js
+
+      - name: Upload report artifact
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: weekly-digest-${{ github.run_id }}
+          path: output/
+          retention-days: 30

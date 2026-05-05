@@ -10,3 +10,7 @@ airtable_sync.launchd.err
 contentdash-sheets-key.json
 launchd-airtable-sync.out
 launchd-airtable-sync.err
+node_modules/
+.env
+output/
+tokens.json
