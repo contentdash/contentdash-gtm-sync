@@ -1,0 +1,40 @@
+name: Daily Ops Briefing
+
+on:
+  schedule:
+    - cron: '0 1 * * 1-5'  # Mon–Fri 9:00am PHT (UTC+8 = 01:00 UTC)
+  workflow_dispatch:
+
+jobs:
+  briefing:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - name: Send daily ops briefing
+        env:
+          AIRTABLE_PAT: ${{ secrets.AIRTABLE_PAT }}
+          XERO_CLIENT_ID: ${{ secrets.XERO_CLIENT_ID }}
+          XERO_CLIENT_SECRET: ${{ secrets.XERO_CLIENT_SECRET }}
+          XERO_REDIRECT_URI: ${{ secrets.XERO_REDIRECT_URI }}
+          XERO_TOKENS_JSON: ${{ secrets.XERO_TOKENS_JSON }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: node daily-ops.js
+
+      - name: Rotate Xero tokens secret
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GH_REPO_PAT }}
+        run: |
+          if [ -f /tmp/xero-tokens-fresh.json ] && [ -n "$GH_TOKEN" ]; then
+            gh secret set XERO_TOKENS_JSON --repo contentdash/contentdash-gtm-sync \
+              < /tmp/xero-tokens-fresh.json \
+              && echo "✓ XERO_TOKENS_JSON rotated" \
+              || echo "⚠ Rotation failed — ensure GH_REPO_PAT has Secrets:write permission"
+          else
+            echo "ℹ Xero rotation skipped (no fresh tokens or GH_REPO_PAT not set)"
+          fi
