@@ -30,6 +30,20 @@ jobs:
           AIRTABLE_PAT: ${{ secrets.AIRTABLE_PAT }}
           TESTING_MODE: 'true'
         run: node invoice-reminder.js
+      - name: Rotate Xero tokens secret
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GH_REPO_PAT }}
+        run: |
+          if [ -f /tmp/xero-tokens-fresh.json ] && [ -n "$GH_TOKEN" ]; then
+            gh secret set XERO_TOKENS_JSON --repo contentdash/contentdash-gtm-sync \
+              < /tmp/xero-tokens-fresh.json \
+              && echo "✓ XERO_TOKENS_JSON rotated" \
+              || echo "⚠ Rotation failed — ensure GH_REPO_PAT has Secrets:write permission"
+          else
+            echo "ℹ Xero rotation skipped (no fresh tokens or GH_REPO_PAT not set)"
+          fi
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:

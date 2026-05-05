@@ -2,7 +2,7 @@ name: EOW Reminder
 
 on:
   schedule:
-    - cron: '5 8 * * 5'  # Friday 4:05pm PHT
+    - cron: '5 8 * * 5'  # Friday 4:05pm PHT (UTC+8 = 08:05 UTC)
   workflow_dispatch:
 
 jobs:
@@ -22,6 +22,9 @@ jobs:
           XERO_CLIENT_SECRET: ${{ secrets.XERO_CLIENT_SECRET }}
           XERO_REDIRECT_URI: ${{ secrets.XERO_REDIRECT_URI }}
           XERO_TOKENS_JSON: ${{ secrets.XERO_TOKENS_JSON }}
+          APPS_SCRIPT_URL: ${{ secrets.APPS_SCRIPT_URL }}
+          APPS_SCRIPT_TOKEN: ${{ secrets.APPS_SCRIPT_TOKEN }}
+          AIRTABLE_PAT: ${{ secrets.AIRTABLE_PAT }}
           EMAIL_FLEIRE: ${{ secrets.EMAIL_FLEIRE }}
           EMAIL_CHARLENE: ${{ secrets.EMAIL_CHARLENE }}
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
@@ -30,7 +33,23 @@ jobs:
           AIRTABLE_PAT: ${{ secrets.AIRTABLE_PAT }}
           TESTING_MODE: 'true'
         run: node eow-reminder.js
-      - uses: actions/upload-artifact@v4
+
+      - name: Rotate Xero tokens secret
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GH_REPO_PAT }}
+        run: |
+          if [ -f /tmp/xero-tokens-fresh.json ] && [ -n "$GH_TOKEN" ]; then
+            gh secret set XERO_TOKENS_JSON --repo contentdash/contentdash-gtm-sync \
+              < /tmp/xero-tokens-fresh.json \
+              && echo "✓ XERO_TOKENS_JSON rotated" \
+              || echo "⚠ Rotation failed — ensure GH_REPO_PAT has Secrets:write permission"
+          else
+            echo "ℹ Xero rotation skipped (no fresh tokens or GH_REPO_PAT not set)"
+          fi
+
+      - name: Upload report artifact
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: eow-reminder-${{ github.run_id }}
