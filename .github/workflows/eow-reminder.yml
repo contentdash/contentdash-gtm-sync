@@ -10,14 +10,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
-
       - run: npm ci
-
       - name: Send EOW reminder
         env:
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
@@ -32,3 +29,9 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           TESTING_MODE: 'true'
         run: node eow-reminder.js
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: eow-reminder-${{ github.run_id }}
+          path: output/
+          retention-days: 30
