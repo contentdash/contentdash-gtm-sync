@@ -94,18 +94,44 @@ async function buildReport() {
       </div>`;
   }
 
-  // --- Action items ---
+  // --- Action items — dynamically generated from real data ---
+  const actionRows = [];
+
+  if (stripe?.failedPayments > 0) {
+    const failed = stripe.subscriptions.filter(s => s.status === 'past_due' || s.status === 'unpaid');
+    if (failed.length > 0) {
+      failed.forEach(s => actionRows.push(`<tr style="background:#fff5f5"><td>🔴 Urgent</td><td>Fix failed payment — <strong>${s.customerName}</strong> ${s.currency} ${(s.amount/100).toFixed(2)}/mo · subscription at risk</td><td>Charlene</td></tr>`));
+    } else {
+      actionRows.push(`<tr style="background:#fff5f5"><td>🔴 Urgent</td><td>Fix ${stripe.failedPayments} failed Stripe payment(s) — check Stripe dashboard for customer names</td><td>Charlene</td></tr>`);
+    }
+  }
+
+  if (ar?.overdue?.length > 0) {
+    const sorted = [...ar.overdue].sort((a, b) => b.daysOverdue - a.daysOverdue);
+    sorted.forEach(i => {
+      const urgency = i.daysOverdue > 30 ? '🔴 Urgent' : i.daysOverdue > 14 ? '🔴 High' : '🟡 Med';
+      const bg = i.daysOverdue > 14 ? 'background:#fff5f5' : '';
+      actionRows.push(`<tr style="${bg}"><td>${urgency}</td><td>Chase <strong>${i.contact}</strong> — ${i.currency} ${i.amountDue} due ${i.dueDate} · <strong>${i.daysOverdue} days overdue</strong></td><td>Charlene</td></tr>`);
+    });
+  }
+
+  const renewingThisWeek = stripe?.subscriptions.filter(s => {
+    const days = Math.ceil((new Date(s.currentPeriodEnd) - new Date()) / 86400000);
+    return days >= 0 && days <= 7;
+  }) || [];
+  renewingThisWeek.forEach(s => {
+    actionRows.push(`<tr><td>🟡 Med</td><td>Confirm renewal — <strong>${s.customerName}</strong> ${s.currency} ${(s.amount/100).toFixed(2)} renewing ${s.currentPeriodEnd}</td><td>Charlene</td></tr>`);
+  });
+
+  actionRows.push(`<tr><td>🟢 Routine</td><td>Update GTM pipeline — flag stale leads with no activity in 5+ days</td><td>Charlene</td></tr>`);
+  actionRows.push(`<tr><td>🟢 Routine</td><td>Prepare EOW report by Friday 4pm — send to info@contentdash.app</td><td>Charlene</td></tr>`);
+
   const actionSection = `
     <div class="section">
       <div class="section-title">✅ This Week's Action Items</div>
       <table>
         <thead><tr><th>Priority</th><th>Task</th><th>Owner</th></tr></thead>
-        <tbody>
-          <tr><td>🔴 High</td><td>Follow up on overdue invoices (see AR above)</td><td>Charlene</td></tr>
-          <tr><td>🟡 Med</td><td>Update GTM pipeline in Trello — flag stale leads (>5 days no activity)</td><td>Charlene</td></tr>
-          <tr><td>🟡 Med</td><td>Confirm Stripe subscriptions renewing this week</td><td>Charlene</td></tr>
-          <tr><td>🟢 Low</td><td>Prepare EOW report by Friday 4pm</td><td>Charlene</td></tr>
-        </tbody>
+        <tbody>${actionRows.join('')}</tbody>
       </table>
     </div>`;
 
@@ -150,22 +176,30 @@ async function sendSlack(stripe, ar) {
   const webhookUrl = process.env.SLACK_WEBHOOK_URL;
   if (!webhookUrl) { console.log('⚠ SLACK_WEBHOOK_URL not set — skipping Slack'); return; }
 
-  const mrrText = stripe ? `*$${stripe.totalMRR}* MRR` : '_Stripe unavailable_';
-  const failedText = stripe?.failedPayments > 0 ? ` · ⚠ ${stripe.failedPayments} failed payment(s)` : '';
-  const arText = ar ? (ar.overdue.length > 0 ? `⚠ *${ar.overdue.length}* overdue invoice(s)` : '✓ No overdue invoices') : '_Xero not connected_';
+  const mrrText = stripe ? `*$${stripe.totalMRR}* MRR · $${stripe.collectedLast30Days} collected (30d)` : '_Stripe unavailable_';
+  const failedText = stripe?.failedPayments > 0 ? `\n⚠ *${stripe.failedPayments} failed payment(s)* — action needed` : '';
+
+  let arLines = '_Xero not connected_';
+  if (ar) {
+    arLines = ar.overdue.length === 0
+      ? '✅ No overdue invoices'
+      : ar.overdue.slice(0, 5).map(i => `• *${i.contact}* — ${i.currency} ${i.amountDue} · ${i.daysOverdue}d overdue`).join('\n')
+        + (ar.overdue.length > 5 ? `\n_…and ${ar.overdue.length - 5} more_` : '');
+  }
+
+  const testing = process.env.TESTING_MODE !== 'false';
 
   await fetch(webhookUrl, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       blocks: [
-        { type: 'header', text: { type: 'plain_text', text: '📊 DashoContent — Weekly Ops Digest' } },
+        { type: 'header', text: { type: 'plain_text', text: `📊 DashoContent — Weekly Ops Digest${testing ? ' [TEST]' : ''}` } },
         { type: 'section', fields: [
           { type: 'mrkdwn', text: `💳 *Stripe*\n${mrrText}${failedText}` },
-          { type: 'mrkdwn', text: `📋 *Xero AR*\n${arText}` },
+          { type: 'mrkdwn', text: `📋 *Overdue AR*\n${arLines}` },
         ]},
-        { type: 'section', text: { type: 'mrkdwn', text: '*This week:* Follow up on overdue invoices · Flag stale GTM leads · Confirm renewals · EOW report by Friday 4pm' }},
-        { type: 'context', elements: [{ type: 'mrkdwn', text: `Full report emailed to Fleire & Charlene · ${new Date().toLocaleDateString('en-SG', { weekday: 'long', month: 'short', day: 'numeric' })}` }]},
+        { type: 'context', elements: [{ type: 'mrkdwn', text: `Full report emailed · ${new Date().toLocaleDateString('en-SG', { weekday: 'long', month: 'short', day: 'numeric' })}` }]},
       ]
     }),
   });
@@ -187,14 +221,17 @@ async function sendEmail(html) {
   const now = new Date();
   const subject = `DashoContent Ops Digest — Week of ${now.toLocaleDateString('en-SG', { month: 'short', day: 'numeric', year: 'numeric' })}`;
 
+  const testing = process.env.TESTING_MODE !== 'false';
+  const recipients = testing ? process.env.EMAIL_FLEIRE : [process.env.EMAIL_FLEIRE, process.env.EMAIL_CHARLENE].join(', ');
+
   await transporter.sendMail({
     from: `"DashoContent Ops" <${process.env.GMAIL_USER}>`,
-    to: [process.env.EMAIL_FLEIRE, process.env.EMAIL_CHARLENE].join(', '),
-    subject,
+    to: recipients,
+    subject: testing ? `[TEST] ${subject}` : subject,
     html,
   });
 
-  console.log(`✓ Email sent to ${process.env.EMAIL_FLEIRE} and ${process.env.EMAIL_CHARLENE}`);
+  console.log(`✓ Email sent to ${recipients}${testing ? ' (TESTING MODE)' : ''}`);
   return true;
 }
 

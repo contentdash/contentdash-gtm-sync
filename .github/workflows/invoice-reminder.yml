@@ -1,8 +1,8 @@
-name: Monthly Invoice Checklist
+name: Weekly Invoice Chase
 
 on:
   schedule:
-    - cron: '7 0 1 * *'  # 1st of month 8:07am PHT (UTC+8 = 00:07 UTC)
+    - cron: '10 0 * * 1'  # Monday 8:10am PHT (UTC+8 = Monday 00:10 UTC)
   workflow_dispatch:
 
 jobs:
@@ -18,12 +18,17 @@ jobs:
 
       - run: npm ci
 
-      - name: Send invoice checklist
+      - name: Send invoice chase
         env:
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+          XERO_CLIENT_ID: ${{ secrets.XERO_CLIENT_ID }}
+          XERO_CLIENT_SECRET: ${{ secrets.XERO_CLIENT_SECRET }}
+          XERO_REDIRECT_URI: ${{ secrets.XERO_REDIRECT_URI }}
+          XERO_TOKENS_JSON: ${{ secrets.XERO_TOKENS_JSON }}
           EMAIL_FLEIRE: ${{ secrets.EMAIL_FLEIRE }}
           EMAIL_CHARLENE: ${{ secrets.EMAIL_CHARLENE }}
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          TESTING_MODE: 'true'
         run: node invoice-reminder.js

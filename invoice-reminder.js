@@ -2,54 +2,96 @@ import 'dotenv/config';
 import nodemailer from 'nodemailer';
 import { getStripeSnapshot } from './stripe-report.js';
 
+const testing = process.env.TESTING_MODE !== 'false';
+const weekLabel = new Date().toLocaleDateString('en-SG', { month: 'short', day: 'numeric', year: 'numeric' });
+
+// Pull live Stripe data
 const stripe = await getStripeSnapshot();
-const renewingThisMonth = stripe.subscriptions
+
+// Pull live Xero AR
+let ar = null;
+try {
+  const { getARSnapshot } = await import('./ar-check.js');
+  ar = await getARSnapshot();
+} catch (e) {
+  console.log('⚠ Xero AR unavailable:', e.message);
+}
+
+// Stripe: renewals in next 14 days
+const renewingRows = stripe.subscriptions
   .filter(s => {
-    const end = new Date(s.currentPeriodEnd);
-    const now = new Date();
-    const daysUntil = Math.ceil((end - now) / (1000 * 60 * 60 * 24));
-    return daysUntil <= 14;
+    const days = Math.ceil((new Date(s.currentPeriodEnd) - new Date()) / 86400000);
+    return days >= 0 && days <= 14;
+  })
+  .map(s => {
+    const days = Math.ceil((new Date(s.currentPeriodEnd) - new Date()) / 86400000);
+    return `<tr><td style="padding:6px 8px;border-bottom:1px solid #f4f4f4"><strong>${s.customerName}</strong></td><td style="padding:6px 8px;border-bottom:1px solid #f4f4f4">${s.currency} ${(s.amount/100).toFixed(2)}/${s.interval}</td><td style="padding:6px 8px;border-bottom:1px solid #f4f4f4">${s.currentPeriodEnd}</td><td style="padding:6px 8px;border-bottom:1px solid #f4f4f4;color:${days <= 3 ? '#dc2626' : '#d97706'}"><strong>${days}d</strong></td></tr>`;
   });
 
-const renewRows = renewingThisMonth.length
-  ? renewingThisMonth.map(s =>
-      `<li><strong>${s.customerName}</strong> — ${s.currency} ${(s.amount/100).toFixed(2)}/${s.interval} renews ${s.currentPeriodEnd}</li>`
-    ).join('')
-  : '<li>No Stripe subscriptions renewing in the next 14 days</li>';
+// Xero: overdue invoices sorted by urgency
+const overdueRows = ar?.overdue?.length > 0
+  ? [...ar.overdue]
+    .sort((a, b) => b.daysOverdue - a.daysOverdue)
+    .map(i => `
+      <tr style="${i.daysOverdue > 14 ? 'background:#fff5f5' : ''}">
+        <td style="padding:6px 8px;border-bottom:1px solid #f4f4f4"><strong>${i.contact}</strong></td>
+        <td style="padding:6px 8px;border-bottom:1px solid #f4f4f4">${i.currency} ${i.amountDue}</td>
+        <td style="padding:6px 8px;border-bottom:1px solid #f4f4f4">${i.dueDate}</td>
+        <td style="padding:6px 8px;border-bottom:1px solid #f4f4f4"><strong style="color:${i.daysOverdue > 30 ? '#dc2626' : '#d97706'}">${i.daysOverdue} days</strong></td>
+        <td style="padding:6px 8px;border-bottom:1px solid #f4f4f4">${i.status}</td>
+      </tr>`)
+    .join('')
+  : '<tr><td colspan="5" style="padding:8px;color:#16a34a;text-align:center">✓ No overdue invoices in Xero</td></tr>';
 
 const html = `<!DOCTYPE html>
 <html><head><meta charset="UTF-8">
 <style>
-  body { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 13px; color: #111; max-width: 600px; margin: 0 auto; padding: 24px; }
+  body { font-family: 'Helvetica Neue', Arial, sans-serif; font-size: 13px; color: #111; max-width: 700px; margin: 0 auto; padding: 24px; }
   h2 { font-size: 18px; font-weight: 900; margin-bottom: 4px; }
-  ul { padding-left: 18px; line-height: 1.9; }
+  .section { margin-bottom: 22px; }
+  .section-title { font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: #555; border-bottom: 1px solid #eee; padding-bottom: 5px; margin-bottom: 10px; }
+  table { width: 100%; border-collapse: collapse; font-size: 12px; }
+  th { font-size: 10px; font-weight: 700; text-transform: uppercase; color: #aaa; text-align: left; padding: 4px 8px; border-bottom: 1px solid #eee; }
+  ol { padding-left: 18px; line-height: 1.9; }
   .footer { border-top: 1px solid #eee; padding-top: 10px; font-size: 10px; color: #aaa; margin-top: 24px; }
 </style></head><body>
-<h2>🧾 Monthly Invoice Checklist</h2>
-<p style="color:#666">Hi Charlene — start-of-month reminder to generate and validate invoices.</p>
+<h2>💸 Weekly Invoice & AR Chase — ${weekLabel}</h2>
+<p style="color:#666">Hi Charlene — here's your weekly collections and billing checklist.</p>
 
-<p><strong>Manual invoices to generate this month (Xero):</strong></p>
-<ul>
-  <li>PRWorks Inc. — PHP 45,000 retainer</li>
-  <li>Nick Chapleau (Dodon.ai) — USD $750 managed service</li>
-  <li>Any new enterprise clients added this month</li>
-</ul>
+${ar?.overdue?.length > 0 ? `
+<div class="section">
+  <div class="section-title">🔴 Overdue Invoices — Chase These This Week</div>
+  <table>
+    <thead><tr><th>Client</th><th>Amount Due</th><th>Due Date</th><th>Days Overdue</th><th>Status</th></tr></thead>
+    <tbody>${overdueRows}</tbody>
+  </table>
+  <p style="font-size:11px;color:#666;margin-top:8px">For each: call or email the contact → log the outcome in Trello → set a follow-up if no response within 2 days.</p>
+</div>` : `
+<div class="section">
+  <div class="section-title">✅ Overdue Invoices</div>
+  <p style="color:#16a34a">No overdue invoices in Xero this week.</p>
+</div>`}
 
-<p><strong>Stripe auto-billing — renewing in next 14 days:</strong></p>
-<ul>${renewRows}</ul>
+${renewingRows.length > 0 ? `
+<div class="section">
+  <div class="section-title">🔄 Stripe Renewals — Next 14 Days</div>
+  <table>
+    <thead><tr><th>Subscriber</th><th>Plan</th><th>Renews On</th><th>Days Left</th></tr></thead>
+    <tbody>${renewingRows.join('')}</tbody>
+  </table>
+</div>` : ''}
 
-<p><strong>Steps:</strong></p>
-<ol style="padding-left:18px;line-height:1.9">
-  <li>Generate invoices in Xero for manual clients</li>
-  <li>Validate amounts match rate cards</li>
-  <li>Send invoices — confirm delivery</li>
-  <li>Log invoice numbers in Trello pipeline</li>
-  <li>Set follow-up reminder for 7 days if unpaid</li>
-</ol>
-<div class="footer">Auto-generated by dasho-ops · Fires 1st of every month at 8am</div>
+<div class="section">
+  <div class="section-title">📝 Manual Invoices to Generate This Week (Xero)</div>
+  <ol>
+    <li>PRWorks Inc. — PHP 45,000 monthly retainer</li>
+    <li>Nick Chapleau / Dodon.ai — USD $750 managed service</li>
+    <li>Any new enterprise clients onboarded this week</li>
+  </ol>
+</div>
+
+<div class="footer">Auto-generated by dasho-ops · Fires every Monday at 8am · Source: Stripe API + Xero API</div>
 </body></html>`;
-
-const monthLabel = new Date().toLocaleDateString('en-SG', { month: 'long', year: 'numeric' });
 
 // Email
 const appPassword = process.env.GMAIL_APP_PASSWORD;
@@ -58,36 +100,44 @@ if (appPassword) {
     service: 'gmail',
     auth: { user: process.env.GMAIL_USER, pass: appPassword },
   });
+  const to = testing ? process.env.EMAIL_FLEIRE : process.env.EMAIL_CHARLENE;
+  const cc = testing ? undefined : process.env.EMAIL_FLEIRE;
+  const overdueCount = ar?.overdue?.length || 0;
+  const subject = `${testing ? '[TEST] ' : ''}Weekly Invoice Chase — ${overdueCount} overdue · ${weekLabel}`;
   await transporter.sendMail({
     from: `"DashoContent Ops" <${process.env.GMAIL_USER}>`,
-    to: process.env.EMAIL_CHARLENE,
-    cc: process.env.EMAIL_FLEIRE,
-    subject: `Monthly Invoice Checklist — ${monthLabel}`,
-    html,
+    to, cc, subject, html,
   });
-  console.log('✓ Invoice reminder email sent');
+  console.log(`✓ Invoice chase email sent to ${to}${testing ? ' (TESTING MODE)' : ''}`);
 } else {
-  console.log('⚠ GMAIL_APP_PASSWORD not set — skipping email');
+  console.log('⚠ GMAIL_APP_PASSWORD not set');
 }
 
 // Slack
 const webhookUrl = process.env.SLACK_WEBHOOK_URL;
 if (webhookUrl) {
-  const renewingText = renewingThisMonth.length
-    ? renewingThisMonth.map(s => `• *${s.customerName}* — ${s.currency} ${(s.amount/100).toFixed(2)} renews ${s.currentPeriodEnd}`).join('\n')
-    : '• No Stripe subscriptions renewing in the next 14 days';
+  const overdueCount = ar?.overdue?.length || 0;
+  const overdueSlack = ar
+    ? (overdueCount === 0
+      ? '✅ No overdue invoices'
+      : ar.overdue.sort((a,b) => b.daysOverdue - a.daysOverdue).slice(0, 5)
+          .map(i => `• *${i.contact}* — ${i.currency} ${i.amountDue} · ${i.daysOverdue}d overdue`).join('\n')
+          + (overdueCount > 5 ? `\n_…and ${overdueCount - 5} more_` : ''))
+    : '_Xero unavailable_';
 
   await fetch(webhookUrl, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({
       blocks: [
-        { type: 'header', text: { type: 'plain_text', text: `🧾 Monthly Invoice Checklist — ${monthLabel}` } },
-        { type: 'section', text: { type: 'mrkdwn', text: '*Manual invoices to generate (Xero):*\n• PRWorks Inc. — PHP 45,000 retainer\n• Nick Chapleau (Dodon.ai) — USD $750\n• Any new enterprise clients' }},
-        { type: 'section', text: { type: 'mrkdwn', text: `*Stripe auto-billing (next 14 days):*\n${renewingText}` }},
-        { type: 'context', elements: [{ type: 'mrkdwn', text: 'Generate → Validate → Send → Log in Trello → Set 7-day follow-up' }]},
-      ]
+        { type: 'header', text: { type: 'plain_text', text: `💸 Weekly Invoice Chase — ${weekLabel}${testing ? ' [TEST]' : ''}` } },
+        { type: 'section', text: { type: 'mrkdwn', text: `*Overdue invoices (${overdueCount}):*\n${overdueSlack}` }},
+        renewingRows.length > 0
+          ? { type: 'section', text: { type: 'mrkdwn', text: `*Stripe renewals (14d):* ${stripe.subscriptions.filter(s => Math.ceil((new Date(s.currentPeriodEnd)-new Date())/86400000) <= 14).map(s => `${s.customerName} ${s.currentPeriodEnd}`).join(' · ')}` }}
+          : null,
+        { type: 'context', elements: [{ type: 'mrkdwn', text: 'Full checklist emailed · Chase all overdue → log in Trello → generate manual invoices in Xero' }]},
+      ].filter(Boolean)
     }),
   });
-  console.log('✓ Invoice Slack notification sent');
+  console.log('✓ Invoice chase Slack sent');
 }
