@@ -39,7 +39,7 @@ jobs:
           APPS_SCRIPT_URL: ${{ secrets.APPS_SCRIPT_URL }}
           APPS_SCRIPT_TOKEN: ${{ secrets.APPS_SCRIPT_TOKEN }}
           AIRTABLE_PAT: ${{ secrets.AIRTABLE_PAT }}
-          TESTING_MODE: 'true'
+          TESTING_MODE: 'false'
         run: node weekly-digest.js
 
       - name: Commit MRR history

@@ -28,7 +28,7 @@ jobs:
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
           AIRTABLE_PAT: ${{ secrets.AIRTABLE_PAT }}
-          TESTING_MODE: 'true'
+          TESTING_MODE: 'false'
         run: node invoice-reminder.js
       - name: Rotate Xero tokens secret
         if: always()
