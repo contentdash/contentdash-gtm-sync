@@ -30,6 +30,7 @@ export async function getStripeSnapshot() {
 
   const INTERNAL_PATTERNS = [
     'kentlacno', 'sadriano', 'fleiremae', 'test+', '@test.', 'test@',
+    'apasoquin@contentdash.app', 'info@contentdash.app',
   ];
   const isInternal = email => INTERNAL_PATTERNS.some(p => (email || '').toLowerCase().includes(p));
 
