@@ -1,10 +1,10 @@
 [
   {
     "date": "2026-05-05",
-    "mrr": 1098.99,
-    "subscribers": 38,
+    "mrr": 1098.97,
+    "subscribers": 26,
     "newSubs": 4,
-    "churnedSubs": 42,
-    "netMRRChange": -794.03
+    "churnedSubs": 8,
+    "netMRRChange": -694.7
   }
 ]
