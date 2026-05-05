@@ -2,7 +2,7 @@ name: EOW Reminder
 
 on:
   schedule:
-    - cron: '5 8 * * 5'  # Friday 4:05pm PHT (UTC+8 = Friday 08:05 UTC)
+    - cron: '5 8 * * 5'  # Friday 4:05pm PHT
   workflow_dispatch:
 
 jobs:
@@ -21,6 +21,10 @@ jobs:
       - name: Send EOW reminder
         env:
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+          XERO_CLIENT_ID: ${{ secrets.XERO_CLIENT_ID }}
+          XERO_CLIENT_SECRET: ${{ secrets.XERO_CLIENT_SECRET }}
+          XERO_REDIRECT_URI: ${{ secrets.XERO_REDIRECT_URI }}
+          XERO_TOKENS_JSON: ${{ secrets.XERO_TOKENS_JSON }}
           EMAIL_FLEIRE: ${{ secrets.EMAIL_FLEIRE }}
           EMAIL_CHARLENE: ${{ secrets.EMAIL_CHARLENE }}
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
