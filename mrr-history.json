@@ -1,1 +1,10 @@
-[]
+[
+  {
+    "date": "2026-05-05",
+    "mrr": 1098.99,
+    "subscribers": 38,
+    "newSubs": 4,
+    "churnedSubs": 42,
+    "netMRRChange": -794.03
+  }
+]
