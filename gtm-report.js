@@ -4,49 +4,50 @@ const AIRTABLE_BASE = 'appdOhglYCp56PrrY';
 const AIRTABLE_TABLE = 'tblbQbb5l9ygvbEFS';
 
 function parseCSV(text) {
-  const lines = text.trim().split('\n');
-  if (lines.length < 2) return [];
-  const headers = lines[0].split(',').map(h => h.replace(/^"|"$/g, '').trim());
-  return lines.slice(1).map(line => {
-    // Handle quoted fields (may contain commas)
-    const fields = [];
-    let current = '';
-    let inQuotes = false;
-    for (let i = 0; i < line.length; i++) {
-      const ch = line[i];
-      if (ch === '"') { inQuotes = !inQuotes; }
-      else if (ch === ',' && !inQuotes) { fields.push(current); current = ''; }
-      else { current += ch; }
+  // Full RFC-4180 parser: handles embedded newlines and commas inside quoted fields
+  const records = [];
+  let field = '';
+  let row = [];
+  let inQuotes = false;
+
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    const next = text[i + 1];
+    if (inQuotes) {
+      if (ch === '"' && next === '"') { field += '"'; i++; } // escaped quote
+      else if (ch === '"') { inQuotes = false; }
+      else { field += ch; }
+    } else {
+      if (ch === '"') { inQuotes = true; }
+      else if (ch === ',') { row.push(field.trim()); field = ''; }
+      else if (ch === '\r' && next === '\n') { row.push(field.trim()); records.push(row); row = []; field = ''; i++; }
+      else if (ch === '\n') { row.push(field.trim()); records.push(row); row = []; field = ''; }
+      else { field += ch; }
     }
-    fields.push(current);
-    const row = {};
-    headers.forEach((h, i) => { row[h] = (fields[i] || '').trim(); });
-    return row;
+  }
+  if (field || row.length) { row.push(field.trim()); records.push(row); }
+
+  if (records.length < 2) return [];
+  const headers = records[0].map(h => h.replace(/^"|"$/g, '').trim());
+  return records.slice(1).filter(r => r.some(f => f)).map(r => {
+    const obj = {};
+    headers.forEach((h, i) => { if (h) obj[h] = r[i] || ''; });
+    return obj;
   });
 }
 
+// Public Google Sheet (shared as "Anyone with the link can view")
+const PIPELINE_SHEET_ID = '1qEYuSoqzQuqmTPDFB-KgNcXb3bYIYqmWMAX2mOLC5pY';
+const PIPELINE_SHEET_TAB = 'Pipeline Ops';
+
 async function fetchPipelineRows() {
-  // Primary: Google Sheet CSV export (set SHEET_ID + SHEET_TAB env vars)
-  const sheetId = process.env.SHEET_ID;
-  if (sheetId) {
-    const tab = encodeURIComponent(process.env.SHEET_TAB || 'Pipeline Ops');
-    const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${tab}`;
-    const res = await fetch(csvUrl);
-    if (!res.ok) throw new Error(`Sheet CSV HTTP ${res.status} — make sure the sheet is shared as "Anyone with the link can view"`);
-    const text = await res.text();
-    return parseCSV(text);
-  }
-
-  // Fallback: Apps Script doGet endpoint
-  const url = process.env.APPS_SCRIPT_URL;
-  const token = process.env.APPS_SCRIPT_TOKEN;
-  if (!url || !token) throw new Error('Set SHEET_ID (preferred) or APPS_SCRIPT_URL + APPS_SCRIPT_TOKEN');
-
-  const res = await fetch(`${url}?token=${encodeURIComponent(token)}`);
-  if (!res.ok) throw new Error(`Apps Script HTTP ${res.status}`);
-  const data = await res.json();
-  if (!data.ok) throw new Error(data.error || 'Apps Script error');
-  return data.rows || [];
+  const sheetId = process.env.SHEET_ID || PIPELINE_SHEET_ID;
+  const tab = encodeURIComponent(process.env.SHEET_TAB || PIPELINE_SHEET_TAB);
+  const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${tab}`;
+  const res = await fetch(csvUrl);
+  if (!res.ok) throw new Error(`Sheet CSV HTTP ${res.status}`);
+  const text = await res.text();
+  return parseCSV(text);
 }
 
 async function fetchAirtableLeads() {
@@ -60,12 +61,18 @@ async function fetchAirtableLeads() {
   return data.records || [];
 }
 
-// Stage order for funnel display (top of funnel → bottom)
+// Stage order for funnel display — matches actual sheet stage names
 const FUNNEL_STAGES = [
   'ICP Fit', 'Outreach Sent', 'Replied', 'Qualification Booked', 'Qualified',
-  'Discovery Booked', 'Discovery Done', 'Proposal Sent', 'Negotiation', 'Won',
+  'Discovery Booked', 'Discovery Done', 'Proposal Out', 'Proposal Sent', 'Negotiation',
+  'Multi-Threaded', 'Kickoff / Won', 'Won',
 ];
-const CLOSED_STAGES = new Set(['Won', 'Lost']);
+// All closed stages in the sheet (won or lost variants)
+const CLOSED_STAGES = new Set(['Won', 'Lost', 'Kickoff / Won', 'Closed Lost', 'Closed Won']);
+// Proposal-or-beyond stages for conversion rate
+const PROPOSAL_STAGES = new Set(['Proposal Out', 'Proposal Sent', 'Negotiation', 'Multi-Threaded', 'Kickoff / Won', 'Won', 'Closed Won']);
+// Only count deals contacted within this many days as "active" (filters zombie leads)
+const ACTIVE_CONTACT_THRESHOLD_DAYS = 90;
 
 export async function getGTMSnapshot() {
   const today = new Date();
@@ -79,8 +86,13 @@ export async function getGTMSnapshot() {
 
   let pipeline = null;
   if (rows) {
-    const active = rows.filter(r => r['Account'] && !CLOSED_STAGES.has(r['Stage']));
     const all = rows.filter(r => r['Account']);
+    // Active = not closed AND contacted within threshold (filters zombie leads from prior years)
+    const active = all.filter(r => {
+      if (CLOSED_STAGES.has(r['Stage'])) return false;
+      const daysSince = parseInt(r['Days Since Last Contact']) || 9999;
+      return daysSince <= ACTIVE_CONTACT_THRESHOLD_DAYS;
+    });
 
     const stageCounts = {};
     const stageValues = {};
@@ -98,7 +110,7 @@ export async function getGTMSnapshot() {
       stageValues[stage] = (stageValues[stage] || 0) + val;
 
       const daysSince = parseInt(row['Days Since Last Contact']) || 0;
-      if (daysSince > 5) staleDeals.push({ account: row['Account'], stage, daysSince, owner: row['Owner'] });
+      if (daysSince > 7) staleDeals.push({ account: row['Account'], stage, daysSince, owner: row['Owner'] });
 
       if (String(row['Overdue Next Step']).toUpperCase() === 'Y') {
         overdueNextSteps.push({
@@ -119,25 +131,25 @@ export async function getGTMSnapshot() {
       if (row['Created Date'] && new Date(row['Created Date']) >= sevenDaysAgo) newThisWeek++;
     });
 
-    // Funnel: count deals at each stage (active + closed Won in last 30d)
-    const funnel = FUNNEL_STAGES.map(stage => {
-      const count = (stage === 'Won')
-        ? all.filter(r => r['Stage'] === 'Won' && r['Created Date'] && new Date(r['Created Date']) >= thirtyDaysAgo).length
-        : stageCounts[stage] || 0;
-      return { stage, count, value: stageValues[stage] || 0 };
-    }).filter(f => f.count > 0);
+    // Funnel: active stages + won/closed in last 30d
+    const wonRecent = all.filter(r =>
+      (r['Stage'] === 'Kickoff / Won' || r['Stage'] === 'Won' || r['Stage'] === 'Closed Won') &&
+      r['Created Date'] && new Date(r['Created Date']) >= thirtyDaysAgo
+    );
+    const funnel = FUNNEL_STAGES.map(stage => ({
+      stage, count: stageCounts[stage] || 0, value: stageValues[stage] || 0,
+    })).filter(f => f.count > 0);
 
-    // Conversion rate: leads that reached Proposal Sent / total active+won(30d)
-    const proposalReached = (stageCounts['Proposal Sent'] || 0)
-      + (stageCounts['Negotiation'] || 0)
-      + all.filter(r => r['Stage'] === 'Won').length;
-    const totalEntered = active.length + all.filter(r => r['Stage'] === 'Won').length;
+    // Conversion rate: active deals that reached Proposal or beyond
+    const proposalReached = active.filter(r => PROPOSAL_STAGES.has(r['Stage'])).length + wonRecent.length;
+    const totalEntered = active.length + wonRecent.length;
     const proposalConvRate = totalEntered > 0
       ? +((proposalReached / totalEntered) * 100).toFixed(1)
       : 0;
 
     const wonThisWeek = all.filter(r =>
-      r['Stage'] === 'Won' && r['Created Date'] && new Date(r['Created Date']) >= sevenDaysAgo
+      (r['Stage'] === 'Kickoff / Won' || r['Stage'] === 'Won' || r['Stage'] === 'Closed Won') &&
+      r['Created Date'] && new Date(r['Created Date']) >= sevenDaysAgo
     );
 
     pipeline = {
