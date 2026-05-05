@@ -14,6 +14,9 @@ Click "New repository secret" for each:
 | `EMAIL_CHARLENE` | `cvirlouvet@contentdash.app` | — |
 | `GMAIL_USER` | `info@contentdash.app` | — |
 | `GMAIL_APP_PASSWORD` | *(16-char app password)* | myaccount.google.com → Security → App passwords |
+| `APPS_SCRIPT_URL` | *(web app URL)* | Google Sheet → Extensions → Apps Script → Deploy → Manage deployments → copy URL |
+| `APPS_SCRIPT_TOKEN` | *(same as PIPELINE_WEBHOOK_TOKEN in Script Properties)* | Apps Script Project Settings → Script properties |
+| `AIRTABLE_PAT` | `patpgiPYbDrouIY7N...` | Already known |
 
 ## Gmail App Password (one-time setup)
 1. Go to myaccount.google.com
@@ -21,6 +24,17 @@ Click "New repository secret" for each:
 3. Create: name it "DashoContent Ops"
 4. Copy the 16-character password (shown once)
 5. Add as GMAIL_APP_PASSWORD secret above
+
+## Apps Script — Pipeline Read Endpoint (one-time setup)
+The `airtable_pipeline_webhook.gs` file now includes a `doGet` handler for reading pipeline data.
+
+1. Open the Google Sheet → Extensions → Apps Script
+2. Replace the existing script with the updated `airtable_pipeline_webhook.gs`
+3. Deploy → New deployment (or update existing) → Web app
+   - Execute as: Me
+   - Who has access: Anyone with the link
+4. Copy the deployment URL → add as `APPS_SCRIPT_URL` secret
+5. Project Settings → Script properties → copy `PIPELINE_WEBHOOK_TOKEN` value → add as `APPS_SCRIPT_TOKEN` secret
 
 ## Xero Tokens (refresh every ~60 days)
 After running `cd ~/Projects/xero-datapull && npm run auth`:

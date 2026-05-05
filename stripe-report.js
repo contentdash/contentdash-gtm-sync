@@ -81,12 +81,62 @@ export async function getStripeSnapshot() {
     .filter(c => c.paid && !c.refunded)
     .reduce((sum, c) => sum + c.amount / 100, 0);
 
+  // New subscriptions this month
+  const newSubsRaw = await stripe.subscriptions.list({ status: 'active', limit: 50, created: { gte: thirtyDaysAgo } });
+  const newSubs = newSubsRaw.data
+    .filter(s => {
+      const email = customerMap[s.customer] || s.customer;
+      return !isInternal(email);
+    })
+    .map(s => {
+      const monthlyUSD = s.items.data[0]?.price?.recurring?.interval === 'year'
+        ? +(s.items.data.reduce((sum, i) => sum + (i.price.unit_amount || 0) * (i.quantity || 1), 0) / 100 / 12).toFixed(2)
+        : +(s.items.data.reduce((sum, i) => sum + (i.price.unit_amount || 0) * (i.quantity || 1), 0) / 100).toFixed(2);
+      return { customer: customerMap[s.customer] || s.customer, monthlyUSD, currency: s.currency.toUpperCase() };
+    });
+  const newMRR = newSubs.reduce((sum, s) => {
+    if (s.currency === 'USD') return sum + s.monthlyUSD;
+    if (s.currency === 'SGD') return sum + s.monthlyUSD * 0.74;
+    return sum;
+  }, 0);
+
+  // Churned subscriptions this month (canceled)
+  const canceledSubsRaw = await stripe.subscriptions.list({ status: 'canceled', limit: 50, created: { gte: thirtyDaysAgo } });
+  const canceledCustomerIds = [...new Set(canceledSubsRaw.data.map(s => s.customer).filter(Boolean))];
+  const canceledCustomerMap = { ...customerMap };
+  await Promise.all(canceledCustomerIds.filter(id => !canceledCustomerMap[id]).map(async id => {
+    try { const c = await stripe.customers.retrieve(id); canceledCustomerMap[id] = c.email || c.name || id; }
+    catch { canceledCustomerMap[id] = id; }
+  }));
+  const churnedSubs = canceledSubsRaw.data
+    .filter(s => !isInternal(canceledCustomerMap[s.customer] || ''))
+    .map(s => {
+      const interval = s.items.data[0]?.price?.recurring?.interval || 'month';
+      const monthlyUSD = interval === 'year'
+        ? +(s.items.data.reduce((sum, i) => sum + (i.price.unit_amount || 0) * (i.quantity || 1), 0) / 100 / 12).toFixed(2)
+        : +(s.items.data.reduce((sum, i) => sum + (i.price.unit_amount || 0) * (i.quantity || 1), 0) / 100).toFixed(2);
+      return { customer: canceledCustomerMap[s.customer] || s.customer, monthlyUSD, currency: s.currency.toUpperCase() };
+    });
+  const churnedMRR = churnedSubs.reduce((sum, s) => {
+    if (s.currency === 'USD') return sum + s.monthlyUSD;
+    if (s.currency === 'SGD') return sum + s.monthlyUSD * 0.74;
+    return sum;
+  }, 0);
+
   return {
     subscriptions: enriched,
     totalMRR: +totalMRR.toFixed(2),
+    subscriberCount: enriched.length,
     collectedLast30Days: +collected.toFixed(2),
     failedPayments: failed.length,
     failedDetails: failed,
+    growth: {
+      newSubs: newSubs.length,
+      newMRR: +newMRR.toFixed(2),
+      churnedSubs: churnedSubs.length,
+      churnedMRR: +churnedMRR.toFixed(2),
+      netMRRChange: +(newMRR - churnedMRR).toFixed(2),
+    },
     asOf: new Date().toISOString().slice(0, 10),
   };
 }
@@ -99,6 +149,8 @@ if (process.argv[1].endsWith('stripe-report.js')) {
   console.log(`Total MRR (USD equiv): $${snap.totalMRR}`);
   console.log(`Collected last 30 days: $${snap.collectedLast30Days}`);
   console.log(`Failed payments: ${snap.failedPayments}`);
+  console.log(`Subscribers: ${snap.subscriberCount}`);
+  console.log(`Growth (30d): +${snap.growth.newSubs} new ($${snap.growth.newMRR} MRR) | -${snap.growth.churnedSubs} churned ($${snap.growth.churnedMRR} MRR) | net $${snap.growth.netMRRChange}`);
   console.log('\nActive subscriptions:');
   snap.subscriptions.forEach(s => {
     console.log(`  ${s.customerName} — ${s.currency} ${s.amount/100}/${s.interval} (~$${s.monthlyUSD}/mo)`);

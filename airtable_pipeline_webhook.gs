@@ -55,6 +55,41 @@ const PIPELINE_HEADERS = [
 const FORMULA_START_COLUMN = 21; // U
 const FORMULA_END_COLUMN = 25;   // Y
 
+// Read pipeline data — secured by same PIPELINE_WEBHOOK_TOKEN
+function doGet(e) {
+  try {
+    const token = (e.parameter && e.parameter.token) || '';
+    const expectedToken = PropertiesService.getScriptProperties().getProperty('PIPELINE_WEBHOOK_TOKEN');
+    if (!expectedToken || token !== expectedToken) {
+      return jsonResponse_(401, { ok: false, error: 'Unauthorized' });
+    }
+
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAME);
+    if (!sheet) return jsonResponse_(500, { ok: false, error: `Missing sheet: ${SHEET_NAME}` });
+
+    const lastRow = sheet.getLastRow();
+    if (lastRow < 2) return jsonResponse_(200, { ok: true, rows: [], asOf: new Date().toISOString() });
+
+    const headers = sheet.getRange(1, 1, 1, PIPELINE_HEADERS.length).getValues()[0].map(String);
+    const data = sheet.getRange(2, 1, lastRow - 1, PIPELINE_HEADERS.length).getValues();
+
+    const rows = data
+      .filter(row => clean_(row[0])) // skip blank Account rows
+      .map(row => {
+        const obj = {};
+        headers.forEach((h, i) => {
+          const v = row[i];
+          obj[h] = v instanceof Date ? v.toISOString().slice(0, 10) : String(v == null ? '' : v);
+        });
+        return obj;
+      });
+
+    return jsonResponse_(200, { ok: true, rows, asOf: new Date().toISOString() });
+  } catch (error) {
+    return jsonResponse_(500, { ok: false, error: error.message });
+  }
+}
+
 function doPost(e) {
   try {
     const token = (e.parameter && e.parameter.token) || '';

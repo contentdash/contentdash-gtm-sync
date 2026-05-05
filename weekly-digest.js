@@ -1,6 +1,7 @@
 import 'dotenv/config';
 import nodemailer from 'nodemailer';
 import { getStripeSnapshot } from './stripe-report.js';
+import { getGTMSnapshot } from './gtm-report.js';
 import { writeFileSync, mkdirSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -32,6 +33,8 @@ async function buildReport() {
         <td>${s.currentPeriodEnd}</td>
       </tr>`).join('');
 
+    const netMRRColor = stripe.growth.netMRRChange >= 0 ? '#16a34a' : '#dc2626';
+    const netMRRSign = stripe.growth.netMRRChange >= 0 ? '+' : '';
     stripeSection = `
       <div class="section">
         <div class="section-title">💳 Stripe — Platform MRR</div>
@@ -39,7 +42,12 @@ async function buildReport() {
           <div class="kpi">
             <div class="kpi-label">Total MRR</div>
             <div class="kpi-val" style="color:#16a34a">$${stripe.totalMRR}</div>
-            <div class="kpi-sub">USD equivalent</div>
+            <div class="kpi-sub">${stripe.subscriberCount} subscribers</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-label">Net MRR Change</div>
+            <div class="kpi-val" style="color:${netMRRColor}">${netMRRSign}$${stripe.growth.netMRRChange}</div>
+            <div class="kpi-sub">+${stripe.growth.newSubs} new · −${stripe.growth.churnedSubs} churned</div>
           </div>
           <div class="kpi">
             <div class="kpi-label">Collected (30d)</div>
@@ -59,6 +67,84 @@ async function buildReport() {
       </div>`;
   } catch (e) {
     stripeSection = `<div class="section"><div class="section-title">💳 Stripe</div><p style="color:#dc2626">Error: ${e.message}</p></div>`;
+  }
+
+  // --- GTM pipeline snapshot ---
+  let gtm = null;
+  let gtmSection = '';
+  try {
+    gtm = await getGTMSnapshot();
+    const p = gtm.pipeline;
+    const ib = gtm.inbound;
+
+    let stageRows = '';
+    if (p) {
+      const stageOrder = ['ICP Fit', 'Outreach Sent', 'Replied', 'Qualification Booked', 'Qualified', 'Discovery Booked', 'Discovery Done', 'Proposal Sent', 'Negotiation'];
+      const allStages = [...new Set([...stageOrder, ...Object.keys(p.stageCounts)])];
+      stageRows = allStages
+        .filter(s => p.stageCounts[s])
+        .map(s => `<tr><td>${s}</td><td>${p.stageCounts[s]}</td><td>${p.stageValues[s] ? '$' + p.stageValues[s].toLocaleString() : '—'}</td></tr>`)
+        .join('');
+    }
+
+    let alertRows = '';
+    if (p?.staleDeals?.length) {
+      alertRows += p.staleDeals.slice(0, 5).map(d =>
+        `<tr style="background:#fffbeb"><td>🟡 Stale</td><td><strong>${d.account}</strong> · ${d.stage}</td><td>${d.daysSince} days no contact</td></tr>`
+      ).join('');
+    }
+    if (p?.overdueNextSteps?.length) {
+      alertRows += p.overdueNextSteps.slice(0, 5).map(d =>
+        `<tr style="background:#fff5f5"><td>🔴 Overdue</td><td><strong>${d.account}</strong> · ${d.stage}</td><td>${d.nextStep || 'Next step overdue'} (${d.nextStepDate || '—'})</td></tr>`
+      ).join('');
+    }
+    if (p?.stuckDeals?.length) {
+      alertRows += p.stuckDeals.slice(0, 3).map(d =>
+        `<tr style="background:#fff5f5"><td>🔴 Stuck</td><td><strong>${d.account}</strong> · ${d.stage}</td><td>${d.daysSince} days no movement</td></tr>`
+      ).join('');
+    }
+    if (!alertRows) alertRows = '<tr><td colspan="3" style="color:#16a34a;text-align:center">✓ No urgent pipeline alerts</td></tr>';
+
+    const inboundNote = ib ? `${ib.newThisWeek} new lead${ib.newThisWeek !== 1 ? 's' : ''} this week` : 'Airtable unavailable';
+
+    gtmSection = `
+      <div class="section">
+        <div class="section-title">📈 GTM — Pipeline & Inbound</div>
+        ${p ? `
+        <div class="kpi-row">
+          <div class="kpi">
+            <div class="kpi-label">Active Deals</div>
+            <div class="kpi-val">${p.totalDeals}</div>
+            <div class="kpi-sub">+${p.newThisWeek} new this week</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-label">Pipeline Value</div>
+            <div class="kpi-val">$${p.totalPipelineValue.toLocaleString()}</div>
+            <div class="kpi-sub">Active stages</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-label">Inbound Leads</div>
+            <div class="kpi-val">${ib ? ib.total : '—'}</div>
+            <div class="kpi-sub">${inboundNote}</div>
+          </div>
+          <div class="kpi">
+            <div class="kpi-label">Health</div>
+            <div class="kpi-val" style="font-size:14px">🔴${p.health.red} 🟡${p.health.yellow} 🟢${p.health.green}</div>
+            <div class="kpi-sub">Won this week: ${p.wonThisWeek}</div>
+          </div>
+        </div>
+        <table style="margin-bottom:12px">
+          <thead><tr><th>Stage</th><th>Deals</th><th>Value</th></tr></thead>
+          <tbody>${stageRows}</tbody>
+        </table>
+        <div class="section-title" style="margin-top:12px">⚠ Pipeline Alerts</div>
+        <table>
+          <thead><tr><th>Status</th><th>Deal</th><th>Issue</th></tr></thead>
+          <tbody>${alertRows}</tbody>
+        </table>` : `<p style="color:#d97706">⚠ Pipeline data unavailable — set APPS_SCRIPT_URL + APPS_SCRIPT_TOKEN</p>`}
+      </div>`;
+  } catch (e) {
+    gtmSection = `<div class="section"><div class="section-title">📈 GTM</div><p style="color:#dc2626">Error: ${e.message}</p></div>`;
   }
 
   // --- Xero AR (optional — needs auth) ---
@@ -115,6 +201,23 @@ async function buildReport() {
     });
   }
 
+  // GTM action items
+  if (gtm?.pipeline) {
+    const p = gtm.pipeline;
+    p.overdueNextSteps.slice(0, 3).forEach(d => {
+      actionRows.push(`<tr style="background:#fff5f5"><td>🔴 Urgent</td><td>Overdue next step — <strong>${d.account}</strong> · ${d.stage}: ${d.nextStep || 'follow up'} (was ${d.nextStepDate || 'past due'})</td><td>Charlene</td></tr>`);
+    });
+    p.stuckDeals.slice(0, 3).forEach(d => {
+      actionRows.push(`<tr style="background:#fff5f5"><td>🔴 Urgent</td><td>Stuck deal — <strong>${d.account}</strong> · ${d.stage} · ${d.daysSince} days no movement</td><td>Charlene</td></tr>`);
+    });
+    p.staleDeals.slice(0, 3).forEach(d => {
+      actionRows.push(`<tr style="background:#fffbeb"><td>🟡 Med</td><td>No contact in ${d.daysSince} days — <strong>${d.account}</strong> · ${d.stage}</td><td>Charlene</td></tr>`);
+    });
+    if (gtm.inbound?.newThisWeek > 0) {
+      actionRows.push(`<tr><td>🟡 Med</td><td>Review ${gtm.inbound.newThisWeek} new inbound lead${gtm.inbound.newThisWeek !== 1 ? 's' : ''} in Airtable — qualify and add to pipeline</td><td>Charlene</td></tr>`);
+    }
+  }
+
   const renewingThisWeek = stripe?.subscriptions.filter(s => {
     const days = Math.ceil((new Date(s.currentPeriodEnd) - new Date()) / 86400000);
     return days >= 0 && days <= 7;
@@ -161,6 +264,7 @@ async function buildReport() {
   <div class="meta">Auto-generated<br>info@contentdash.app · cvirlouvet@contentdash.app</div>
 </div>
 ${stripeSection}
+${gtmSection}
 ${arSection}
 ${actionSection}
 <div class="footer">
@@ -169,14 +273,16 @@ ${actionSection}
 </div>
 </body></html>`;
 
-  return { html, stripe, ar };
+  return { html, stripe, ar, gtm };
 }
 
-async function sendSlack(stripe, ar) {
+async function sendSlack(stripe, ar, gtm) {
   const webhookUrl = process.env.SLACK_WEBHOOK_URL;
   if (!webhookUrl) { console.log('⚠ SLACK_WEBHOOK_URL not set — skipping Slack'); return; }
 
-  const mrrText = stripe ? `*$${stripe.totalMRR}* MRR · $${stripe.collectedLast30Days} collected (30d)` : '_Stripe unavailable_';
+  const mrrText = stripe
+    ? `*$${stripe.totalMRR}* MRR · ${stripe.subscriberCount} subs · Net: ${stripe.growth.netMRRChange >= 0 ? '+' : ''}$${stripe.growth.netMRRChange}\n$${stripe.collectedLast30Days} collected (30d)`
+    : '_Stripe unavailable_';
   const failedText = stripe?.failedPayments > 0
     ? '\n⚠ *Failed:* ' + (stripe.failedDetails?.map(f => `${f.customer} (${f.amount})`).join(', ') || `${stripe.failedPayments} payment(s)`)
     : '';
@@ -189,6 +295,15 @@ async function sendSlack(stripe, ar) {
         + (ar.overdue.length > 5 ? `\n_…and ${ar.overdue.length - 5} more_` : '');
   }
 
+  let gtmLines = '_Pipeline unavailable_';
+  if (gtm?.pipeline) {
+    const p = gtm.pipeline;
+    const alerts = (p.overdueNextSteps.length + p.stuckDeals.length);
+    gtmLines = `*${p.totalDeals}* active deals · $${p.totalPipelineValue.toLocaleString()} pipeline`;
+    gtmLines += `\n🔴${p.health.red} 🟡${p.health.yellow} 🟢${p.health.green} health · ${alerts > 0 ? `⚠ ${alerts} alert${alerts !== 1 ? 's' : ''}` : '✅ no alerts'}`;
+    if (gtm.inbound?.newThisWeek > 0) gtmLines += `\n${gtm.inbound.newThisWeek} new inbound lead${gtm.inbound.newThisWeek !== 1 ? 's' : ''} this week`;
+  }
+
   const testing = process.env.TESTING_MODE !== 'false';
 
   await fetch(webhookUrl, {
@@ -199,6 +314,9 @@ async function sendSlack(stripe, ar) {
         { type: 'header', text: { type: 'plain_text', text: `📊 DashoContent — Weekly Ops Digest${testing ? ' [TEST]' : ''}` } },
         { type: 'section', fields: [
           { type: 'mrkdwn', text: `💳 *Stripe*\n${mrrText}${failedText}` },
+          { type: 'mrkdwn', text: `📈 *GTM Pipeline*\n${gtmLines}` },
+        ]},
+        { type: 'section', fields: [
           { type: 'mrkdwn', text: `📋 *Overdue AR*\n${arLines}` },
         ]},
         { type: 'context', elements: [{ type: 'mrkdwn', text: `Full report emailed · ${new Date().toLocaleDateString('en-SG', { weekday: 'long', month: 'short', day: 'numeric' })}` }]},
@@ -250,7 +368,7 @@ function syncToDrive(filePath) {
 }
 
 // Main
-const { html, stripe, ar } = await buildReport();
+const { html, stripe, ar, gtm } = await buildReport();
 const outDir = path.join(__dirname, 'output');
 mkdirSync(outDir, { recursive: true });
 const outPath = path.join(outDir, `digest-${new Date().toISOString().slice(0, 10)}.html`);
@@ -259,6 +377,6 @@ console.log(`✓ Report saved: ${outPath}`);
 
 await Promise.all([
   sendEmail(html),
-  sendSlack(stripe, ar),
+  sendSlack(stripe, ar, gtm),
 ]);
 syncToDrive(outPath);

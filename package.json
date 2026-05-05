@@ -8,7 +8,8 @@
     "eow": "node eow-reminder.js",
     "invoice": "node invoice-reminder.js",
     "ar": "node ar-check.js",
-    "stripe": "node stripe-report.js"
+    "stripe": "node stripe-report.js",
+    "gtm": "node gtm-report.js"
   },
   "dependencies": {
     "csv-writer": "^1.6.0",
