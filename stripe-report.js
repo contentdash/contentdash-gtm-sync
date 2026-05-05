@@ -28,13 +28,20 @@ export async function getStripeSnapshot() {
     customerMap[id] = c.email || c.name || id;
   }));
 
-  const enriched = subscriptions.map(s => ({
-    ...s,
-    customerName: customerMap[s.customer] || s.customer,
-    monthlyUSD: s.interval === 'year'
-      ? +(s.amount / 100 / 12).toFixed(2)
-      : +(s.amount / 100).toFixed(2),
-  }));
+  const INTERNAL_PATTERNS = [
+    'kentlacno', 'sadriano', 'fleiremae', 'test+', '@test.', 'test@',
+  ];
+  const isInternal = email => INTERNAL_PATTERNS.some(p => (email || '').toLowerCase().includes(p));
+
+  const enriched = subscriptions
+    .map(s => ({
+      ...s,
+      customerName: customerMap[s.customer] || s.customer,
+      monthlyUSD: s.interval === 'year'
+        ? +(s.amount / 100 / 12).toFixed(2)
+        : +(s.amount / 100).toFixed(2),
+    }))
+    .filter(s => !isInternal(s.customerName));
 
   const totalMRR = enriched.reduce((sum, s) => {
     if (s.currency === 'USD') return sum + s.monthlyUSD;

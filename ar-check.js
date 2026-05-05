@@ -41,7 +41,10 @@ async function buildClient() {
     saved.tokenSet.refresh_token,
   );
   await xero.setTokenSet(fresh);
-  writeFileSync(TOKENS_PATH, JSON.stringify({ ...saved, tokenSet: fresh, savedAt: new Date().toISOString() }, null, 2));
+  // Only write tokens back locally — skip in CI where the path doesn't exist
+  if (!process.env.XERO_TOKENS_JSON) {
+    writeFileSync(TOKENS_PATH, JSON.stringify({ ...saved, tokenSet: fresh, savedAt: new Date().toISOString() }, null, 2));
+  }
   return xero;
 }
 
