@@ -6,7 +6,12 @@ const testing = process.env.TESTING_MODE !== 'false';
 const weekLabel = new Date().toLocaleDateString('en-SG', { month: 'short', day: 'numeric', year: 'numeric' });
 
 // Pull live Stripe data
-const stripe = await getStripeSnapshot();
+let stripe = null;
+try {
+  stripe = await getStripeSnapshot();
+} catch (e) {
+  console.log('⚠ Stripe unavailable (rate limit or error):', e.message);
+}
 
 // Pull live Xero AR
 let ar = null;
@@ -18,7 +23,7 @@ try {
 }
 
 // Stripe: renewals in next 14 days
-const renewingRows = stripe.subscriptions
+const renewingRows = (stripe?.subscriptions || [])
   .filter(s => {
     const days = Math.ceil((new Date(s.currentPeriodEnd) - new Date()) / 86400000);
     return days >= 0 && days <= 14;
@@ -103,7 +108,8 @@ if (appPassword) {
   const to = testing ? process.env.EMAIL_FLEIRE : process.env.EMAIL_CHARLENE;
   const cc = testing ? undefined : process.env.EMAIL_FLEIRE;
   const overdueCount = ar?.overdue?.length || 0;
-  const subject = `${testing ? '[TEST] ' : ''}Weekly Invoice Chase — ${overdueCount} overdue · ${weekLabel}`;
+  const stripeNote = stripe ? '' : ' · ⚠ Stripe unavailable';
+  const subject = `${testing ? '[TEST] ' : ''}Weekly Invoice Chase — ${overdueCount} overdue${stripeNote} · ${weekLabel}`;
   await transporter.sendMail({
     from: `"DashoContent Ops" <${process.env.GMAIL_USER}>`,
     to, cc, subject, html,
