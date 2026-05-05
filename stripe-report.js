@@ -49,12 +49,27 @@ export async function getStripeSnapshot() {
     return sum;
   }, 0);
 
-  // Recent failed payments (last 30 days)
+  // Recent failed payments (last 30 days) — resolve customer names
   const failedCharges = await stripe.paymentIntents.list({
     limit: 20,
     created: { gte: thirtyDaysAgo },
   });
-  const failed = failedCharges.data.filter(p => p.status === 'requires_payment_method' || p.status === 'canceled');
+  const failedRaw = failedCharges.data.filter(p => p.status === 'requires_payment_method' || p.status === 'canceled');
+  const failedCustomerIds = [...new Set(failedRaw.map(p => p.customer).filter(Boolean))];
+  const failedCustomerMap = {};
+  await Promise.all(failedCustomerIds.map(async id => {
+    try {
+      const c = await stripe.customers.retrieve(id);
+      failedCustomerMap[id] = c.email || c.name || id;
+    } catch { failedCustomerMap[id] = id; }
+  }));
+  const failed = failedRaw
+    .filter(p => !isInternal(failedCustomerMap[p.customer] || ''))
+    .map(p => ({
+      customer: failedCustomerMap[p.customer] || p.customer || 'Unknown',
+      amount: p.amount ? `${p.currency?.toUpperCase()} ${(p.amount/100).toFixed(2)}` : 'unknown amount',
+      date: new Date(p.created * 1000).toISOString().slice(0, 10),
+    }));
 
   // Recent successful charges (last 30 days)
   const recentCharges = await stripe.charges.list({
@@ -70,6 +85,7 @@ export async function getStripeSnapshot() {
     totalMRR: +totalMRR.toFixed(2),
     collectedLast30Days: +collected.toFixed(2),
     failedPayments: failed.length,
+    failedDetails: failed,
     asOf: new Date().toISOString().slice(0, 10),
   };
 }

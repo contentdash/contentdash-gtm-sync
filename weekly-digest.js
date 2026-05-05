@@ -98,11 +98,11 @@ async function buildReport() {
   const actionRows = [];
 
   if (stripe?.failedPayments > 0) {
-    const failed = stripe.subscriptions.filter(s => s.status === 'past_due' || s.status === 'unpaid');
-    if (failed.length > 0) {
-      failed.forEach(s => actionRows.push(`<tr style="background:#fff5f5"><td>🔴 Urgent</td><td>Fix failed payment — <strong>${s.customerName}</strong> ${s.currency} ${(s.amount/100).toFixed(2)}/mo · subscription at risk</td><td>Charlene</td></tr>`));
-    } else {
-      actionRows.push(`<tr style="background:#fff5f5"><td>🔴 Urgent</td><td>Fix ${stripe.failedPayments} failed Stripe payment(s) — check Stripe dashboard for customer names</td><td>Charlene</td></tr>`);
+    (stripe.failedDetails || []).forEach(f => {
+      actionRows.push(`<tr style="background:#fff5f5"><td>🔴 Urgent</td><td>Failed payment — <strong>${f.customer}</strong> · ${f.amount} · failed ${f.date} · contact to update card</td><td>Charlene</td></tr>`);
+    });
+    if (!stripe.failedDetails?.length) {
+      actionRows.push(`<tr style="background:#fff5f5"><td>🔴 Urgent</td><td>Fix ${stripe.failedPayments} failed Stripe payment(s) — check Stripe dashboard</td><td>Charlene</td></tr>`);
     }
   }
 
@@ -177,7 +177,9 @@ async function sendSlack(stripe, ar) {
   if (!webhookUrl) { console.log('⚠ SLACK_WEBHOOK_URL not set — skipping Slack'); return; }
 
   const mrrText = stripe ? `*$${stripe.totalMRR}* MRR · $${stripe.collectedLast30Days} collected (30d)` : '_Stripe unavailable_';
-  const failedText = stripe?.failedPayments > 0 ? `\n⚠ *${stripe.failedPayments} failed payment(s)* — action needed` : '';
+  const failedText = stripe?.failedPayments > 0
+    ? '\n⚠ *Failed:* ' + (stripe.failedDetails?.map(f => `${f.customer} (${f.amount})`).join(', ') || `${stripe.failedPayments} payment(s)`)
+    : '';
 
   let arLines = '_Xero not connected_';
   if (ar) {
