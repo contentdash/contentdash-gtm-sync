@@ -20,6 +20,7 @@ async function buildReport() {
 
   // --- Stripe data (always available) ---
   let stripe = null;
+  let ar = null;
   let stripeSection = '';
   try {
     stripe = await getStripeSnapshot();
@@ -64,7 +65,7 @@ async function buildReport() {
   let arSection = '';
   try {
     const { getARSnapshot } = await import('./ar-check.js');
-    const ar = await getARSnapshot();
+    ar = await getARSnapshot();
     const overdueRows = ar.overdue.length
       ? ar.overdue.map(i => `
         <tr>
@@ -142,7 +143,33 @@ ${actionSection}
 </div>
 </body></html>`;
 
-  return html;
+  return { html, stripe, ar };
+}
+
+async function sendSlack(stripe, ar) {
+  const webhookUrl = process.env.SLACK_WEBHOOK_URL;
+  if (!webhookUrl) { console.log('⚠ SLACK_WEBHOOK_URL not set — skipping Slack'); return; }
+
+  const mrrText = stripe ? `*$${stripe.totalMRR}* MRR` : '_Stripe unavailable_';
+  const failedText = stripe?.failedPayments > 0 ? ` · ⚠ ${stripe.failedPayments} failed payment(s)` : '';
+  const arText = ar ? (ar.overdue.length > 0 ? `⚠ *${ar.overdue.length}* overdue invoice(s)` : '✓ No overdue invoices') : '_Xero not connected_';
+
+  await fetch(webhookUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      blocks: [
+        { type: 'header', text: { type: 'plain_text', text: '📊 DashoContent — Weekly Ops Digest' } },
+        { type: 'section', fields: [
+          { type: 'mrkdwn', text: `💳 *Stripe*\n${mrrText}${failedText}` },
+          { type: 'mrkdwn', text: `📋 *Xero AR*\n${arText}` },
+        ]},
+        { type: 'section', text: { type: 'mrkdwn', text: '*This week:* Follow up on overdue invoices · Flag stale GTM leads · Confirm renewals · EOW report by Friday 4pm' }},
+        { type: 'context', elements: [{ type: 'mrkdwn', text: `Full report emailed to Fleire & Charlene · ${new Date().toLocaleDateString('en-SG', { weekday: 'long', month: 'short', day: 'numeric' })}` }]},
+      ]
+    }),
+  });
+  console.log('✓ Slack notification sent');
 }
 
 async function sendEmail(html) {
@@ -184,12 +211,15 @@ function syncToDrive(filePath) {
 }
 
 // Main
-const html = await buildReport();
+const { html, stripe, ar } = await buildReport();
 const outDir = path.join(__dirname, 'output');
 mkdirSync(outDir, { recursive: true });
 const outPath = path.join(outDir, `digest-${new Date().toISOString().slice(0, 10)}.html`);
 writeFileSync(outPath, html);
 console.log(`✓ Report saved: ${outPath}`);
 
-await sendEmail(html);
+await Promise.all([
+  sendEmail(html),
+  sendSlack(stripe, ar),
+]);
 syncToDrive(outPath);
