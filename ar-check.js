@@ -61,9 +61,14 @@ export async function getARSnapshot() {
 
   const today = new Date();
   const invoicesResp = await xero.accountingApi.getInvoices(
-    tenantId, undefined, undefined,
-    ['AUTHORISED'], ['ACCREC'], undefined, undefined, undefined,
-    undefined, undefined, undefined, undefined, true
+    tenantId,        // xeroTenantId
+    undefined,       // ifModifiedSince
+    'Type=="ACCREC"', // where — AR invoices only
+    undefined,       // order
+    undefined,       // IDs
+    undefined,       // invoiceNumbers
+    undefined,       // contactIDs
+    ['AUTHORISED'],  // statuses — unpaid only
   );
 
   const invoices = (invoicesResp.body.invoices || []).map(inv => {
@@ -74,7 +79,7 @@ export async function getARSnapshot() {
       contact: inv.contact?.name || 'Unknown',
       amountDue: inv.amountDue,
       currency: inv.currencyCode,
-      dueDate: inv.dueDateString || 'N/A',
+      dueDate: inv.dueDateString || (inv.dueDate ? new Date(inv.dueDate).toISOString().slice(0, 10) : 'N/A'),
       daysOverdue: Math.max(0, daysOverdue),
       status: daysOverdue > 30 ? '🔴 30+ days' : daysOverdue > 7 ? '🟡 7+ days' : '🟢 Current',
     };

@@ -54,7 +54,7 @@ async function fetchAirtableLeads() {
   const pat = process.env.AIRTABLE_PAT;
   if (!pat) throw new Error('AIRTABLE_PAT not set');
 
-  const url = `https://api.airtable.com/v0/${AIRTABLE_BASE}/${AIRTABLE_TABLE}?pageSize=100&sort%5B0%5D%5Bfield%5D=Created&sort%5B0%5D%5Bdirection%5D=desc`;
+  const url = `https://api.airtable.com/v0/${AIRTABLE_BASE}/${AIRTABLE_TABLE}?pageSize=100`;
   const res = await fetch(url, { headers: { Authorization: `Bearer ${pat}` } });
   if (!res.ok) throw new Error(`Airtable HTTP ${res.status}`);
   const data = await res.json();

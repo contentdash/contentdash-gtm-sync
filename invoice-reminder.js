@@ -30,7 +30,7 @@ try {
   const { getARSnapshot } = await import('./ar-check.js');
   ar = await getARSnapshot();
 } catch (e) {
-  console.log('⚠ Xero AR unavailable:', e.message);
+  console.log('⚠ Xero AR unavailable:', e?.message || String(e));
 }
 
 // Stripe: renewals in next 14 days
