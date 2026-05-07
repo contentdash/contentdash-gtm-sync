@@ -1,0 +1,4 @@
+.env
+output/preview.html
+output/emails.json
+__pycache__/

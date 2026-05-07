@@ -1,0 +1,43 @@
+name: DashoContent Daily Outreach
+
+on:
+  schedule:
+    # 10am ET (EDT = UTC-4) Monday–Friday
+    - cron: '0 14 * * 1-5'
+  workflow_dispatch:  # manual trigger from GitHub Actions UI
+
+permissions:
+  contents: write   # needed to commit sent-log.json back to repo
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Generate email queue
+        run: |
+          cd outreach
+          python3 generate.py --leads=enriched.csv
+
+      - name: Send batch
+        env:
+          RESEND_API_KEY: ${{ secrets.DASHOCONTENT_OUTREACH_RESEND_KEY }}
+        run: |
+          cd outreach
+          python3 send.py --batch=5 --send
+
+      - name: Commit updated sent log
+        run: |
+          git config user.name "dashocontent-bot"
+          git config user.email "info@contentdash.app"
+          git add outreach/sent-log.json || true
+          git diff --staged --quiet || git commit -m "chore: update outreach sent log [skip ci]"
+          git push || true
