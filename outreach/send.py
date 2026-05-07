@@ -210,6 +210,7 @@ def main():
 
     sent_count = 0
     failed     = []
+    sent_leads = []
 
     for i, lead in enumerate(queue, 1):
         subject = lead[subj_key]
@@ -225,6 +226,7 @@ def main():
             record_sent(log, lead, email_num, subject)
             save_sent_log(log)
             sent_count += 1
+            sent_leads.append(lead)
             print(f"  ✓  Sent → {lead['to']}")
 
             if i < len(queue):
@@ -248,6 +250,11 @@ def main():
                 print(f"    {f['to']}: {f['error']}")
         print(f"  Log: {SENT_LOG}")
 
+        lead_lines = "\n".join(
+            f"  • {l.get('contact_name') or '—'}  |  {l['to']}  |  {l['company']}"
+            for l in sent_leads
+        )
+
         if failed and sent_count == 0:
             msg = f"❌ *DashoContent Outreach* — Batch failed\n0/{len(queue)} sent. Check logs."
             send_alert(config,
@@ -258,32 +265,38 @@ def main():
             )
         elif failed:
             msg = (f"⚠️ *DashoContent Outreach* — {sent_count} sent, {len(failed)} failed\n"
-                   f"Progress: {total_sent_all}/{len(emails)} leads contacted.")
+                   f"Progress: {total_sent_all}/{len(emails)} leads contacted.\n\n"
+                   f"*Sent:*\n{lead_lines}")
             send_alert(config,
                 subject=f"⚠️ Batch partial — {sent_count} sent, {len(failed)} failed",
                 body=f"{sent_count} emails sent today, {len(failed)} failed.\n\n"
                      f"Progress: {total_sent_all}/{len(emails)} leads contacted.\n\n"
+                     f"Sent:\n{lead_lines}\n\n"
                      f"Failed:\n" + "\n".join(f"  {f['to']}: {f['error']}" for f in failed)
             )
         elif remaining == 0:
             msg = (f"✅ *DashoContent Outreach* — Full list contacted!\n"
-                   f"All {len(emails)} leads reached. Time to run follow-ups.")
+                   f"All {len(emails)} leads reached. Time to run follow-ups.\n\n"
+                   f"*Last batch:*\n{lead_lines}")
             send_alert(config,
                 subject="✅ All done — full list contacted",
                 body=f"All {len(emails)} leads have been contacted.\n\n"
                      f"Sent today: {sent_count}\n"
                      f"Total: {total_sent_all}/{len(emails)}\n\n"
+                     f"Last batch:\n{lead_lines}\n\n"
                      f"Time to review replies and run follow-ups:\n"
                      f"  cd outreach && python3 send.py --followup --send"
             )
         else:
             msg = (f"✅ *DashoContent Outreach* — {sent_count} sent today\n"
-                   f"Progress: {total_sent_all}/{len(emails)} leads contacted. {remaining} remaining.")
+                   f"Progress: {total_sent_all}/{len(emails)} leads contacted. {remaining} remaining.\n\n"
+                   f"*Sent:*\n{lead_lines}")
             send_alert(config,
                 subject=f"✅ Batch sent — {sent_count} today, {remaining} remaining",
                 body=f"{sent_count} emails sent today.\n\n"
                      f"Progress: {total_sent_all}/{len(emails)} leads contacted.\n"
                      f"Remaining: {remaining}\n\n"
+                     f"Sent:\n{lead_lines}\n\n"
                      f"Next batch fires next send day at 9am PHT."
             )
         send_slack(msg)
