@@ -109,6 +109,21 @@ def send_email(config: dict, to: str, subject: str, body: str):
         raise RuntimeError(f"Resend error: {result}")
 
 
+def send_slack(text: str):
+    url = os.environ.get("SLACK_WEBHOOK_URL")
+    if not url:
+        return
+    try:
+        subprocess.run(
+            ["curl", "-s", "-X", "POST", url,
+             "-H", "Content-Type: application/json",
+             "-d", json.dumps({"text": text})],
+            capture_output=True, timeout=10,
+        )
+    except Exception as e:
+        print(f"  ⚠  Slack notify failed: {e}")
+
+
 def send_alert(config: dict, subject: str, body: str):
     try:
         _resend_post(config["RESEND_API_KEY"], {
@@ -234,6 +249,7 @@ def main():
         print(f"  Log: {SENT_LOG}")
 
         if failed and sent_count == 0:
+            msg = f"❌ *DashoContent Outreach* — Batch failed\n0/{len(queue)} sent. Check logs."
             send_alert(config,
                 subject=f"❌ Batch failed — 0/{len(queue)} sent",
                 body=f"All {len(queue)} sends failed today.\n\n" +
@@ -241,6 +257,8 @@ def main():
                      "\n\nCheck send.py logs."
             )
         elif failed:
+            msg = (f"⚠️ *DashoContent Outreach* — {sent_count} sent, {len(failed)} failed\n"
+                   f"Progress: {total_sent_all}/{len(emails)} leads contacted.")
             send_alert(config,
                 subject=f"⚠️ Batch partial — {sent_count} sent, {len(failed)} failed",
                 body=f"{sent_count} emails sent today, {len(failed)} failed.\n\n"
@@ -248,6 +266,8 @@ def main():
                      f"Failed:\n" + "\n".join(f"  {f['to']}: {f['error']}" for f in failed)
             )
         elif remaining == 0:
+            msg = (f"✅ *DashoContent Outreach* — Full list contacted!\n"
+                   f"All {len(emails)} leads reached. Time to run follow-ups.")
             send_alert(config,
                 subject="✅ All done — full list contacted",
                 body=f"All {len(emails)} leads have been contacted.\n\n"
@@ -257,6 +277,8 @@ def main():
                      f"  cd outreach && python3 send.py --followup --send"
             )
         else:
+            msg = (f"✅ *DashoContent Outreach* — {sent_count} sent today\n"
+                   f"Progress: {total_sent_all}/{len(emails)} leads contacted. {remaining} remaining.")
             send_alert(config,
                 subject=f"✅ Batch sent — {sent_count} today, {remaining} remaining",
                 body=f"{sent_count} emails sent today.\n\n"
@@ -264,6 +286,7 @@ def main():
                      f"Remaining: {remaining}\n\n"
                      f"Next batch fires next send day at 9am PHT."
             )
+        send_slack(msg)
     else:
         print(f"  Dry run complete — {len(queue)} emails previewed, nothing sent.")
         print(f"  Add --send to send for real.")

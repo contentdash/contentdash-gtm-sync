@@ -30,6 +30,7 @@ jobs:
       - name: Send batch
         env:
           RESEND_API_KEY: ${{ secrets.DASHOCONTENT_OUTREACH_RESEND_KEY }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         run: |
           cd outreach
           python3 send.py --batch=8 --send
