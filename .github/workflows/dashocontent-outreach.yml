@@ -2,8 +2,8 @@ name: DashoContent Daily Outreach
 
 on:
   schedule:
-    # 10am ET (EDT = UTC-4) Monday–Friday
-    - cron: '0 14 * * 1-5'
+    # 9am PHT (UTC+8) Tuesday–Thursday
+    - cron: '0 1 * * 2-4'
   workflow_dispatch:  # manual trigger from GitHub Actions UI
 
 permissions:
@@ -32,7 +32,7 @@ jobs:
           RESEND_API_KEY: ${{ secrets.DASHOCONTENT_OUTREACH_RESEND_KEY }}
         run: |
           cd outreach
-          python3 send.py --batch=5 --send
+          python3 send.py --batch=8 --send
 
       - name: Commit updated sent log
         run: |

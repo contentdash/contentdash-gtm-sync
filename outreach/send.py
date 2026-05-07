@@ -262,7 +262,7 @@ def main():
                 body=f"{sent_count} emails sent today.\n\n"
                      f"Progress: {total_sent_all}/{len(emails)} leads contacted.\n"
                      f"Remaining: {remaining}\n\n"
-                     f"Next batch fires tomorrow at 10am ET."
+                     f"Next batch fires next send day at 9am PHT."
             )
     else:
         print(f"  Dry run complete — {len(queue)} emails previewed, nothing sent.")
