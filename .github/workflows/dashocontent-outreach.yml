@@ -41,4 +41,4 @@ jobs:
           git config user.email "info@contentdash.app"
           git add outreach/sent-log.json || true
           git diff --staged --quiet || git commit -m "chore: update outreach sent log [skip ci]"
-          git push || true
+          git push

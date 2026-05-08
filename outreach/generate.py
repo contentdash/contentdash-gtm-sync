@@ -394,8 +394,8 @@ def generate_sequence(row: dict, scan_data: dict | None = None) -> dict | None:
             company=company,
             roast=scan["roast"],
             voice=scan["voice"],
-            scan_context_line=SCAN_CONTEXT_LINE[segment],
-            differentiator_short=SCAN_DIFFERENTIATOR_SHORT[segment],
+            scan_context_line=SCAN_CONTEXT_LINE.get(segment, SCAN_CONTEXT_LINE["founder"]),
+            differentiator_short=SCAN_DIFFERENTIATOR_SHORT.get(segment, SCAN_DIFFERENTIATOR_SHORT["founder"]),
             sender=SENDER_NAME,
         )
         followup_body = SCAN_FOLLOWUP_BODY.format(
