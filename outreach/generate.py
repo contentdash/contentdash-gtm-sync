@@ -8,8 +8,8 @@ Usage:
     python3 generate.py --leads=outreach/enriched.csv
 
 Output:
-    output/preview.html   — review all emails before sending
-    output/emails.json    — queue file for send.py
+    output/preview.html   -review all emails before sending
+    output/emails.json    -queue file for send.py
 """
 
 import argparse
@@ -19,6 +19,7 @@ import re
 from pathlib import Path
 
 LEADS_CSV   = Path(__file__).parent / "leads.csv"
+SCANNED_CSV = Path(__file__).parent / "scanned.csv"
 OUTPUT_DIR  = Path(__file__).parent / "output"
 SENDER_NAME = "Fleire"
 
@@ -174,6 +175,13 @@ def possessive(name: str) -> str:
     return f"{name}'" if name.endswith("s") else f"{name}'s"
 
 
+def generate_scan_subject(first_name: str, company: str, roast: str) -> str:
+    """Subject for scan-personalized emails -quotes the roast to signal real research."""
+    if first_name:
+        return f'{first_name} - "{roast}"'
+    return f'"{roast}" - {company}'
+
+
 def generate_subject(first_name: str, company: str, segment: str, archetype: str) -> str:
     fn = first_name
     co = company
@@ -181,56 +189,56 @@ def generate_subject(first_name: str, company: str, segment: str, archetype: str
 
     if archetype == "c_suite":
         if segment == "agency":
-            return f"{fn} — who's producing for {cop} clients?" if fn else f"Who's producing for {cop} clients?"
+            return f"{fn} - who's producing for {cop} clients?" if fn else f"Who's producing for {cop} clients?"
         elif segment == "content-team":
-            return f"{fn} — content output at {co}" if fn else f"Content output at {co}"
+            return f"{fn} - content output at {co}" if fn else f"Content output at {co}"
         else:
-            return f"{fn} — who's writing for {co}?" if fn else f"Who's writing for {co}?"
+            return f"{fn} - who's writing for {co}?" if fn else f"Who's writing for {co}?"
 
     elif archetype == "cmo":
         if segment == "agency":
-            return f"{fn} — content for {cop} clients" if fn else f"Content for {cop} clients"
+            return f"{fn} - content for {cop} clients" if fn else f"Content for {cop} clients"
         else:
-            return f"{fn} — {cop} content output" if fn else f"{cop} content output"
+            return f"{fn} - {cop} content output" if fn else f"{cop} content output"
 
     elif archetype == "creative_lead":
         if segment == "agency":
-            return f"{fn} — volume vs. quality at {co}" if fn else f"Volume vs. quality at {co}"
+            return f"{fn} - volume vs. quality at {co}" if fn else f"Volume vs. quality at {co}"
         else:
-            return f"{fn} — content output at {co}" if fn else f"Content output at {co}"
+            return f"{fn} - content output at {co}" if fn else f"Content output at {co}"
 
     elif archetype == "account_lead":
         if segment == "agency":
-            return f"{fn} — content for {cop} clients" if fn else f"Content for {cop} clients"
+            return f"{fn} - content for {cop} clients" if fn else f"Content for {cop} clients"
         else:
-            return f"{fn} — content at {co}" if fn else f"Content at {co}"
+            return f"{fn} - content at {co}" if fn else f"Content at {co}"
 
     elif archetype == "growth_lead":
-        return f"{fn} — content output at {co}" if fn else f"Content output at {co}"
+        return f"{fn} - content output at {co}" if fn else f"Content output at {co}"
 
     elif archetype == "content_lead":
-        return f"{fn} — content output at {co}" if fn else f"Content output at {co}"
+        return f"{fn} - content output at {co}" if fn else f"Content output at {co}"
 
     else:  # default
         if segment == "agency":
-            return f"{fn} — content for {cop} clients" if fn else f"Content for {cop} clients"
+            return f"{fn} - content for {cop} clients" if fn else f"Content for {cop} clients"
         elif segment == "founder":
-            return f"{fn} — who's writing for {co}?" if fn else f"Who's writing for {co}?"
+            return f"{fn} - who's writing for {co}?" if fn else f"Who's writing for {co}?"
         else:
-            return f"{fn} — content at {co}" if fn else f"Content at {co}"
+            return f"{fn} - content at {co}" if fn else f"Content at {co}"
 
 
 # ─── Email Templates ──────────────────────────────────────────────────────────
 
 BODY_TEMPLATE = """{greeting}
-
+{intro}
 {opener}
 
 {differentiator}
 
-{role_value_line} Free to start, no credit card needed. First pieces in 48 hours.
+{role_value_line}
 
-Want me to run a free brand voice audit on {company}? I'll scan your content and send you the results — takes me two minutes.
+Want me to run a free brand voice audit on {company}? I'll scan your content and send you the results. Takes two minutes.
 
 - {sender}
 DashoContent"""
@@ -241,7 +249,7 @@ FOLLOWUP_BODY = """{greeting}
 
 Just following up on my last email.
 
-Still happy to run that free brand voice audit on {company} if you're open to it — I'll scan your content and send the results over.
+Still happy to run that free brand voice audit on {company} if you're open to it. I'll scan your content and send the results over.
 
 - {sender}
 DashoContent"""
@@ -255,13 +263,13 @@ SEGMENT_PHRASES = {
 SEGMENT_DIFFERENTIATOR = {
     "agency": (
         "Unlike just adding a writer, DashoContent gives each client brand its own workspace "
-        "with its own rules. Every draft is scored against them before it goes to the client — "
-        "so revision loops stop being the default. Agencies using it report 60% fewer revision "
+        "with its own rules. Every draft is scored against them before it goes to the client. "
+        "Revision loops stop being the default. Agencies using it report 60% fewer revision "
         "rounds and 40% faster delivery."
     ),
     "founder": (
-        "Unlike hiring a writer, DashoContent builds your brand rules into the system first — "
-        "your voice, your audience, what you never say. Every draft is scored against them before "
+        "Unlike hiring a writer, DashoContent builds your brand rules into the system first. "
+        "Your voice, your audience, what you never say. Every draft is scored against them before "
         "you see it. The output sounds like you, not like a generic post."
     ),
     "content-team": (
@@ -280,6 +288,49 @@ ROLE_VALUE_LINES = {
     "content_lead": "Your team sets the standard. We multiply what they can ship.",
     "default":      "You decide the direction. We handle the writing.",
 }
+
+
+# ─── Scan Data ────────────────────────────────────────────────────────────────
+
+def load_scan_data() -> dict:
+    """Return dict keyed by company name for rows that have a roast."""
+    if not SCANNED_CSV.exists():
+        return {}
+    with open(SCANNED_CSV, newline="", encoding="utf-8") as f:
+        return {r["company"]: r for r in csv.DictReader(f) if r.get("roast")}
+
+
+SCAN_BODY_TEMPLATE = """{greeting}
+{intro}
+I ran a quick scan on {company}. Your brand is coming across as "{roast}." {voice}.
+
+{scan_context_line}
+
+{differentiator_short}
+
+Want me to send you the full scan results for {company}?
+
+- {sender}
+DashoContent"""
+
+SCAN_CONTEXT_LINE = {
+    "agency":       "The positioning is strong. But if the content going out to clients isn't hitting that mark consistently, the gap shows in every pitch.",
+    "founder":      "Strong positioning. But it only holds if your content is consistently delivering on it.",
+    "content-team": "That's solid brand clarity. The risk is drift, especially when output volume goes up.",
+}
+
+SCAN_DIFFERENTIATOR_SHORT = {
+    "agency":       "DashoContent builds each client brand's rules into the system. Every draft is scored before it goes out. Agencies report 60% fewer revision rounds and 40% faster delivery.",
+    "founder":      "DashoContent builds your brand rules into the system first. Every draft is scored against your actual voice before you see it.",
+    "content-team": "DashoContent scores every draft against your brand rules before your team reviews it. Fewer revision rounds, same quality standard every time.",
+}
+
+SCAN_FOLLOWUP_BODY = """{greeting}
+
+Following up. Still happy to send you the full {company} scan if you're curious.
+
+- {sender}
+DashoContent"""
 
 
 # ─── Segment Inference ────────────────────────────────────────────────────────
@@ -306,7 +357,7 @@ def infer_segment(row: dict) -> str:
 
 # ─── Generator ────────────────────────────────────────────────────────────────
 
-def generate_sequence(row: dict) -> dict | None:
+def generate_sequence(row: dict, scan_data: dict | None = None) -> dict | None:
     email = (row.get("email") or "").strip()
     if not email or "@" not in email:
         return None
@@ -326,30 +377,51 @@ def generate_sequence(row: dict) -> dict | None:
     first_name = extract_first_name(contact_name, email)
     greeting  = f"Hi {first_name}," if first_name else "Hi,"
 
-    first_name_or_company = first_name if first_name else company
+    scan = (scan_data or {}).get(company_raw) or (scan_data or {}).get(company)
 
-    opener = SEGMENT_OPENERS[segment].get(archetype) or SEGMENT_OPENERS[segment]["default"]
-    role_value_line = ROLE_VALUE_LINES.get(archetype, ROLE_VALUE_LINES["default"])
-    differentiator = SEGMENT_DIFFERENTIATOR[segment]
-
-    subject = generate_subject(first_name, company, segment, archetype)
-
-    body = BODY_TEMPLATE.format(
-        greeting=greeting,
-        opener=opener,
-        differentiator=differentiator,
-        role_value_line=role_value_line,
-        company=company,
-        sender=SENDER_NAME,
-    )
-
+    if scan and scan.get("roast"):
+        subject = generate_scan_subject(first_name, company, scan["roast"])
+    else:
+        subject = generate_subject(first_name, company, segment, archetype)
     followup_subject = FOLLOWUP_SUBJECT.format(original_subject=subject)
-    followup_body = FOLLOWUP_BODY.format(
-        greeting=greeting,
-        segment_phrase=SEGMENT_PHRASES[segment],
-        company=company,
-        sender=SENDER_NAME,
-    )
+
+    intro = "I'm Fleire. I founded DashoContent.\n" if archetype == "c_suite" else ""
+
+    if scan and scan.get("roast"):
+        body = SCAN_BODY_TEMPLATE.format(
+            greeting=greeting,
+            intro=intro,
+            company=company,
+            roast=scan["roast"],
+            voice=scan["voice"],
+            scan_context_line=SCAN_CONTEXT_LINE[segment],
+            differentiator_short=SCAN_DIFFERENTIATOR_SHORT[segment],
+            sender=SENDER_NAME,
+        )
+        followup_body = SCAN_FOLLOWUP_BODY.format(
+            greeting=greeting,
+            company=company,
+            sender=SENDER_NAME,
+        )
+    else:
+        opener = SEGMENT_OPENERS[segment].get(archetype) or SEGMENT_OPENERS[segment]["default"]
+        role_value_line = ROLE_VALUE_LINES.get(archetype, ROLE_VALUE_LINES["default"])
+        differentiator = SEGMENT_DIFFERENTIATOR[segment]
+        body = BODY_TEMPLATE.format(
+            greeting=greeting,
+            intro=intro,
+            opener=opener,
+            differentiator=differentiator,
+            role_value_line=role_value_line,
+            company=company,
+            sender=SENDER_NAME,
+        )
+        followup_body = FOLLOWUP_BODY.format(
+            greeting=greeting,
+            segment_phrase=SEGMENT_PHRASES[segment],
+            company=company,
+            sender=SENDER_NAME,
+        )
 
     return {
         "segment":        segment,
@@ -362,6 +434,7 @@ def generate_sequence(row: dict) -> dict | None:
         "role":           role,
         "company_url":    company_url,
         "notes":          notes,
+        "scan_roast":     scan["roast"] if scan and scan.get("roast") else "",
         "email1_subject": subject,
         "email1_body":    body,
         "email1_utm":     UTM_LINKS[segment],
@@ -398,24 +471,25 @@ def render_html(sequences: list[dict]) -> str:
         name_tag   = f" &nbsp;·&nbsp; Hi {s['first_name']}" if s["first_name"] else ""
         role_tag   = f" &nbsp;·&nbsp; {s['role']}" if s["role"] else ""
         arch_label = ARCHETYPE_LABELS.get(s["archetype"], s["archetype"])
+        scan_badge = ' &nbsp;<span class="badge scan">⚡ scan</span>' if s.get("scan_roast") else ""
         cards += f"""
         <div class="card">
           <div class="card-header">
             <div class="meta">
               <span class="badge" style="background:{color}">{s['segment']}</span>
-              <span class="badge arch">{arch_label}</span>
+              <span class="badge arch">{arch_label}</span>{scan_badge}
               <span class="business">{s['company']}</span>{role_tag}
             </div>
             <div class="to">To: <strong>{s['to']}</strong>{name_tag}</div>
           </div>
           <div class="email-block">
-            <div class="email-label">Email 1 — Cold Outreach</div>
+            <div class="email-label">Email 1 -Cold Outreach</div>
             <div class="subject">Subject: {s['email1_subject']}</div>
             <div class="body">{body1_html}</div>
             <div class="utm-note">UTM: {s['email1_utm']}</div>
           </div>
           <div class="email-block followup">
-            <div class="email-label">Email 2 — Follow-up (send 3–5 days after if no reply)</div>
+            <div class="email-label">Email 2 -Follow-up (send 3–5 days after if no reply)</div>
             <div class="subject">Subject: {s['email2_subject']}</div>
             <div class="body">{body2_html}</div>
           </div>
@@ -440,7 +514,7 @@ def render_html(sequences: list[dict]) -> str:
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>DashoContent Outreach Preview — {total} leads</title>
+  <title>DashoContent Outreach Preview -{total} leads</title>
   <style>
     * {{ box-sizing: border-box; margin: 0; padding: 0; }}
     body {{ font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
@@ -466,6 +540,7 @@ def render_html(sequences: list[dict]) -> str:
     .badge {{ font-size: 0.7rem; font-weight: 600; padding: 0.2rem 0.6rem;
               border-radius: 999px; color: #0f172a; }}
     .badge.arch {{ background: #334155; color: #94a3b8; }}
+    .badge.scan {{ background: #064e3b; color: #6ee7b7; }}
     .email-block {{ padding: 1.25rem; }}
     .email-block.followup {{ background: #0f172a; border-top: 1px solid #1e293b; }}
     .email-label {{ font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
@@ -479,7 +554,7 @@ def render_html(sequences: list[dict]) -> str:
   </style>
 </head>
 <body>
-  <h1>DashoContent — Outreach Preview</h1>
+  <h1>DashoContent -Outreach Preview</h1>
   <p class="subtitle">Review all emails before sending. Nothing has been sent.</p>
   <div class="stats">
     <div class="stat"><div class="stat-num">{total}</div><div class="stat-label">Total leads</div></div>
@@ -514,12 +589,18 @@ def main():
     with open(leads_path, newline="", encoding="utf-8") as f:
         rows = list(csv.DictReader(f))
 
+    scan_data = load_scan_data()
+    if scan_data:
+        print(f"✓ Scan data loaded for {len(scan_data)} companies")
+    else:
+        print(f"  No scanned.csv found -using archetype copy for all leads")
+
     sequences = []
     skipped   = []
     seen_emails = set()
 
     for row in rows:
-        result = generate_sequence(row)
+        result = generate_sequence(row, scan_data)
         if result:
             if result["to"] in seen_emails:
                 continue
@@ -534,7 +615,9 @@ def main():
     (OUTPUT_DIR / "preview.html").write_text(render_html(sequences), encoding="utf-8")
     (OUTPUT_DIR / "emails.json").write_text(json.dumps(sequences, indent=2, ensure_ascii=False), encoding="utf-8")
 
+    scan_personalized = sum(1 for s in sequences if s.get("scan_roast"))
     print(f"✓ {len(sequences)} sequences generated  ({len(skipped)} skipped — missing email or company)")
+    print(f"  {scan_personalized} scan-personalized  |  {len(sequences) - scan_personalized} archetype fallback")
     print(f"\nOutputs:")
     print(f"  {OUTPUT_DIR}/preview.html   ← open this to review")
     print(f"  {OUTPUT_DIR}/emails.json")
