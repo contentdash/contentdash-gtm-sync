@@ -1,0 +1,37 @@
+name: Discovery Call Brief
+
+on:
+  schedule:
+    - cron: '30 23 * * 0-4'  # Mon–Fri 7:30am PHT (UTC+8 = 23:30 UTC prev day)
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  brief:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+
+      - name: Send discovery call briefs
+        env:
+          GMAIL_USER: ${{ secrets.GMAIL_USER }}
+          GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
+          EMAIL_FLEIRE: ${{ secrets.EMAIL_FLEIRE }}
+          EMAIL_CHARLENE: ${{ secrets.EMAIL_CHARLENE }}
+          TESTING_MODE: 'false'
+        run: node call-brief.js
+
+      - name: Commit updated automation state
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add automation-state.json
+          git diff --staged --quiet || git commit -m "chore: update automation state [skip ci]"
+          git push

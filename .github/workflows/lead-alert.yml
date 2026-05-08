@@ -19,4 +19,6 @@ jobs:
         env:
           AIRTABLE_PAT: ${{ secrets.AIRTABLE_PAT }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          APPS_SCRIPT_URL: ${{ secrets.APPS_SCRIPT_URL }}
+          PIPELINE_WEBHOOK_TOKEN: ${{ secrets.PIPELINE_WEBHOOK_TOKEN }}
         run: node lead-alert.js

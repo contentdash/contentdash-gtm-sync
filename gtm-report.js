@@ -40,7 +40,7 @@ function parseCSV(text) {
 const PIPELINE_SHEET_ID = '1qEYuSoqzQuqmTPDFB-KgNcXb3bYIYqmWMAX2mOLC5pY';
 const PIPELINE_SHEET_TAB = 'Pipeline Ops';
 
-async function fetchPipelineRows() {
+export async function fetchPipelineRows() {
   const sheetId = process.env.SHEET_ID || PIPELINE_SHEET_ID;
   const tab = encodeURIComponent(process.env.SHEET_TAB || PIPELINE_SHEET_TAB);
   const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv&sheet=${tab}`;
@@ -189,7 +189,7 @@ export async function getGTMSnapshot() {
   return { pipeline, inbound, asOf: today.toISOString().slice(0, 10) };
 }
 
-if (process.argv[1].endsWith('gtm-report.js')) {
+if (process.argv[1]?.endsWith('gtm-report.js')) {
   const snap = await getGTMSnapshot();
   console.log('\n=== GTM SNAPSHOT ===');
   console.log(`As of: ${snap.asOf}`);
