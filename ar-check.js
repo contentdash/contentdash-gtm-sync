@@ -92,7 +92,7 @@ export async function getARSnapshot() {
 }
 
 // Run standalone
-if (process.argv[1].endsWith('ar-check.js')) {
+if (process.argv[1]?.endsWith('ar-check.js')) {
   try {
     const ar = await getARSnapshot();
     console.log('\n=== XERO AR SNAPSHOT ===');
