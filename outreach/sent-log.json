@@ -1,1 +1,60 @@
-{"sent": []}
+{
+  "sent": [
+    {
+      "to": "srinivas@adaglobal.com",
+      "company": "ADA Global",
+      "email_num": 1,
+      "subject": "Srinivas - \"The sculptor shaping clarity from intricate data\"",
+      "sent_at": "2026-05-12T01:36:14.485348"
+    },
+    {
+      "to": "siva@adaglobal.com",
+      "company": "ADA Global",
+      "email_num": 1,
+      "subject": "Siva - \"The sculptor shaping clarity from intricate data\"",
+      "sent_at": "2026-05-12T01:37:14.807180"
+    },
+    {
+      "to": "sherry@adaglobal.com",
+      "company": "ADA Global",
+      "email_num": 1,
+      "subject": "Sherry - \"The sculptor shaping clarity from intricate data\"",
+      "sent_at": "2026-05-12T01:38:15.004184"
+    },
+    {
+      "to": "januar@adaglobal.com",
+      "company": "ADA Global",
+      "email_num": 1,
+      "subject": "Januar - \"The sculptor shaping clarity from intricate data\"",
+      "sent_at": "2026-05-12T01:39:15.383644"
+    },
+    {
+      "to": "rangan@adaglobal.com",
+      "company": "ADA Global",
+      "email_num": 1,
+      "subject": "Rangan - \"The sculptor shaping clarity from intricate data\"",
+      "sent_at": "2026-05-12T01:40:15.798912"
+    },
+    {
+      "to": "srikanth@adscholars.com",
+      "company": "ADscholars",
+      "email_num": 1,
+      "subject": "Srikanth - who's writing for ADscholars?",
+      "sent_at": "2026-05-12T01:41:16.122499"
+    },
+    {
+      "to": "satheesh.kumar@adscholars.com",
+      "company": "ADscholars",
+      "email_num": 1,
+      "subject": "Satheesh - who's writing for ADscholars?",
+      "sent_at": "2026-05-12T01:42:16.383952"
+    },
+    {
+      "to": "stephanie.zgheib@adscholars.com",
+      "company": "ADscholars",
+      "email_num": 1,
+      "subject": "Stephanie - who's writing for ADscholars?",
+      "sent_at": "2026-05-12T01:43:16.666785"
+    }
+  ]
+}
