@@ -55,6 +55,62 @@
       "email_num": 1,
       "subject": "Stephanie - who's writing for ADscholars?",
       "sent_at": "2026-05-12T01:43:16.666785"
+    },
+    {
+      "to": "soumyajit.mukherjee@adscholars.com",
+      "company": "ADscholars",
+      "email_num": 1,
+      "subject": "Soumyajit - content output at ADscholars",
+      "sent_at": "2026-05-13T01:37:43.259252"
+    },
+    {
+      "to": "meenal.madishetty@adscholars.com",
+      "company": "ADscholars",
+      "email_num": 1,
+      "subject": "Meenal - who's writing for ADscholars?",
+      "sent_at": "2026-05-13T01:38:43.487004"
+    },
+    {
+      "to": "shyam.ravishankar@adscholars.com",
+      "company": "ADscholars",
+      "email_num": 1,
+      "subject": "Shyam - who's writing for ADscholars?",
+      "sent_at": "2026-05-13T01:39:43.777891"
+    },
+    {
+      "to": "maria.lozanes@adscholars.com",
+      "company": "ADscholars",
+      "email_num": 1,
+      "subject": "Maria - who's writing for ADscholars?",
+      "sent_at": "2026-05-13T01:40:44.088440"
+    },
+    {
+      "to": "maiqui.tameta@adscholars.com",
+      "company": "ADscholars",
+      "email_num": 1,
+      "subject": "Maiqui - content output at ADscholars",
+      "sent_at": "2026-05-13T01:41:44.340389"
+    },
+    {
+      "to": "dirgha@adscholars.com",
+      "company": "ADscholars",
+      "email_num": 1,
+      "subject": "Dirgha - who's writing for ADscholars?",
+      "sent_at": "2026-05-13T01:42:44.645276"
+    },
+    {
+      "to": "robin.mah@airrlabs.com",
+      "company": "AIRR Labs",
+      "email_num": 1,
+      "subject": "Robin - who's writing for AIRR Labs?",
+      "sent_at": "2026-05-13T01:43:44.902955"
+    },
+    {
+      "to": "donna.barcelon@airrlabs.com",
+      "company": "AIRR Labs",
+      "email_num": 1,
+      "subject": "Donna - who's writing for AIRR Labs?",
+      "sent_at": "2026-05-13T01:44:45.176018"
     }
   ]
 }
