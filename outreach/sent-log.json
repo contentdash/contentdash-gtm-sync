@@ -111,6 +111,62 @@
       "email_num": 1,
       "subject": "Donna - who's writing for AIRR Labs?",
       "sent_at": "2026-05-13T01:44:45.176018"
+    },
+    {
+      "to": "jan.roman@airrlabs.com",
+      "company": "AIRR Labs",
+      "email_num": 1,
+      "subject": "Jan - who's writing for AIRR Labs?",
+      "sent_at": "2026-05-14T01:39:32.022106"
+    },
+    {
+      "to": "alice.cao@airrlabs.com",
+      "company": "AIRR Labs",
+      "email_num": 1,
+      "subject": "Alice - content at AIRR Labs",
+      "sent_at": "2026-05-14T01:40:32.243467"
+    },
+    {
+      "to": "robert@avow.tech",
+      "company": "AVOW",
+      "email_num": 1,
+      "subject": "Robert - who's writing for AVOW?",
+      "sent_at": "2026-05-14T01:41:32.495042"
+    },
+    {
+      "to": "ashwin@avow.tech",
+      "company": "AVOW",
+      "email_num": 1,
+      "subject": "Ashwin - who's writing for AVOW?",
+      "sent_at": "2026-05-14T01:42:32.801191"
+    },
+    {
+      "to": "melissa@avow.tech",
+      "company": "AVOW",
+      "email_num": 1,
+      "subject": "Melissa - AVOW's content output",
+      "sent_at": "2026-05-14T01:43:32.960426"
+    },
+    {
+      "to": "orietta@avow.tech",
+      "company": "AVOW",
+      "email_num": 1,
+      "subject": "Orietta - who's writing for AVOW?",
+      "sent_at": "2026-05-14T01:44:33.133137"
+    },
+    {
+      "to": "guenole@avow.tech",
+      "company": "AVOW",
+      "email_num": 1,
+      "subject": "Gu\u00e9nol\u00e9 - who's writing for AVOW?",
+      "sent_at": "2026-05-14T01:45:33.359733"
+    },
+    {
+      "to": "viorel@avow.tech",
+      "company": "AVOW",
+      "email_num": 1,
+      "subject": "Viorel - content at AVOW",
+      "sent_at": "2026-05-14T01:46:33.567024"
     }
   ]
 }
