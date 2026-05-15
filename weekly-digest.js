@@ -361,7 +361,7 @@ async function buildReport() {
 </head><body>
 <div class="header">
   <div><h1>DashoContent — Weekly Ops Digest</h1><div style="font-size:12px;color:#666;margin-top:2px">${dateStr}</div></div>
-  <div class="meta">Auto-generated<br>info@contentdash.app · cvirlouvet@contentdash.app</div>
+  <div class="meta">Auto-generated<br>info@contentdash.app</div>
 </div>
 ${milestoneBar}
 ${stripeSection}
@@ -493,7 +493,7 @@ async function sendEmail(html) {
   const now = new Date();
   const subject = `DashoContent Ops Digest — Week of ${now.toLocaleDateString('en-SG', { month: 'short', day: 'numeric', year: 'numeric' })}`;
   const testing = process.env.TESTING_MODE !== 'false';
-  const recipients = testing ? process.env.EMAIL_FLEIRE : [process.env.EMAIL_FLEIRE, process.env.EMAIL_CHARLENE].join(', ');
+  const recipients = process.env.EMAIL_FLEIRE;
 
   await transporter.sendMail({
     from: `"DashoContent Ops" <${process.env.GMAIL_USER}>`,

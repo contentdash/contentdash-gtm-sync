@@ -23,7 +23,6 @@ jobs:
           XERO_REDIRECT_URI: ${{ secrets.XERO_REDIRECT_URI }}
           XERO_TOKENS_JSON: ${{ secrets.XERO_TOKENS_JSON }}
           EMAIL_FLEIRE: ${{ secrets.EMAIL_FLEIRE }}
-          EMAIL_CHARLENE: ${{ secrets.EMAIL_CHARLENE }}
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
