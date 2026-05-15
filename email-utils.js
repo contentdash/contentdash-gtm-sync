@@ -16,11 +16,9 @@ export async function sendEmail({ subject, html, to, cc }) {
   });
 }
 
-// testing === true  → send to Fleire only
-// testing === false → send to Charlene, cc Fleire
-export function resolveRecipients(testing = true) {
+// 2026-05-15: Charlene removed from email path. GTM/MRR-flavored content
+// now goes to Slack #core-ops via SLACK_WEBHOOK_URL. Fleire keeps email copy.
+export function resolveRecipients(_testing = true) {
   const fleire = process.env.EMAIL_FLEIRE || 'info@contentdash.app';
-  const charlene = process.env.EMAIL_CHARLENE || 'cvirlouvet@contentdash.app';
-  if (testing) return { to: fleire, cc: undefined };
-  return { to: charlene, cc: fleire };
+  return { to: fleire, cc: undefined };
 }

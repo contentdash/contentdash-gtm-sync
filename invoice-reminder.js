@@ -121,8 +121,8 @@ if (appPassword) {
     service: 'gmail',
     auth: { user: process.env.GMAIL_USER, pass: appPassword },
   });
-  const to = testing ? process.env.EMAIL_FLEIRE : process.env.EMAIL_CHARLENE;
-  const cc = testing ? undefined : process.env.EMAIL_FLEIRE;
+  const to = process.env.EMAIL_FLEIRE;
+  const cc = undefined;
   const overdueCount = ar?.overdue?.length || 0;
   const subject = `${testing ? '[TEST] ' : ''}Weekly Invoice Chase — ${ar ? `${overdueCount} overdue` : 'collections checklist'} · ${weekLabel}`;
   await transporter.sendMail({

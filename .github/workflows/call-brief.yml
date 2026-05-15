@@ -24,7 +24,6 @@ jobs:
           GMAIL_USER: ${{ secrets.GMAIL_USER }}
           GMAIL_APP_PASSWORD: ${{ secrets.GMAIL_APP_PASSWORD }}
           EMAIL_FLEIRE: ${{ secrets.EMAIL_FLEIRE }}
-          EMAIL_CHARLENE: ${{ secrets.EMAIL_CHARLENE }}
           TESTING_MODE: 'false'
         run: node call-brief.js
 

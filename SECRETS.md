@@ -11,12 +11,14 @@ Click "New repository secret" for each:
 | `XERO_REDIRECT_URI` | `http://localhost:3333/callback` | Already in local .env |
 | `XERO_TOKENS_JSON` | *(paste full contents of `~/Projects/xero-datapull/tokens.json` after running auth)* | Run `npm run auth` in xero-datapull first |
 | `EMAIL_FLEIRE` | `info@contentdash.app` | — |
-| `EMAIL_CHARLENE` | `cvirlouvet@contentdash.app` | — |
 | `GMAIL_USER` | `info@contentdash.app` | — |
 | `GMAIL_APP_PASSWORD` | *(16-char app password)* | myaccount.google.com → Security → App passwords |
 | `APPS_SCRIPT_URL` | *(web app URL)* | Google Sheet → Extensions → Apps Script → Deploy → Manage deployments → copy URL |
 | `APPS_SCRIPT_TOKEN` | *(same as PIPELINE_WEBHOOK_TOKEN in Script Properties)* | Apps Script Project Settings → Script properties |
 | `AIRTABLE_PAT` | `patpgiPYbDrouIY7N...` | Already known |
+| `SLACK_WEBHOOK_URL` | *(Incoming Webhook URL for #core-ops)* | https://api.slack.com/messaging/webhooks — create app, enable Incoming Webhooks, add to #core-ops, copy URL |
+
+**Deprecated** (2026-05-15): `EMAIL_CHARLENE` no longer used — Charlene's transition to Ops & Account Lead (2026-06-01) moves all GTM/MRR notifications to Slack `#core-ops` via `SLACK_WEBHOOK_URL`. Safe to delete from GH secrets.
 
 ## Gmail App Password (one-time setup)
 1. Go to myaccount.google.com

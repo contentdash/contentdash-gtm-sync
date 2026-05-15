@@ -185,8 +185,8 @@ if (appPassword) {
     service: 'gmail',
     auth: { user: process.env.GMAIL_USER, pass: appPassword },
   });
-  const to = testing ? process.env.EMAIL_FLEIRE : process.env.EMAIL_CHARLENE;
-  const cc = testing ? undefined : process.env.EMAIL_FLEIRE;
+  const to = process.env.EMAIL_FLEIRE;
+  const cc = undefined;
   await transporter.sendMail({
     from: `"DashoContent Ops" <${process.env.GMAIL_USER}>`,
     to, cc,

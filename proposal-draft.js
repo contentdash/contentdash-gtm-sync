@@ -221,7 +221,7 @@ ${sku === 'KOL' ? `
     <li>We'll send a contract upon your go-ahead</li>
     <li>Onboarding starts within 2 business days of signing</li>
   </ol>
-  <p style="font-size:12px">Ready to move forward? Reply to this email or reach me at <strong>cvirlouvet@contentdash.app</strong>.</p>
+  <p style="font-size:12px">Ready to move forward? Reply to this email or reach me at <strong>info@contentdash.app</strong>.</p>
 </div>
 
 <hr style="border:none;border-top:2px solid #f5a623;margin:24px 0">
