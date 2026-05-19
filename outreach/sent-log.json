@@ -167,6 +167,62 @@
       "email_num": 1,
       "subject": "Viorel - content at AVOW",
       "sent_at": "2026-05-14T01:46:33.567024"
+    },
+    {
+      "to": "gaston.taratuta@alephholding.com",
+      "company": "Aleph",
+      "email_num": 1,
+      "subject": "Gast\u00f3n - who's writing for Aleph?",
+      "sent_at": "2026-05-19T01:41:04.557366"
+    },
+    {
+      "to": "marius.ivanovas@alephholding.com",
+      "company": "Aleph",
+      "email_num": 1,
+      "subject": "Marius - who's writing for Aleph?",
+      "sent_at": "2026-05-19T01:42:04.837698"
+    },
+    {
+      "to": "ignacio.vidaguren@alephholding.com",
+      "company": "Aleph",
+      "email_num": 1,
+      "subject": "Ignacio - who's writing for Aleph?",
+      "sent_at": "2026-05-19T01:43:05.074775"
+    },
+    {
+      "to": "rabin.yaghoubi@alephholding.com",
+      "company": "Aleph",
+      "email_num": 1,
+      "subject": "Rabin - who's writing for Aleph?",
+      "sent_at": "2026-05-19T01:44:05.295398"
+    },
+    {
+      "to": "pieterjan.dekroon@alephholding.com",
+      "company": "Aleph",
+      "email_num": 1,
+      "subject": "Pieter-jan - who's writing for Aleph?",
+      "sent_at": "2026-05-19T01:45:05.507397"
+    },
+    {
+      "to": "eddie.lee@amplifaiservices.com",
+      "company": "AmplifAI Services",
+      "email_num": 1,
+      "subject": "Eddie - who's writing for AmplifAI Services?",
+      "sent_at": "2026-05-19T01:46:05.730603"
+    },
+    {
+      "to": "quad.delapaz@amplifaiservices.com",
+      "company": "AmplifAI Services",
+      "email_num": 1,
+      "subject": "Quad - who's writing for AmplifAI Services?",
+      "sent_at": "2026-05-19T01:47:05.958033"
+    },
+    {
+      "to": "allan.lina@amplifaiservices.com",
+      "company": "AmplifAI Services",
+      "email_num": 1,
+      "subject": "Allan - who's writing for AmplifAI Services?",
+      "sent_at": "2026-05-19T01:48:06.172218"
     }
   ]
 }
