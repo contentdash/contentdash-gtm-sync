@@ -279,6 +279,62 @@
       "email_num": 1,
       "subject": "Brijkishor - who's writing for BidKinetic?",
       "sent_at": "2026-05-20T01:49:04.261627"
+    },
+    {
+      "to": "santhosh@bidroid.io",
+      "company": "Bidroid Hub Technologies",
+      "email_num": 1,
+      "subject": "Santhosh - who's writing for Bidroid Hub Technologies?",
+      "sent_at": "2026-05-21T01:40:34.236694"
+    },
+    {
+      "to": "gaurav@bidroid.io",
+      "company": "Bidroid Hub Technologies",
+      "email_num": 1,
+      "subject": "Gaurav - content at Bidroid Hub Technologies",
+      "sent_at": "2026-05-21T01:41:34.446635"
+    },
+    {
+      "to": "rissa@bidroid.io",
+      "company": "Bidroid Hub Technologies",
+      "email_num": 1,
+      "subject": "Rissa - who's writing for Bidroid Hub Technologies?",
+      "sent_at": "2026-05-21T01:42:34.683556"
+    },
+    {
+      "to": "quang@bidroid.io",
+      "company": "Bidroid Hub Technologies",
+      "email_num": 1,
+      "subject": "Quang - who's writing for Bidroid Hub Technologies?",
+      "sent_at": "2026-05-21T01:43:34.966203"
+    },
+    {
+      "to": "mikegonzales@brightbox.com.ph",
+      "company": "Brightbox",
+      "email_num": 1,
+      "subject": "Michael - who's writing for Brightbox?",
+      "sent_at": "2026-05-21T01:44:35.276859"
+    },
+    {
+      "to": "earl@brightbox.com.ph",
+      "company": "Brightbox",
+      "email_num": 1,
+      "subject": "Earl - who's writing for Brightbox?",
+      "sent_at": "2026-05-21T01:45:35.507448"
+    },
+    {
+      "to": "anthony.abrantes@brightbox.com.ph",
+      "company": "Brightbox",
+      "email_num": 1,
+      "subject": "Anthony - who's writing for Brightbox?",
+      "sent_at": "2026-05-21T01:46:35.637906"
+    },
+    {
+      "to": "carlo.paulino@brightbox.com.ph",
+      "company": "Brightbox",
+      "email_num": 1,
+      "subject": "Carlo - who's writing for Brightbox?",
+      "sent_at": "2026-05-21T01:47:35.882701"
     }
   ]
 }
