@@ -559,6 +559,62 @@
       "email_num": 1,
       "subject": "Vivien - who's writing for HAVAS Ortega?",
       "sent_at": "2026-06-02T01:57:30.677501"
+    },
+    {
+      "to": "barbie.sison@havasmediaortega.com",
+      "company": "HAVAS Ortega",
+      "email_num": 1,
+      "subject": "Barbie - content at HAVAS Ortega",
+      "sent_at": "2026-06-03T01:54:58.663613"
+    },
+    {
+      "to": "jade.ilagan@ideasxmachina.com",
+      "company": "IdeasXMachina Hakuhodo",
+      "email_num": 1,
+      "subject": "Jade - who's writing for IdeasXMachina Hakuhodo?",
+      "sent_at": "2026-06-03T01:55:58.947071"
+    },
+    {
+      "to": "shayne.madamba@ideasxmachina.com",
+      "company": "IdeasXMachina Hakuhodo",
+      "email_num": 1,
+      "subject": "Shayne - who's writing for IdeasXMachina Hakuhodo?",
+      "sent_at": "2026-06-03T01:56:59.144808"
+    },
+    {
+      "to": "patricia.panibio@ideasxmachina.com",
+      "company": "IdeasXMachina Hakuhodo",
+      "email_num": 1,
+      "subject": "Patricia - content at IdeasXMachina Hakuhodo",
+      "sent_at": "2026-06-03T01:57:59.475833"
+    },
+    {
+      "to": "shai.avecilla-riofrio@ideasxmachina.com",
+      "company": "IdeasXMachina Hakuhodo",
+      "email_num": 1,
+      "subject": "Shai - content output at IdeasXMachina Hakuhodo",
+      "sent_at": "2026-06-03T01:58:59.688951"
+    },
+    {
+      "to": "tobias.bernardo@ideasxmachina.com",
+      "company": "IdeasXMachina Hakuhodo",
+      "email_num": 1,
+      "subject": "Tobias - content at IdeasXMachina Hakuhodo",
+      "sent_at": "2026-06-03T01:59:59.926197"
+    },
+    {
+      "to": "shu.takahashi@ideasxmachina.com",
+      "company": "IdeasXMachina Hakuhodo",
+      "email_num": 1,
+      "subject": "Shu - content at IdeasXMachina Hakuhodo",
+      "sent_at": "2026-06-03T02:01:00.157156"
+    },
+    {
+      "to": "karen.parreno@ideasxmachina.com",
+      "company": "IdeasXMachina Hakuhodo",
+      "email_num": 1,
+      "subject": "Karen - who's writing for IdeasXMachina Hakuhodo?",
+      "sent_at": "2026-06-03T02:02:00.460239"
     }
   ]
 }
