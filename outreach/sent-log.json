@@ -615,6 +615,62 @@
       "email_num": 1,
       "subject": "Karen - who's writing for IdeasXMachina Hakuhodo?",
       "sent_at": "2026-06-03T02:02:00.460239"
+    },
+    {
+      "to": "trent.silins@kopamedia.io",
+      "company": "Kop\u0101",
+      "email_num": 1,
+      "subject": "Trent - who's writing for Kop\u0101?",
+      "sent_at": "2026-06-04T01:54:01.792099"
+    },
+    {
+      "to": "brett.stevens@kopamedia.io",
+      "company": "Kop\u0101",
+      "email_num": 1,
+      "subject": "Brett - who's writing for Kop\u0101?",
+      "sent_at": "2026-06-04T01:55:02.050516"
+    },
+    {
+      "to": "mardy.binauhan@kopamedia.io",
+      "company": "Kop\u0101",
+      "email_num": 1,
+      "subject": "Mardy - who's writing for Kop\u0101?",
+      "sent_at": "2026-06-04T01:56:02.407334"
+    },
+    {
+      "to": "anne.adre@kopamedia.io",
+      "company": "Kop\u0101",
+      "email_num": 1,
+      "subject": "Anne - content at Kop\u0101",
+      "sent_at": "2026-06-04T01:57:02.717593"
+    },
+    {
+      "to": "rk@lkl.ai",
+      "company": "LOKAL",
+      "email_num": 1,
+      "subject": "Ramon - who's writing for LOKAL?",
+      "sent_at": "2026-06-04T01:58:03.192100"
+    },
+    {
+      "to": "joshua.pielago@lkl.ai",
+      "company": "LOKAL",
+      "email_num": 1,
+      "subject": "Joshua - who's writing for LOKAL?",
+      "sent_at": "2026-06-04T01:59:03.453057"
+    },
+    {
+      "to": "chip.lopez@lkl.ai",
+      "company": "LOKAL",
+      "email_num": 1,
+      "subject": "Chip - who's writing for LOKAL?",
+      "sent_at": "2026-06-04T02:00:03.889910"
+    },
+    {
+      "to": "20info@originecg.com",
+      "company": "Origine Consulting Group",
+      "email_num": 1,
+      "subject": "Who's writing for Origine Consulting Group?",
+      "sent_at": "2026-06-04T02:01:04.136409"
     }
   ]
 }
