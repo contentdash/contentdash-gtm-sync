@@ -671,6 +671,62 @@
       "email_num": 1,
       "subject": "Who's writing for Origine Consulting Group?",
       "sent_at": "2026-06-04T02:01:04.136409"
+    },
+    {
+      "to": "admin@prometheus.ph",
+      "company": "Prometheus",
+      "email_num": 1,
+      "subject": "Who's writing for Prometheus?",
+      "sent_at": "2026-06-09T01:37:40.573573"
+    },
+    {
+      "to": "careers@rush.ph",
+      "company": "RUSH Technologies",
+      "email_num": 1,
+      "subject": "Careers - who's writing for RUSH Technologies?",
+      "sent_at": "2026-06-09T01:38:40.829221"
+    },
+    {
+      "to": "workwithus@sparkit.global",
+      "company": "Spark It",
+      "email_num": 1,
+      "subject": "Workwithus - who's writing for Spark It?",
+      "sent_at": "2026-06-09T01:39:41.016100"
+    },
+    {
+      "to": "huixin.koey@airrlabs.com",
+      "company": "AIRR Labs",
+      "email_num": 1,
+      "subject": "Huixin - content at AIRR Labs",
+      "sent_at": "2026-06-09T01:40:41.293442"
+    },
+    {
+      "to": "robin.zieme@channelfactory.com",
+      "company": "Channel Factory",
+      "email_num": 1,
+      "subject": "Robin - content at Channel Factory",
+      "sent_at": "2026-06-09T01:41:41.611906"
+    },
+    {
+      "to": "rai.dizon@havasmediaortega.com",
+      "company": "HAVAS Ortega",
+      "email_num": 1,
+      "subject": "Raymond - content output at HAVAS Ortega",
+      "sent_at": "2026-06-09T01:42:42.033164"
+    },
+    {
+      "to": "tatsuro.osuga@ideasxmachina.com",
+      "company": "IdeasXMachina Hakuhodo",
+      "email_num": 1,
+      "subject": "Tatsuro - content output at IdeasXMachina Hakuhodo",
+      "sent_at": "2026-06-09T01:43:42.272802"
+    },
+    {
+      "to": "rey.leuterio@ideasxmachina.com",
+      "company": "IdeasXMachina Hakuhodo",
+      "email_num": 1,
+      "subject": "Rey - content output at IdeasXMachina Hakuhodo",
+      "sent_at": "2026-06-09T01:44:42.504592"
     }
   ]
 }
