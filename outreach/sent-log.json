@@ -727,6 +727,62 @@
       "email_num": 1,
       "subject": "Rey - content output at IdeasXMachina Hakuhodo",
       "sent_at": "2026-06-09T01:44:42.504592"
+    },
+    {
+      "to": "angel@adobomagazine.com",
+      "company": "adobo magazine",
+      "email_num": 1,
+      "subject": "Angel - content output at adobo magazine",
+      "sent_at": "2026-06-10T01:43:57.725414"
+    },
+    {
+      "to": "tet@adobomagazine.com",
+      "company": "adobo magazine",
+      "email_num": 1,
+      "subject": "Tet - content at adobo magazine",
+      "sent_at": "2026-06-10T01:44:57.938429"
+    },
+    {
+      "to": "mari-rem@adobomagazine.com",
+      "company": "adobo magazine",
+      "email_num": 1,
+      "subject": "Mari-rem - content at adobo magazine",
+      "sent_at": "2026-06-10T01:45:58.147848"
+    },
+    {
+      "to": "klara.grintal@adaglobal.com",
+      "company": "ADA Global",
+      "email_num": 1,
+      "subject": "Klara - \"The sculptor shaping clarity from intricate data\"",
+      "sent_at": "2026-06-10T01:46:58.402784"
+    },
+    {
+      "to": "remesh.kumar@adscholars.com",
+      "company": "ADscholars",
+      "email_num": 1,
+      "subject": "Remesh - content for ADscholars' clients",
+      "sent_at": "2026-06-10T01:47:58.583849"
+    },
+    {
+      "to": "rory.johnson@airrlabs.com",
+      "company": "AIRR Labs",
+      "email_num": 1,
+      "subject": "Rory - who's producing for AIRR Labs' clients?",
+      "sent_at": "2026-06-10T01:48:58.739223"
+    },
+    {
+      "to": "dang.nguyen@airrlabs.com",
+      "company": "AIRR Labs",
+      "email_num": 1,
+      "subject": "Dang - content for AIRR Labs' clients",
+      "sent_at": "2026-06-10T01:49:58.932984"
+    },
+    {
+      "to": "sophia.wee@airrlabs.com",
+      "company": "AIRR Labs",
+      "email_num": 1,
+      "subject": "Sophia - content for AIRR Labs' clients",
+      "sent_at": "2026-06-10T01:50:59.231920"
     }
   ]
 }
