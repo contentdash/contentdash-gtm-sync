@@ -783,6 +783,62 @@
       "email_num": 1,
       "subject": "Sophia - content for AIRR Labs' clients",
       "sent_at": "2026-06-10T01:50:59.231920"
+    },
+    {
+      "to": "henson@adhoc-marketing.com",
+      "company": "Ad Hoc Marketing",
+      "email_num": 1,
+      "subject": "Henson - who's producing for Ad Hoc Marketing's clients?",
+      "sent_at": "2026-06-11T01:51:10.093066"
+    },
+    {
+      "to": "mark@adhoc-marketing.com",
+      "company": "Ad Hoc Marketing",
+      "email_num": 1,
+      "subject": "Mark - who's producing for Ad Hoc Marketing's clients?",
+      "sent_at": "2026-06-11T01:52:10.378411"
+    },
+    {
+      "to": "jawahar@adhoc-marketing.com",
+      "company": "Ad Hoc Marketing",
+      "email_num": 1,
+      "subject": "Jawahar - volume vs. quality at Ad Hoc Marketing",
+      "sent_at": "2026-06-11T01:53:10.643356"
+    },
+    {
+      "to": "juniel@adhoc-marketing.com",
+      "company": "Ad Hoc Marketing",
+      "email_num": 1,
+      "subject": "Juniel - content output at Ad Hoc Marketing",
+      "sent_at": "2026-06-11T01:54:10.925655"
+    },
+    {
+      "to": "press@alephholding.com",
+      "company": "Aleph",
+      "email_num": 1,
+      "subject": "Maria - content for Aleph's clients",
+      "sent_at": "2026-06-11T01:55:11.210363"
+    },
+    {
+      "to": "trish.esteban@amplifaiservices.com",
+      "company": "AmplifAI Services",
+      "email_num": 1,
+      "subject": "Trish - content for AmplifAI Services' clients",
+      "sent_at": "2026-06-11T01:56:11.676619"
+    },
+    {
+      "to": "aryan.khanna@bidkinetic.com",
+      "company": "BidKinetic",
+      "email_num": 1,
+      "subject": "Aryan - content for BidKinetic's clients",
+      "sent_at": "2026-06-11T01:57:11.960615"
+    },
+    {
+      "to": "ralph@bidroid.io",
+      "company": "Bidroid Hub Technologies",
+      "email_num": 1,
+      "subject": "Ralph - content for Bidroid Hub Technologies' clients",
+      "sent_at": "2026-06-11T01:58:12.259865"
     }
   ]
 }
