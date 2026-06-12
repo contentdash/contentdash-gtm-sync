@@ -839,6 +839,62 @@
       "email_num": 1,
       "subject": "Ralph - content for Bidroid Hub Technologies' clients",
       "sent_at": "2026-06-11T01:58:12.259865"
+    },
+    {
+      "to": "luiz.barros@channelfactory.com",
+      "company": "Channel Factory",
+      "email_num": 1,
+      "subject": "Luiz - content for Channel Factory's clients",
+      "sent_at": "2026-06-12T09:02:31.593589"
+    },
+    {
+      "to": "reytiempo@entergameon.com",
+      "company": "Co-Op Play",
+      "email_num": 1,
+      "subject": "Rey - who's producing for Co-Op Play's clients?",
+      "sent_at": "2026-06-12T09:03:31.853311"
+    },
+    {
+      "to": "kyuchul.kim@davidandgolyat.com",
+      "company": "David & Golyat",
+      "email_num": 1,
+      "subject": "Kyuchul - who's producing for David & Golyat's clients?",
+      "sent_at": "2026-06-12T09:04:32.126499"
+    },
+    {
+      "to": "hello_dcp@dentsu.com",
+      "company": "Dentsu Creative",
+      "email_num": 1,
+      "subject": "Ronald - \"The refined artisan shaping bold brand identities\"",
+      "sent_at": "2026-06-12T09:05:32.369696"
+    },
+    {
+      "to": "franco@digitankstudios.com",
+      "company": "Digitank Studios",
+      "email_num": 1,
+      "subject": "Franco - who's producing for Digitank Studios' clients?",
+      "sent_at": "2026-06-12T09:06:32.604549"
+    },
+    {
+      "to": "loudette@digitankstudios.com",
+      "company": "Digitank Studios",
+      "email_num": 1,
+      "subject": "Loudette - content for Digitank Studios' clients",
+      "sent_at": "2026-06-12T09:07:32.841817"
+    },
+    {
+      "to": "iona@digitankstudios.com",
+      "company": "Digitank Studios",
+      "email_num": 1,
+      "subject": "Iona - content for Digitank Studios' clients",
+      "sent_at": "2026-06-12T09:08:33.093297"
+    },
+    {
+      "to": "janclaud@digitankstudios.com",
+      "company": "Digitank Studios",
+      "email_num": 1,
+      "subject": "Jan - content for Digitank Studios' clients",
+      "sent_at": "2026-06-12T09:09:33.315687"
     }
   ]
 }
