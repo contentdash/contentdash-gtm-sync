@@ -23,6 +23,8 @@ jobs:
           python-version: '3.11'
 
       - name: Generate email queue
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
           cd outreach
           python3 generate.py --leads=enriched.csv
@@ -35,10 +37,22 @@ jobs:
           cd outreach
           python3 send.py --batch=8 --send
 
-      - name: Commit updated sent log
+      - name: Audit run health
+        if: always()   # report even if Generate/Send failed, so problems surface
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          cd outreach
+          python3 audit.py
+
+      - name: Commit sent log + personalization caches
+        if: always()
         run: |
           git config user.name "dashocontent-bot"
           git config user.email "info@contentdash.app"
-          git add outreach/sent-log.json || true
-          git diff --staged --quiet || git commit -m "chore: update outreach sent log [skip ci]"
+          # Persist the send record AND the research/opener caches so the next run
+          # only fetches/generates for genuinely new leads (no repeat API cost).
+          git add outreach/sent-log.json outreach/site_research.json outreach/personalized.json || true
+          git diff --staged --quiet || git commit -m "chore: update outreach sent log + caches [skip ci]"
           git push

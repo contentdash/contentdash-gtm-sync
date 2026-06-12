@@ -1,0 +1,32 @@
+name: Outreach Monitor
+
+# Watchdog for the DashoContent Daily Outreach automation. Runs ~1h after each
+# send window and checks the GitHub Actions API: did the outreach run actually
+# fire and succeed? Alerts Slack on failure or if it has gone silent. This is the
+# one check the in-run audit step can't do — it catches the run never starting
+# (workflow disabled, YAML broken, runner outage).
+
+on:
+  schedule:
+    - cron: '0 2 * * 2-4'   # 10am PHT Tue–Thu, ~1h after the 9am outreach
+  workflow_dispatch:
+
+permissions:
+  actions: read
+  contents: read
+
+jobs:
+  monitor:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Watchdog check
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          cd outreach
+          python3 audit.py --watchdog

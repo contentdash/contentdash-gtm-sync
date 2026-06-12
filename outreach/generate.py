@@ -15,8 +15,12 @@ Output:
 import argparse
 import csv
 import json
+import os
 import re
 from pathlib import Path
+
+import research
+from personalize import personalize_opener, load_cache, save_cache
 
 LEADS_CSV   = Path(__file__).parent / "leads.csv"
 SCANNED_CSV = Path(__file__).parent / "scanned.csv"
@@ -357,7 +361,9 @@ def infer_segment(row: dict) -> str:
 
 # ─── Generator ────────────────────────────────────────────────────────────────
 
-def generate_sequence(row: dict, scan_data: dict | None = None) -> dict | None:
+def generate_sequence(row: dict, scan_data: dict | None = None,
+                      api_key: str | None = None, cache: dict | None = None,
+                      site_cache: dict | None = None) -> dict | None:
     email = (row.get("email") or "").strip()
     if not email or "@" not in email:
         return None
@@ -404,7 +410,19 @@ def generate_sequence(row: dict, scan_data: dict | None = None) -> dict | None:
             sender=SENDER_NAME,
         )
     else:
-        opener = SEGMENT_OPENERS[segment].get(archetype) or SEGMENT_OPENERS[segment]["default"]
+        # Warm, per-lead opener grounded in real data: the company's own live website
+        # copy (primary) + role + research note. Falls back to the legacy template
+        # opener if no key / empty / API error.
+        site_text = ""
+        if api_key:
+            site_text = research.as_prompt_block(research.research_for_lead(email, site_cache))
+        opener = personalize_opener(
+            first_name=first_name, company=company, role=role,
+            segment=segment, notes=notes, scan_roast="", site_text=site_text,
+            email=email, api_key=api_key, cache=cache,
+        )
+        if not opener:
+            opener = SEGMENT_OPENERS[segment].get(archetype) or SEGMENT_OPENERS[segment]["default"]
         role_value_line = ROLE_VALUE_LINES.get(archetype, ROLE_VALUE_LINES["default"])
         differentiator = SEGMENT_DIFFERENTIATOR[segment]
         body = BODY_TEMPLATE.format(
@@ -472,12 +490,14 @@ def render_html(sequences: list[dict]) -> str:
         role_tag   = f" &nbsp;·&nbsp; {s['role']}" if s["role"] else ""
         arch_label = ARCHETYPE_LABELS.get(s["archetype"], s["archetype"])
         scan_badge = ' &nbsp;<span class="badge scan">⚡ scan</span>' if s.get("scan_roast") else ""
+        sent_badge = ' &nbsp;<span class="badge sent">✓ already contacted — won\'t resend</span>' if s.get("already_sent_email1") else ""
+        card_cls   = "card already-sent" if s.get("already_sent_email1") else "card"
         cards += f"""
-        <div class="card">
+        <div class="{card_cls}">
           <div class="card-header">
             <div class="meta">
               <span class="badge" style="background:{color}">{s['segment']}</span>
-              <span class="badge arch">{arch_label}</span>{scan_badge}
+              <span class="badge arch">{arch_label}</span>{scan_badge}{sent_badge}
               <span class="business">{s['company']}</span>{role_tag}
             </div>
             <div class="to">To: <strong>{s['to']}</strong>{name_tag}</div>
@@ -495,7 +515,9 @@ def render_html(sequences: list[dict]) -> str:
           </div>
         </div>"""
 
-    total   = len(sequences)
+    total     = len(sequences)
+    will_send = sum(1 for s in sequences if not s.get("already_sent_email1"))
+    skipped   = sum(1 for s in sequences if s.get("already_sent_email1"))
     founder = sum(1 for s in sequences if s["segment"] == "founder")
     team    = sum(1 for s in sequences if s["segment"] == "content-team")
     agency  = sum(1 for s in sequences if s["segment"] == "agency")
@@ -541,6 +563,12 @@ def render_html(sequences: list[dict]) -> str:
               border-radius: 999px; color: #0f172a; }}
     .badge.arch {{ background: #334155; color: #94a3b8; }}
     .badge.scan {{ background: #064e3b; color: #6ee7b7; }}
+    .badge.sent {{ background: #7c2d12; color: #fed7aa; }}
+    .card.already-sent {{ opacity: 0.5; }}
+    .stat.send {{ background: #064e3b; }}
+    .stat.send .stat-num {{ color: #6ee7b7; }}
+    .stat.skip {{ background: #422006; }}
+    .stat.skip .stat-num {{ color: #fed7aa; }}
     .email-block {{ padding: 1.25rem; }}
     .email-block.followup {{ background: #0f172a; border-top: 1px solid #1e293b; }}
     .email-label {{ font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
@@ -555,9 +583,11 @@ def render_html(sequences: list[dict]) -> str:
 </head>
 <body>
   <h1>DashoContent -Outreach Preview</h1>
-  <p class="subtitle">Review all emails before sending. Nothing has been sent.</p>
+  <p class="subtitle">Review before sending. Nothing has been sent. Greyed-out cards were already contacted in a previous batch and will NOT be re-sent.</p>
   <div class="stats">
-    <div class="stat"><div class="stat-num">{total}</div><div class="stat-label">Total leads</div></div>
+    <div class="stat send"><div class="stat-num">{will_send}</div><div class="stat-label">Will send (new)</div></div>
+    <div class="stat skip"><div class="stat-num">{skipped}</div><div class="stat-label">Already contacted · skipped</div></div>
+    <div class="stat"><div class="stat-num">{total}</div><div class="stat-label">Total in preview</div></div>
     <div class="stat"><div class="stat-num">{founder}</div><div class="stat-label">Founders</div></div>
     <div class="stat"><div class="stat-num">{team}</div><div class="stat-label">Content teams</div></div>
     <div class="stat"><div class="stat-num">{agency}</div><div class="stat-label">Agencies</div></div>
@@ -576,9 +606,19 @@ def render_html(sequences: list[dict]) -> str:
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--leads", default=str(LEADS_CSV), help="Path to leads CSV")
+    parser.add_argument("--limit", type=int, default=None, help="Only process the first N leads (for sampling)")
     args = parser.parse_args()
 
     OUTPUT_DIR.mkdir(exist_ok=True)
+
+    api_key = os.environ.get("ANTHROPIC_API_KEY")
+    cache = load_cache()
+    site_cache = research.load_cache()
+    if api_key:
+        print(f"✓ Personalization ON — live web research + Anthropic "
+              f"({len(cache)} openers, {len(site_cache)} sites cached)")
+    else:
+        print("  ANTHROPIC_API_KEY not set — falling back to generic template openers")
 
     leads_path = Path(args.leads)
     if not leads_path.exists():
@@ -588,6 +628,9 @@ def main():
 
     with open(leads_path, newline="", encoding="utf-8") as f:
         rows = list(csv.DictReader(f))
+
+    if args.limit:
+        rows = rows[:args.limit]
 
     scan_data = load_scan_data()
     if scan_data:
@@ -600,7 +643,7 @@ def main():
     seen_emails = set()
 
     for row in rows:
-        result = generate_sequence(row, scan_data)
+        result = generate_sequence(row, scan_data, api_key, cache, site_cache)
         if result:
             if result["to"] in seen_emails:
                 continue
@@ -609,15 +652,38 @@ def main():
         else:
             skipped.append(row)
 
+    if api_key:
+        save_cache(cache)
+        research.save_cache(site_cache)
+
+    # Tag leads already contacted in a previous batch so the preview is honest about
+    # what will actually send. send.py dedupes by recipient against this same
+    # sent-log.json at send time — this only surfaces it for the review.
+    sent_path = Path(__file__).parent / "sent-log.json"
+    sent1 = set()
+    if sent_path.exists():
+        try:
+            _log = json.loads(sent_path.read_text(encoding="utf-8"))
+            sent1 = {e["to"] for e in _log.get("sent", []) if e.get("email_num") == 1}
+        except Exception:
+            pass
+    for s in sequences:
+        s["already_sent_email1"] = s["to"] in sent1
+
+    # New (will-send) first, already-contacted last; then by segment + company.
     segment_order = {"founder": 0, "content-team": 1, "agency": 2}
-    sequences.sort(key=lambda s: (segment_order.get(s["segment"], 9), s["company"]))
+    sequences.sort(key=lambda s: (s["already_sent_email1"],
+                                  segment_order.get(s["segment"], 9), s["company"]))
 
     (OUTPUT_DIR / "preview.html").write_text(render_html(sequences), encoding="utf-8")
     (OUTPUT_DIR / "emails.json").write_text(json.dumps(sequences, indent=2, ensure_ascii=False), encoding="utf-8")
 
     scan_personalized = sum(1 for s in sequences if s.get("scan_roast"))
+    new_count = sum(1 for s in sequences if not s.get("already_sent_email1"))
+    already   = sum(1 for s in sequences if s.get("already_sent_email1"))
     print(f"✓ {len(sequences)} sequences generated  ({len(skipped)} skipped — missing email or company)")
-    print(f"  {scan_personalized} scan-personalized  |  {len(sequences) - scan_personalized} archetype fallback")
+    print(f"  → {new_count} NEW will send  |  {already} already contacted (send.py skips these — no double emails)")
+    print(f"  {scan_personalized} scan-grounded  |  rest web/role personalized")
     print(f"\nOutputs:")
     print(f"  {OUTPUT_DIR}/preview.html   ← open this to review")
     print(f"  {OUTPUT_DIR}/emails.json")
