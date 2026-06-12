@@ -124,7 +124,7 @@ const html = `<!DOCTYPE html>
 </style></head><body>
 
 <h2>📋 EOW Report — ${dateLabel}</h2>
-<p style="color:#555;margin-bottom:20px">Hi Charlene — all numbers below are auto-pulled from your tools. Add your notes in the dashed boxes, then <strong>reply to this email or forward to info@contentdash.app by 5pm.</strong></p>
+<p style="color:#555;margin-bottom:20px">Hi team — all numbers below are auto-pulled live from Stripe, Xero and Airtable. Add your notes in the dashed boxes, then <strong>reply to this email by 5pm.</strong></p>
 
 ${hasNumbers ? `
 <div class="section">
@@ -166,7 +166,7 @@ ${arRows ? `
   <div class="fill-box">1.<br>2.<br>3.</div>
 </div>
 
-<p style="font-size:12px;color:#888">→ Fill in the boxes above and reply-all or forward to <strong>info@contentdash.app</strong> before 5pm today.</p>
+<p style="font-size:12px;color:#888">→ Fill in the boxes above and reply before 5pm today.</p>
 <div class="footer">Auto-generated · dasho-ops · Fires every Friday 4pm PHT · ${sourcesUsed || 'No live sources connected'}</div>
 </body></html>`;
 
