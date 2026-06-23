@@ -1063,6 +1063,62 @@
       "email_num": 1,
       "subject": "Angie - volume vs. quality at HAVAS Ortega",
       "sent_at": "2026-06-18T02:01:57.302061"
+    },
+    {
+      "to": "jan.cui@havasmediaortega.com",
+      "company": "HAVAS Ortega",
+      "email_num": 1,
+      "subject": "Jan - content for HAVAS Ortega's clients",
+      "sent_at": "2026-06-23T01:43:31.143178"
+    },
+    {
+      "to": "vic@hitproductions.net",
+      "company": "Hit Productions",
+      "email_num": 1,
+      "subject": "Vic - who's producing for Hit Productions' clients?",
+      "sent_at": "2026-06-23T01:44:31.354384"
+    },
+    {
+      "to": "dennis@hitproductions.net",
+      "company": "Hit Productions",
+      "email_num": 1,
+      "subject": "Dennis - who's producing for Hit Productions' clients?",
+      "sent_at": "2026-06-23T01:45:31.628267"
+    },
+    {
+      "to": "edith@hitproductions.net",
+      "company": "Hit Productions",
+      "email_num": 1,
+      "subject": "Edith - who's producing for Hit Productions' clients?",
+      "sent_at": "2026-06-23T01:46:31.862798"
+    },
+    {
+      "to": "sharon@hitproductions.net",
+      "company": "Hit Productions",
+      "email_num": 1,
+      "subject": "Sharon - content for Hit Productions' clients",
+      "sent_at": "2026-06-23T01:47:32.141146"
+    },
+    {
+      "to": "third.domingo@ideasxmachina.com",
+      "company": "IdeasXMachina Hakuhodo",
+      "email_num": 1,
+      "subject": "Third - who's producing for IdeasXMachina Hakuhodo's clients?",
+      "sent_at": "2026-06-23T01:48:32.474160"
+    },
+    {
+      "to": "lawin.bulatao@ideasxmachina.com",
+      "company": "IdeasXMachina Hakuhodo",
+      "email_num": 1,
+      "subject": "Lawin - volume vs. quality at IdeasXMachina Hakuhodo",
+      "sent_at": "2026-06-23T01:49:32.759945"
+    },
+    {
+      "to": "dovie.raquel@ideasxmachina.com",
+      "company": "IdeasXMachina Hakuhodo",
+      "email_num": 1,
+      "subject": "Dovie - who's producing for IdeasXMachina Hakuhodo's clients?",
+      "sent_at": "2026-06-23T01:50:32.983742"
     }
   ]
 }
