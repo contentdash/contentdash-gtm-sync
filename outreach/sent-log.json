@@ -1119,6 +1119,34 @@
       "email_num": 1,
       "subject": "Dovie - who's producing for IdeasXMachina Hakuhodo's clients?",
       "sent_at": "2026-06-23T01:50:32.983742"
+    },
+    {
+      "to": "rachel.nicol-dimaisip@kopamedia.io",
+      "company": "Kop\u0101",
+      "email_num": 1,
+      "subject": "Rachel - content for Kop\u0101's clients",
+      "sent_at": "2026-06-24T01:42:14.194309"
+    },
+    {
+      "to": "cj.masungsong@lkl.ai",
+      "company": "LOKAL",
+      "email_num": 1,
+      "subject": "Cris-justin - content for LOKAL's clients",
+      "sent_at": "2026-06-24T01:43:14.468231"
+    },
+    {
+      "to": "info@passionfruitph.com",
+      "company": "Passion Fruit Marketing and Collaborations",
+      "email_num": 1,
+      "subject": "Content for Passion Fruit Marketing and Collaborations' clients",
+      "sent_at": "2026-06-24T01:44:14.737901"
+    },
+    {
+      "to": "macy@strategys.com.ph",
+      "company": "Strategys Online Media",
+      "email_num": 1,
+      "subject": "Macy - content for Strategys Online Media's clients",
+      "sent_at": "2026-06-24T01:45:15.005895"
     }
   ]
 }
