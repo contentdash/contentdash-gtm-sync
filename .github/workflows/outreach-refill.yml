@@ -1,0 +1,39 @@
+name: Outreach Auto-Refill
+
+# Keeps the cold-email list from running dry. Weekly, checks how many leads are
+# still unemailed; if below threshold, promotes reserve leads from
+# lead_backlog.csv into enriched.csv so send.py never runs out. Posts to Slack,
+# and alerts when the backlog itself is low (time to source more).
+
+on:
+  schedule:
+    - cron: '0 0 * * 1'   # Monday 8am PHT
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  refill:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Refill active list from backlog if low
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          cd outreach
+          python3 refill.py
+
+      - name: Commit refilled list
+        if: always()
+        run: |
+          git config user.name "dashocontent-bot"
+          git config user.email "info@contentdash.app"
+          git add outreach/enriched.csv outreach/lead_backlog.csv || true
+          git diff --staged --quiet || git commit -m "chore: auto-refill outreach leads from backlog [skip ci]"
+          git push
