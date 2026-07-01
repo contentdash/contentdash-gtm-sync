@@ -1147,6 +1147,62 @@
       "email_num": 1,
       "subject": "Macy - content for Strategys Online Media's clients",
       "sent_at": "2026-06-24T01:45:15.005895"
+    },
+    {
+      "to": "srinivas@adaglobal.com",
+      "company": "ADA Global",
+      "email_num": 2,
+      "subject": "Re: Srinivas - \"The sculptor shaping clarity from intricate data\"",
+      "sent_at": "2026-07-01T02:35:53.669763"
+    },
+    {
+      "to": "siva@adaglobal.com",
+      "company": "ADA Global",
+      "email_num": 2,
+      "subject": "Re: Siva - \"The sculptor shaping clarity from intricate data\"",
+      "sent_at": "2026-07-01T02:36:53.843360"
+    },
+    {
+      "to": "sherry@adaglobal.com",
+      "company": "ADA Global",
+      "email_num": 2,
+      "subject": "Re: Sherry - \"The sculptor shaping clarity from intricate data\"",
+      "sent_at": "2026-07-01T02:37:54.053127"
+    },
+    {
+      "to": "januar@adaglobal.com",
+      "company": "ADA Global",
+      "email_num": 2,
+      "subject": "Re: Januar - \"The sculptor shaping clarity from intricate data\"",
+      "sent_at": "2026-07-01T02:38:54.302201"
+    },
+    {
+      "to": "rangan@adaglobal.com",
+      "company": "ADA Global",
+      "email_num": 2,
+      "subject": "Re: Rangan - \"The sculptor shaping clarity from intricate data\"",
+      "sent_at": "2026-07-01T02:39:54.483301"
+    },
+    {
+      "to": "srikanth@adscholars.com",
+      "company": "ADscholars",
+      "email_num": 2,
+      "subject": "Re: Srikanth - who's writing for ADscholars?",
+      "sent_at": "2026-07-01T02:40:54.712667"
+    },
+    {
+      "to": "satheesh.kumar@adscholars.com",
+      "company": "ADscholars",
+      "email_num": 2,
+      "subject": "Re: Satheesh - who's writing for ADscholars?",
+      "sent_at": "2026-07-01T02:41:54.924446"
+    },
+    {
+      "to": "stephanie.zgheib@adscholars.com",
+      "company": "ADscholars",
+      "email_num": 2,
+      "subject": "Re: Stephanie - who's writing for ADscholars?",
+      "sent_at": "2026-07-01T02:42:55.149822"
     }
   ]
 }
