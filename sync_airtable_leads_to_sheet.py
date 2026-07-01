@@ -133,6 +133,37 @@ def source_url(record_id: str) -> str:
     return f"https://airtable.com/{BASE_ID}/{record_id}"
 
 
+class BillingLimitExceeded(RuntimeError):
+    """Airtable monthly API quota exhausted — distinct from a transient rate limit."""
+
+
+def _airtable_get(url: str, pat: str, retries: int = 5) -> Dict[str, object]:
+    """GET one Airtable page. Retry on transient rate-limit 429; fail fast on
+    the monthly billing-limit 429 (retrying can't restore quota)."""
+    req = Request(url, headers={"Authorization": f"Bearer {pat}"})
+    for attempt in range(retries + 1):
+        try:
+            with urlopen(req, timeout=30) as resp:
+                return json.load(resp)
+        except HTTPError as exc:
+            if exc.code == 429:
+                body = ""
+                try:
+                    body = exc.read().decode("utf-8", errors="replace")
+                except Exception:
+                    pass
+                if "PUBLIC_API_BILLING_LIMIT_EXCEEDED" in body:
+                    raise BillingLimitExceeded(
+                        "Airtable monthly API billing limit exceeded"
+                    ) from exc
+                if attempt < retries:
+                    retry_after = exc.headers.get("Retry-After") if exc.headers else None
+                    wait = float(retry_after) if retry_after else min(30.0, 2.0 * (2 ** attempt))
+                    time.sleep(wait)
+                    continue
+            raise
+
+
 def airtable_records(pat: str) -> List[Dict[str, object]]:
     records: List[Dict[str, object]] = []
     offset = None
@@ -140,13 +171,14 @@ def airtable_records(pat: str) -> List[Dict[str, object]]:
         url = f"https://api.airtable.com/v0/{BASE_ID}/{quote(TABLE_NAME)}?pageSize=100"
         if offset:
             url += f"&offset={quote(offset)}"
-        req = Request(url, headers={"Authorization": f"Bearer {pat}"})
-        with urlopen(req, timeout=30) as resp:
-            payload = json.load(resp)
+        payload = _airtable_get(url, pat)
         records.extend(payload.get("records", []))
         offset = payload.get("offset")
         if not offset:
             return records
+        # Stay under Airtable's 5 req/s/base limit and avoid triggering a
+        # base-wide 30s lockout that also knocks out the lead-alert Action.
+        time.sleep(0.25)
 
 
 def map_record(record: Dict[str, object]) -> Dict[str, str]:
@@ -249,7 +281,13 @@ def main() -> int:
     parser.add_argument("--state-path", required=True)
     args = parser.parse_args()
 
-    inserted, updated = sync(args.webhook_url, args.airtable_pat, args.state_path)
+    try:
+        inserted, updated = sync(args.webhook_url, args.airtable_pat, args.state_path)
+    except BillingLimitExceeded as exc:
+        # Monthly Airtable quota is gone — skip this run cleanly instead of
+        # crash-looping the log until usage resets / the plan is upgraded.
+        print(json.dumps({"skipped": str(exc)}), file=sys.stderr)
+        return 0
     print(json.dumps({"inserted": inserted, "updated": updated}))
     return 0
 

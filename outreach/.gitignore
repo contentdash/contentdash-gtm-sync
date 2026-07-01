@@ -2,3 +2,6 @@
 output/preview.html
 output/emails.json
 __pycache__/
+
+enriched.csv.bak
+new_leads.csv.bak

@@ -22,17 +22,52 @@ function inferSku(budget, industry, problem) {
   return 'Unsure';
 }
 
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+class BillingLimitError extends Error {}
+
+// Airtable returns 429 for two very different reasons:
+//   1. Rate limit (>5 req/s per base) — transient, clears in ~30s → retry.
+//   2. PUBLIC_API_BILLING_LIMIT_EXCEEDED — the workspace's MONTHLY API quota
+//      is used up; retrying is futile until the plan resets/upgrades.
+// Distinguish them so we back off on (1) but fail fast & loud on (2).
+async function airtableFetch(url, pat, { retries = 4 } = {}) {
+  for (let attempt = 0; attempt <= retries; attempt++) {
+    const res = await fetch(url, { headers: { Authorization: `Bearer ${pat}` } });
+    if (res.status === 429) {
+      const body = await res.text();
+      if (body.includes('PUBLIC_API_BILLING_LIMIT_EXCEEDED')) {
+        throw new BillingLimitError('Airtable monthly API billing limit exceeded');
+      }
+      if (attempt === retries) throw new Error(`Airtable rate-limit 429 after ${retries} retries`);
+      const retryAfter = Number(res.headers.get('retry-after'));
+      const waitMs = Number.isFinite(retryAfter) && retryAfter > 0
+        ? retryAfter * 1000
+        : Math.min(30000, 2000 * 2 ** attempt); // 2s, 4s, 8s, 16s
+      console.warn(`  ⚠ Airtable rate-limit — retry ${attempt + 1}/${retries} in ${waitMs}ms`);
+      await sleep(waitMs);
+      continue;
+    }
+    if (res.status >= 500) {
+      if (attempt === retries) throw new Error(`Airtable HTTP ${res.status} after ${retries} retries`);
+      await sleep(Math.min(30000, 2000 * 2 ** attempt));
+      continue;
+    }
+    if (!res.ok) throw new Error(`Airtable HTTP ${res.status}`);
+    return res;
+  }
+}
+
 async function getNewLeads() {
   const pat = process.env.AIRTABLE_PAT;
   if (!pat) throw new Error('AIRTABLE_PAT not set');
 
   const since = new Date(Date.now() - LOOKBACK_MINUTES * 60 * 1000).toISOString();
   const formula = encodeURIComponent(`IS_AFTER(CREATED_TIME(), '${since}')`);
-  const res = await fetch(
+  const res = await airtableFetch(
     `https://api.airtable.com/v0/${AIRTABLE_BASE}/${AIRTABLE_TABLE}?filterByFormula=${formula}`,
-    { headers: { Authorization: `Bearer ${pat}` } },
+    pat,
   );
-  if (!res.ok) throw new Error(`Airtable HTTP ${res.status}`);
   const data = await res.json();
 
   return (data.records || []).map(r => ({
@@ -140,6 +175,12 @@ try {
     console.log('✓ No new leads — Slack silent');
   }
 } catch (e) {
+  if (e instanceof BillingLimitError) {
+    // Monthly Airtable quota is exhausted — retrying every 30 min can't help and
+    // red-spamming the runs hides nothing actionable. Warn loudly, exit clean.
+    console.warn(`⚠ ${e.message} — lead check skipped until Airtable usage resets/upgrades.`);
+    process.exit(0);
+  }
   console.error('Lead alert error:', e?.message || String(e));
   process.exit(1);
 }
