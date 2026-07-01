@@ -17,13 +17,14 @@ import os
 import subprocess
 import sys
 import time
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 
 EMAILS_JSON   = Path(__file__).parent / "output" / "emails.json"
 SENT_LOG      = Path(__file__).parent / "sent-log.json"
 ENV_FILE      = Path(__file__).parent / ".env"
 DEFAULT_DELAY = 60
+MIN_FOLLOWUP_GAP_DAYS = 3   # never send Email 2 sooner than this after Email 1
 FROM_EMAIL    = "fleire@contentdash.app"
 FROM_NAME     = "Fleire"
 ALERT_TO      = ["fleire@thirdteam.org", "info@contentdash.app"]
@@ -69,6 +70,18 @@ def already_sent(log: dict, to: str, email_num: int) -> bool:
         e["to"] == to and e["email_num"] == email_num
         for e in log["sent"]
     )
+
+
+def _email1_sent_at(log: dict, to: str):
+    """Most recent Email-1 send time for a recipient, or None."""
+    times = []
+    for e in log["sent"]:
+        if e["to"] == to and e["email_num"] == 1 and e.get("sent_at"):
+            try:
+                times.append(datetime.fromisoformat(e["sent_at"]))
+            except Exception:
+                pass
+    return max(times) if times else None
 
 
 def record_sent(log: dict, lead: dict, email_num: int, subject: str):
@@ -177,10 +190,15 @@ def main():
     body_key  = "email2_body"    if args.followup else "email1_body"
 
     if args.followup:
-        queue = [
-            e for e in emails
-            if already_sent(log, e["to"], 1) and not already_sent(log, e["to"], 2)
-        ]
+        cutoff = datetime.now() - timedelta(days=MIN_FOLLOWUP_GAP_DAYS)
+        queue = []
+        for e in emails:
+            if not (already_sent(log, e["to"], 1) and not already_sent(log, e["to"], 2)):
+                continue
+            first_at = _email1_sent_at(log, e["to"])
+            if first_at and first_at > cutoff:
+                continue  # too soon since Email 1 — wait for the gap
+            queue.append(e)
     else:
         queue = [e for e in emails if not already_sent(log, e["to"], 1)]
 

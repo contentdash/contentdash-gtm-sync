@@ -1,0 +1,56 @@
+name: DashoContent Outreach Follow-up
+
+# Sends the personalized Email-2 follow-up to leads who got Email 1 but never
+# replied (and are past the 3-day gap enforced in send.py). Runs Mon/Wed/Fri so
+# it never lands the same day as the Tue–Thu cold-email run. Same
+# generate → send → audit → commit pattern as the main outreach workflow.
+
+on:
+  schedule:
+    - cron: '0 1 * * 1,3,5'   # 9am PHT Mon/Wed/Fri
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  followup:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Generate email queue
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          cd outreach
+          python3 generate.py --leads=enriched.csv
+
+      - name: Send follow-up batch
+        env:
+          RESEND_API_KEY: ${{ secrets.DASHOCONTENT_OUTREACH_RESEND_KEY }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          cd outreach
+          python3 send.py --followup --batch=8 --send
+
+      - name: Audit run health
+        if: always()
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+        run: |
+          cd outreach
+          python3 audit.py
+
+      - name: Commit sent log + personalization caches
+        if: always()
+        run: |
+          git config user.name "dashocontent-bot"
+          git config user.email "info@contentdash.app"
+          git add outreach/sent-log.json outreach/site_research.json outreach/personalized.json || true
+          git diff --staged --quiet || git commit -m "chore: update outreach sent log + caches [skip ci]"
+          git push

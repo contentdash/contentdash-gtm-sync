@@ -20,7 +20,7 @@ import re
 from pathlib import Path
 
 import research
-from personalize import personalize_opener, load_cache, save_cache
+from personalize import personalize_opener, personalize_followup, load_cache, save_cache
 
 LEADS_CSV   = Path(__file__).parent / "leads.csv"
 SCANNED_CSV = Path(__file__).parent / "scanned.csv"
@@ -258,6 +258,15 @@ Still happy to run that free brand voice audit on {company} if you're open to it
 - {sender}
 DashoContent"""
 
+PERSONAL_FOLLOWUP_BODY = """{greeting}
+
+{nudge}
+
+Still happy to run that free brand voice audit on {company} — I'll scan your content and send the results over. Worth a quick look?
+
+- {sender}
+DashoContent"""
+
 SEGMENT_PHRASES = {
     "founder":      "founders and small teams",
     "content-team": "in-house content teams",
@@ -434,12 +443,25 @@ def generate_sequence(row: dict, scan_data: dict | None = None,
             company=company,
             sender=SENDER_NAME,
         )
-        followup_body = FOLLOWUP_BODY.format(
-            greeting=greeting,
-            segment_phrase=SEGMENT_PHRASES[segment],
-            company=company,
-            sender=SENDER_NAME,
-        )
+        # Personalized second-touch nudge, grounded in the same cached site research.
+        followup_nudge = None
+        if api_key:
+            followup_nudge = personalize_followup(
+                first_name=first_name, company=company, role=role,
+                segment=segment, notes=notes, site_text=site_text,
+                email=email, api_key=api_key, cache=cache,
+            )
+        if followup_nudge:
+            followup_body = PERSONAL_FOLLOWUP_BODY.format(
+                greeting=greeting, nudge=followup_nudge, company=company, sender=SENDER_NAME,
+            )
+        else:
+            followup_body = FOLLOWUP_BODY.format(
+                greeting=greeting,
+                segment_phrase=SEGMENT_PHRASES[segment],
+                company=company,
+                sender=SENDER_NAME,
+            )
 
     return {
         "segment":        segment,

@@ -71,12 +71,12 @@ def save_cache(cache: dict) -> None:
     CACHE_PATH.write_text(json.dumps(cache, indent=2, ensure_ascii=False), encoding="utf-8")
 
 
-def _call_anthropic(api_key: str, user_prompt: str, retries: int = 3) -> str:
+def _call_anthropic(api_key: str, user_prompt: str, retries: int = 3, system: str = SYSTEM_PROMPT) -> str:
     payload = {
         "model": MODEL,
         "max_tokens": MAX_TOKENS,
         "temperature": 0.7,
-        "system": SYSTEM_PROMPT,
+        "system": system,
         "messages": [{"role": "user", "content": user_prompt}],
     }
     data = json.dumps(payload).encode("utf-8")
@@ -165,6 +165,63 @@ def personalize_opener(
         )
     except Exception as exc:
         print(f"    ⚠ personalize failed for {company} ({role}): {exc}")
+        return None
+
+    line = (line or "").strip().strip('"').strip()
+    if not line or len(line) > MAX_CHARS:
+        return None
+
+    if cache is not None:
+        cache[cache_key] = line
+    return line
+
+
+FOLLOWUP_SYSTEM_PROMPT = (
+    "You write the body line of a SHORT second-touch follow-up email for DashoContent "
+    "(on-brand content production + brand governance). The recipient already got one "
+    "personalized email and didn't reply.\n"
+    "Write ONE short nudge — a single sentence, under 25 words — that gently re-raises "
+    "without being pushy. Rules:\n"
+    "- Ground it in what the company actually does (use the website copy if given); make it "
+    "feel like a continuation, not a copy-paste of the first email.\n"
+    "- Use ONLY the facts provided. Never invent metrics, news, or claims.\n"
+    "- No greeting, no 'I'm Fleire', no sign-off, no CTA (those are added separately). "
+    "Do not use the recipient's first name.\n"
+    "- Warm, low-pressure, human. No 'just circling back' cliché openers, no guilt-tripping.\n"
+    "Return ONLY the sentence, no quotes, no preamble."
+)
+
+
+def personalize_followup(
+    *,
+    first_name: str,
+    company: str,
+    role: str,
+    segment: str,
+    notes: str,
+    site_text: str = "",
+    email: str = "",
+    api_key: str | None = None,
+    cache: dict | None = None,
+) -> str | None:
+    """Short personalized nudge for the Email-2 follow-up, or None to fall back to
+    the generic follow-up body."""
+    api_key = api_key or os.environ.get("ANTHROPIC_API_KEY")
+    if not api_key:
+        return None
+
+    cache_key = (email or f"{company}|{role}") + "|fu"
+    if cache is not None and cache_key in cache:
+        return cache[cache_key] or None
+
+    try:
+        line = _call_anthropic(
+            api_key,
+            _build_user_prompt(first_name, company, role, segment, notes, "", site_text),
+            system=FOLLOWUP_SYSTEM_PROMPT,
+        )
+    except Exception as exc:
+        print(f"    ⚠ personalize_followup failed for {company} ({role}): {exc}")
         return None
 
     line = (line or "").strip().strip('"').strip()
