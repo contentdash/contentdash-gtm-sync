@@ -1203,6 +1203,62 @@
       "email_num": 2,
       "subject": "Re: Stephanie - who's writing for ADscholars?",
       "sent_at": "2026-07-01T02:42:55.149822"
+    },
+    {
+      "to": "jorge@asiabrewery.com",
+      "company": "Asia Brewery",
+      "email_num": 1,
+      "subject": "Jorge - content at Asia Brewery",
+      "sent_at": "2026-07-02T01:50:49.239861"
+    },
+    {
+      "to": "virginia@asiantigersgroup.com",
+      "company": "Asian Tigers Group",
+      "email_num": 1,
+      "subject": "Virginia - content output at Asian Tigers Group",
+      "sent_at": "2026-07-02T01:51:49.398583"
+    },
+    {
+      "to": "michelle@autohubgroup.com",
+      "company": "Autohub Group",
+      "email_num": 1,
+      "subject": "Michelle - Autohub Group's content output",
+      "sent_at": "2026-07-02T01:52:49.584912"
+    },
+    {
+      "to": "rommel@binalot.com",
+      "company": "Binalot Fiesta Foods",
+      "email_num": 1,
+      "subject": "Rommel - content output at Binalot Fiesta Foods",
+      "sent_at": "2026-07-02T01:53:49.861468"
+    },
+    {
+      "to": "steve@boscoffee.com",
+      "company": "Bo's Coffee",
+      "email_num": 1,
+      "subject": "Steve - content output at Bo's Coffee",
+      "sent_at": "2026-07-02T01:54:50.030314"
+    },
+    {
+      "to": "nina@colourette.ph",
+      "company": "Colourette Cosmetics",
+      "email_num": 1,
+      "subject": "Nina - content output at Colourette Cosmetics",
+      "sent_at": "2026-07-02T01:55:50.254724"
+    },
+    {
+      "to": "denice.sy@everbilena.com.ph",
+      "company": "Ever Bilena",
+      "email_num": 1,
+      "subject": "Denice - Ever Bilena's content output",
+      "sent_at": "2026-07-02T01:56:50.442188"
+    },
+    {
+      "to": "divina@figaro.ph",
+      "company": "Figaro Coffee Company",
+      "email_num": 1,
+      "subject": "Divina - content output at Figaro Coffee Company",
+      "sent_at": "2026-07-02T01:57:50.637022"
     }
   ]
 }
