@@ -1259,6 +1259,62 @@
       "email_num": 1,
       "subject": "Divina - content output at Figaro Coffee Company",
       "sent_at": "2026-07-02T01:57:50.637022"
+    },
+    {
+      "to": "soumyajit.mukherjee@adscholars.com",
+      "company": "ADscholars",
+      "email_num": 2,
+      "subject": "Re: Soumyajit - content output at ADscholars",
+      "sent_at": "2026-07-03T01:39:01.481655"
+    },
+    {
+      "to": "meenal.madishetty@adscholars.com",
+      "company": "ADscholars",
+      "email_num": 2,
+      "subject": "Re: Meenal - who's writing for ADscholars?",
+      "sent_at": "2026-07-03T01:40:01.697334"
+    },
+    {
+      "to": "shyam.ravishankar@adscholars.com",
+      "company": "ADscholars",
+      "email_num": 2,
+      "subject": "Re: Shyam - who's writing for ADscholars?",
+      "sent_at": "2026-07-03T01:41:01.923298"
+    },
+    {
+      "to": "maria.lozanes@adscholars.com",
+      "company": "ADscholars",
+      "email_num": 2,
+      "subject": "Re: Maria - who's writing for ADscholars?",
+      "sent_at": "2026-07-03T01:42:02.261190"
+    },
+    {
+      "to": "maiqui.tameta@adscholars.com",
+      "company": "ADscholars",
+      "email_num": 2,
+      "subject": "Re: Maiqui - content output at ADscholars",
+      "sent_at": "2026-07-03T01:43:02.466054"
+    },
+    {
+      "to": "dirgha@adscholars.com",
+      "company": "ADscholars",
+      "email_num": 2,
+      "subject": "Re: Dirgha - who's writing for ADscholars?",
+      "sent_at": "2026-07-03T01:44:02.673507"
+    },
+    {
+      "to": "robin.mah@airrlabs.com",
+      "company": "AIRR Labs",
+      "email_num": 2,
+      "subject": "Re: Robin - who's writing for AIRR Labs?",
+      "sent_at": "2026-07-03T01:45:02.890253"
+    },
+    {
+      "to": "donna.barcelon@airrlabs.com",
+      "company": "AIRR Labs",
+      "email_num": 2,
+      "subject": "Re: Donna - who's writing for AIRR Labs?",
+      "sent_at": "2026-07-03T01:46:03.100424"
     }
   ]
 }
