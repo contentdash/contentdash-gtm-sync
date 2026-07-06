@@ -70,5 +70,13 @@
     "newSubs": 6,
     "churnedSubs": 0,
     "netMRRChange": 0
+  },
+  {
+    "date": "2026-07-06",
+    "mrr": 82.5,
+    "subscribers": 80,
+    "newSubs": 11,
+    "churnedSubs": 0,
+    "netMRRChange": 0
   }
 ]
