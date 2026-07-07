@@ -1371,6 +1371,62 @@
       "email_num": 2,
       "subject": "Re: Viorel - content at AVOW",
       "sent_at": "2026-07-06T01:47:37.360626"
+    },
+    {
+      "to": "mae@grwmcosmetics.com",
+      "company": "GRWM Cosmetics",
+      "email_num": 1,
+      "subject": "Mae - content output at GRWM Cosmetics",
+      "sent_at": "2026-07-07T01:37:22.424361"
+    },
+    {
+      "to": "jacqe@happyskincosmetics.com",
+      "company": "Happy Skin",
+      "email_num": 1,
+      "subject": "Jacqe - content output at Happy Skin",
+      "sent_at": "2026-07-07T01:38:22.624611"
+    },
+    {
+      "to": "jasmine@issycosmetics.com",
+      "company": "Issy Cosmetics",
+      "email_num": 1,
+      "subject": "Jasmine - content output at Issy Cosmetics",
+      "sent_at": "2026-07-07T01:39:22.852718"
+    },
+    {
+      "to": "kate@jollibee.com.ph",
+      "company": "Jollibee",
+      "email_num": 1,
+      "subject": "Kate - Jollibee's content output",
+      "sent_at": "2026-07-07T01:40:23.161474"
+    },
+    {
+      "to": "marc@juliesbakeshop.com.ph",
+      "company": "Julie's Bakeshop",
+      "email_num": 1,
+      "subject": "Marc - Julie's Bakeshop's content output",
+      "sent_at": "2026-07-07T01:41:23.379140"
+    },
+    {
+      "to": "clara@mamasitas.com",
+      "company": "Mama Sita's",
+      "email_num": 1,
+      "subject": "Clara - content output at Mama Sita's",
+      "sent_at": "2026-07-07T01:42:23.577593"
+    },
+    {
+      "to": "mari@manginasal.ph",
+      "company": "Mang Inasal",
+      "email_num": 1,
+      "subject": "Mari - Mang Inasal's content output",
+      "sent_at": "2026-07-07T01:43:23.792374"
+    },
+    {
+      "to": "krie@messybessy.com",
+      "company": "Messy Bessy",
+      "email_num": 1,
+      "subject": "Krie - content output at Messy Bessy",
+      "sent_at": "2026-07-07T01:44:24.004533"
     }
   ]
 }
