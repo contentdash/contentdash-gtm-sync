@@ -1427,6 +1427,62 @@
       "email_num": 1,
       "subject": "Krie - content output at Messy Bessy",
       "sent_at": "2026-07-07T01:44:24.004533"
+    },
+    {
+      "to": "jenny@leslie.ph",
+      "company": "Minute Burger",
+      "email_num": 1,
+      "subject": "Jenny - content at Minute Burger",
+      "sent_at": "2026-07-08T01:36:41.778397"
+    },
+    {
+      "to": "sheila@novuhair.com",
+      "company": "Novuhair",
+      "email_num": 1,
+      "subject": "Sheila - content output at Novuhair",
+      "sent_at": "2026-07-08T01:37:41.993565"
+    },
+    {
+      "to": "sherill@oryspa.com",
+      "company": "Oryspa",
+      "email_num": 1,
+      "subject": "Sherill - content output at Oryspa",
+      "sent_at": "2026-07-08T01:38:42.217733"
+    },
+    {
+      "to": "maryjane@piliani.com",
+      "company": "Pili Ani",
+      "email_num": 1,
+      "subject": "Mary - content output at Pili Ani",
+      "sent_at": "2026-07-08T01:39:42.449040"
+    },
+    {
+      "to": "jonalyn@skinpotions.ph",
+      "company": "SkinPotions",
+      "email_num": 1,
+      "subject": "Jonalyn - content output at SkinPotions",
+      "sent_at": "2026-07-08T01:40:42.648035"
+    },
+    {
+      "to": "jen@snoebeauty.com",
+      "company": "Snoe Beauty",
+      "email_num": 1,
+      "subject": "Jen - content output at Snoe Beauty",
+      "sent_at": "2026-07-08T01:41:42.852261"
+    },
+    {
+      "to": "georgina@sunniesface.com",
+      "company": "Sunnies Face",
+      "email_num": 1,
+      "subject": "Georgina - Sunnies Face's content output",
+      "sent_at": "2026-07-08T01:42:43.078185"
+    },
+    {
+      "to": "laura@vmvhypoallergenics.com",
+      "company": "VMV Hypoallergenics",
+      "email_num": 1,
+      "subject": "Laura - content output at VMV Hypoallergenics",
+      "sent_at": "2026-07-08T01:43:43.285881"
     }
   ]
 }
