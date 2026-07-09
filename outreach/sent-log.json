@@ -1483,6 +1483,62 @@
       "email_num": 1,
       "subject": "Laura - content output at VMV Hypoallergenics",
       "sent_at": "2026-07-08T01:43:43.285881"
+    },
+    {
+      "to": "johnny@waffletime.com",
+      "company": "Waffle Time",
+      "email_num": 1,
+      "subject": "Johnny - content output at Waffle Time",
+      "sent_at": "2026-07-09T01:37:04.237593"
+    },
+    {
+      "to": "angela@zenutrients.com.ph",
+      "company": "Zenutrients",
+      "email_num": 1,
+      "subject": "Angela - content output at Zenutrients",
+      "sent_at": "2026-07-09T01:38:04.560690"
+    },
+    {
+      "to": "collaborate@and-a-half.ph",
+      "company": "And A Half",
+      "email_num": 1,
+      "subject": "Collaborate - content for And A Half's clients",
+      "sent_at": "2026-07-09T01:39:04.864091"
+    },
+    {
+      "to": "hello@boombox.social",
+      "company": "Boombox Social",
+      "email_num": 1,
+      "subject": "Content for Boombox Social's clients",
+      "sent_at": "2026-07-09T01:40:05.308342"
+    },
+    {
+      "to": "info@clarocontent.com",
+      "company": "Claro Content",
+      "email_num": 1,
+      "subject": "Content for Claro Content's clients",
+      "sent_at": "2026-07-09T01:41:05.546598"
+    },
+    {
+      "to": "hello@creativebananas.ph",
+      "company": "Creative Bananas",
+      "email_num": 1,
+      "subject": "Content for Creative Bananas' clients",
+      "sent_at": "2026-07-09T01:42:05.788464"
+    },
+    {
+      "to": "ric@designfortomorrow.co",
+      "company": "Design For Tomorrow",
+      "email_num": 1,
+      "subject": "Ric - who's producing for Design For Tomorrow's clients?",
+      "sent_at": "2026-07-09T01:43:06.085654"
+    },
+    {
+      "to": "hello@dualstory.com",
+      "company": "Dual Story",
+      "email_num": 1,
+      "subject": "Content for Dual Story's clients",
+      "sent_at": "2026-07-09T01:44:06.345613"
     }
   ]
 }
