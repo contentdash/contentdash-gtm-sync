@@ -1,0 +1,9 @@
+# Never cold-email these domains (partners, customers, off-ICP mistakes).
+# One domain per line. send.py skips any recipient at these domains.
+alephholding.com
+alephtalent.com
+dermorepubliq.com
+dodon.ai
+bluc53.com
+contentdash.app
+thirdteam.org

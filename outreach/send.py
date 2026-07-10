@@ -22,6 +22,7 @@ from pathlib import Path
 
 EMAILS_JSON   = Path(__file__).parent / "output" / "emails.json"
 SENT_LOG      = Path(__file__).parent / "sent-log.json"
+SUPPRESSED    = Path(__file__).parent / "suppressed_domains.txt"
 ENV_FILE      = Path(__file__).parent / ".env"
 DEFAULT_DELAY = 60
 MIN_FOLLOWUP_GAP_DAYS = 3   # never send Email 2 sooner than this after Email 1
@@ -184,6 +185,16 @@ def main():
         sys.exit(1)
 
     emails    = json.loads(EMAILS_JSON.read_text())
+
+    # Partner/customer/off-ICP protection: never email a suppressed domain
+    if SUPPRESSED.exists():
+        blocked = {d.strip().lower() for d in SUPPRESSED.read_text().splitlines()
+                   if d.strip() and not d.strip().startswith("#")}
+        before = len(emails)
+        emails = [e for e in emails if e["to"].split("@")[-1].lower() not in blocked]
+        if before - len(emails):
+            print(f"  Suppressed {before - len(emails)} recipient(s) on blocked domains")
+
     log       = load_sent_log()
     email_num = 2 if args.followup else 1
     subj_key  = "email2_subject" if args.followup else "email1_subject"
