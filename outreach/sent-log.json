@@ -1539,6 +1539,62 @@
       "email_num": 1,
       "subject": "Content for Dual Story's clients",
       "sent_at": "2026-07-09T01:44:06.345613"
+    },
+    {
+      "to": "gaston.taratuta@alephholding.com",
+      "company": "Aleph",
+      "email_num": 2,
+      "subject": "Re: Gast\u00f3n - who's writing for Aleph?",
+      "sent_at": "2026-07-10T01:39:40.516507"
+    },
+    {
+      "to": "marius.ivanovas@alephholding.com",
+      "company": "Aleph",
+      "email_num": 2,
+      "subject": "Re: Marius - who's writing for Aleph?",
+      "sent_at": "2026-07-10T01:40:40.731927"
+    },
+    {
+      "to": "ignacio.vidaguren@alephholding.com",
+      "company": "Aleph",
+      "email_num": 2,
+      "subject": "Re: Ignacio - who's writing for Aleph?",
+      "sent_at": "2026-07-10T01:41:40.927025"
+    },
+    {
+      "to": "rabin.yaghoubi@alephholding.com",
+      "company": "Aleph",
+      "email_num": 2,
+      "subject": "Re: Rabin - who's writing for Aleph?",
+      "sent_at": "2026-07-10T01:42:41.151430"
+    },
+    {
+      "to": "pieterjan.dekroon@alephholding.com",
+      "company": "Aleph",
+      "email_num": 2,
+      "subject": "Re: Pieter-jan - who's writing for Aleph?",
+      "sent_at": "2026-07-10T01:43:41.385000"
+    },
+    {
+      "to": "eddie.lee@amplifaiservices.com",
+      "company": "AmplifAI Services",
+      "email_num": 2,
+      "subject": "Re: Eddie - who's writing for AmplifAI Services?",
+      "sent_at": "2026-07-10T01:44:41.630413"
+    },
+    {
+      "to": "quad.delapaz@amplifaiservices.com",
+      "company": "AmplifAI Services",
+      "email_num": 2,
+      "subject": "Re: Quad - who's writing for AmplifAI Services?",
+      "sent_at": "2026-07-10T01:45:41.871192"
+    },
+    {
+      "to": "allan.lina@amplifaiservices.com",
+      "company": "AmplifAI Services",
+      "email_num": 2,
+      "subject": "Re: Allan - who's writing for AmplifAI Services?",
+      "sent_at": "2026-07-10T01:46:42.104625"
     }
   ]
 }
