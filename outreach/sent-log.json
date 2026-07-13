@@ -1595,6 +1595,62 @@
       "email_num": 2,
       "subject": "Re: Allan - who's writing for AmplifAI Services?",
       "sent_at": "2026-07-10T01:46:42.104625"
+    },
+    {
+      "to": "joanna.mojica@amplifaiservices.com",
+      "company": "AmplifAI Services",
+      "email_num": 2,
+      "subject": "Re: Joanna - who's writing for AmplifAI Services?",
+      "sent_at": "2026-07-13T01:39:46.551316"
+    },
+    {
+      "to": "peggy.qin@amplifaiservices.com",
+      "company": "AmplifAI Services",
+      "email_num": 2,
+      "subject": "Re: Peggy - who's writing for AmplifAI Services?",
+      "sent_at": "2026-07-13T01:40:46.768777"
+    },
+    {
+      "to": "louie@bbcomm.ph",
+      "company": "BBCOMM",
+      "email_num": 2,
+      "subject": "Re: Ma. - who's writing for BBCOMM?",
+      "sent_at": "2026-07-13T01:41:47.089450"
+    },
+    {
+      "to": "toteng@bbcomm.ph",
+      "company": "BBCOMM",
+      "email_num": 2,
+      "subject": "Re: Toteng - content at BBCOMM",
+      "sent_at": "2026-07-13T01:42:47.510308"
+    },
+    {
+      "to": "parth@bidkinetic.com",
+      "company": "BidKinetic",
+      "email_num": 2,
+      "subject": "Re: Parth - who's writing for BidKinetic?",
+      "sent_at": "2026-07-13T01:43:47.749729"
+    },
+    {
+      "to": "dj.sabate@bidkinetic.com",
+      "company": "BidKinetic",
+      "email_num": 2,
+      "subject": "Re: Dj - content at BidKinetic",
+      "sent_at": "2026-07-13T01:44:47.990211"
+    },
+    {
+      "to": "adarsh.sharma@bidkinetic.com",
+      "company": "BidKinetic",
+      "email_num": 2,
+      "subject": "Re: Adarsh - who's writing for BidKinetic?",
+      "sent_at": "2026-07-13T01:45:48.260273"
+    },
+    {
+      "to": "brijkishor.arya@bidkinetic.com",
+      "company": "BidKinetic",
+      "email_num": 2,
+      "subject": "Re: Brijkishor - who's writing for BidKinetic?",
+      "sent_at": "2026-07-13T01:46:48.546880"
     }
   ]
 }
