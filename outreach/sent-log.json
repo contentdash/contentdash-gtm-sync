@@ -1651,6 +1651,62 @@
       "email_num": 2,
       "subject": "Re: Brijkishor - who's writing for BidKinetic?",
       "sent_at": "2026-07-13T01:46:48.546880"
+    },
+    {
+      "to": "benjamin@gethooked360.com",
+      "company": "Get Hooked 360",
+      "email_num": 1,
+      "subject": "Benjamin - who's producing for Get Hooked 360's clients?",
+      "sent_at": "2026-07-14T01:35:50.239090"
+    },
+    {
+      "to": "gobocreative@gobo.ph",
+      "company": "Gobo Creatives",
+      "email_num": 1,
+      "subject": "Gobocreative - content for Gobo Creatives' clients",
+      "sent_at": "2026-07-14T01:36:50.550795"
+    },
+    {
+      "to": "info@wearegup.com",
+      "company": "Ground Up",
+      "email_num": 1,
+      "subject": "Content for Ground Up's clients",
+      "sent_at": "2026-07-14T01:37:50.778167"
+    },
+    {
+      "to": "julia@huddleroom.com.ph",
+      "company": "Huddle Room",
+      "email_num": 1,
+      "subject": "Julia - content for Huddle Room's clients",
+      "sent_at": "2026-07-14T01:38:51.037140"
+    },
+    {
+      "to": "hello@itchcreatives.com",
+      "company": "Itch Creatives",
+      "email_num": 1,
+      "subject": "Content for Itch Creatives' clients",
+      "sent_at": "2026-07-14T01:39:51.289134"
+    },
+    {
+      "to": "info@kapwamarketing.com",
+      "company": "Kapwa Marketing",
+      "email_num": 1,
+      "subject": "Content for Kapwa Marketing's clients",
+      "sent_at": "2026-07-14T01:40:51.594780"
+    },
+    {
+      "to": "hello@leapoutdigital.com",
+      "company": "LeapOut Digital",
+      "email_num": 1,
+      "subject": "Content for LeapOut Digital's clients",
+      "sent_at": "2026-07-14T01:41:51.815667"
+    },
+    {
+      "to": "info@limedigital.asia",
+      "company": "Lime Digital Asia",
+      "email_num": 1,
+      "subject": "Content for Lime Digital Asia's clients",
+      "sent_at": "2026-07-14T01:42:52.104414"
     }
   ]
 }
