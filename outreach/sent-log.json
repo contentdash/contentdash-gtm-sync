@@ -1707,6 +1707,62 @@
       "email_num": 1,
       "subject": "Content for Lime Digital Asia's clients",
       "sent_at": "2026-07-14T01:42:52.104414"
+    },
+    {
+      "to": "info@motioncabin.com",
+      "company": "Motion Cabin",
+      "email_num": 1,
+      "subject": "Content for Motion Cabin's clients",
+      "sent_at": "2026-07-16T01:36:15.236270"
+    },
+    {
+      "to": "info@njyn.ph",
+      "company": "NJYN",
+      "email_num": 1,
+      "subject": "Content for NJYN's clients",
+      "sent_at": "2026-07-16T01:37:15.480024"
+    },
+    {
+      "to": "pat@nuworks.ph",
+      "company": "Nuworks Interactive Labs",
+      "email_num": 1,
+      "subject": "Pat - who's producing for Nuworks Interactive Labs' clients?",
+      "sent_at": "2026-07-16T01:38:15.631301"
+    },
+    {
+      "to": "via@oddefy.com",
+      "company": "Oddefy Creative",
+      "email_num": 1,
+      "subject": "Via - who's producing for Oddefy Creative's clients?",
+      "sent_at": "2026-07-16T01:39:15.827569"
+    },
+    {
+      "to": "hello@pino.ph",
+      "company": "PINO Studio",
+      "email_num": 1,
+      "subject": "Content for PINO Studio's clients",
+      "sent_at": "2026-07-16T01:40:16.036995"
+    },
+    {
+      "to": "neuwell.marmol@perkcomm.com",
+      "company": "PerkComm",
+      "email_num": 1,
+      "subject": "Neuwell - content for PerkComm's clients",
+      "sent_at": "2026-07-16T01:41:16.204513"
+    },
+    {
+      "to": "propel@propelmanila.com",
+      "company": "Propel Manila",
+      "email_num": 1,
+      "subject": "Propel - content for Propel Manila's clients",
+      "sent_at": "2026-07-16T01:42:16.365046"
+    },
+    {
+      "to": "hello@serious-studio.com",
+      "company": "Serious Studio",
+      "email_num": 1,
+      "subject": "Content for Serious Studio's clients",
+      "sent_at": "2026-07-16T01:43:16.510069"
     }
   ]
 }
