@@ -1763,6 +1763,62 @@
       "email_num": 1,
       "subject": "Content for Serious Studio's clients",
       "sent_at": "2026-07-16T01:43:16.510069"
+    },
+    {
+      "to": "santhosh@bidroid.io",
+      "company": "Bidroid Hub Technologies",
+      "email_num": 2,
+      "subject": "Re: Santhosh - who's writing for Bidroid Hub Technologies?",
+      "sent_at": "2026-07-17T01:38:55.421051"
+    },
+    {
+      "to": "gaurav@bidroid.io",
+      "company": "Bidroid Hub Technologies",
+      "email_num": 2,
+      "subject": "Re: Gaurav - content at Bidroid Hub Technologies",
+      "sent_at": "2026-07-17T01:39:55.685593"
+    },
+    {
+      "to": "rissa@bidroid.io",
+      "company": "Bidroid Hub Technologies",
+      "email_num": 2,
+      "subject": "Re: Rissa - who's writing for Bidroid Hub Technologies?",
+      "sent_at": "2026-07-17T01:40:55.940073"
+    },
+    {
+      "to": "quang@bidroid.io",
+      "company": "Bidroid Hub Technologies",
+      "email_num": 2,
+      "subject": "Re: Quang - who's writing for Bidroid Hub Technologies?",
+      "sent_at": "2026-07-17T01:41:56.252831"
+    },
+    {
+      "to": "mikegonzales@brightbox.com.ph",
+      "company": "Brightbox",
+      "email_num": 2,
+      "subject": "Re: Michael - who's writing for Brightbox?",
+      "sent_at": "2026-07-17T01:42:56.501608"
+    },
+    {
+      "to": "earl@brightbox.com.ph",
+      "company": "Brightbox",
+      "email_num": 2,
+      "subject": "Re: Earl - who's writing for Brightbox?",
+      "sent_at": "2026-07-17T01:43:56.807869"
+    },
+    {
+      "to": "anthony.abrantes@brightbox.com.ph",
+      "company": "Brightbox",
+      "email_num": 2,
+      "subject": "Re: Anthony - who's writing for Brightbox?",
+      "sent_at": "2026-07-17T01:44:57.074843"
+    },
+    {
+      "to": "carlo.paulino@brightbox.com.ph",
+      "company": "Brightbox",
+      "email_num": 2,
+      "subject": "Re: Carlo - who's writing for Brightbox?",
+      "sent_at": "2026-07-17T01:45:57.352326"
     }
   ]
 }
