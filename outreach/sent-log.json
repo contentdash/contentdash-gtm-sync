@@ -1819,6 +1819,62 @@
       "email_num": 2,
       "subject": "Re: Carlo - who's writing for Brightbox?",
       "sent_at": "2026-07-17T01:45:57.352326"
+    },
+    {
+      "to": "tony.chen@channelfactory.com",
+      "company": "Channel Factory",
+      "email_num": 2,
+      "subject": "Re: Tony - who's writing for Channel Factory?",
+      "sent_at": "2026-07-20T01:45:05.593710"
+    },
+    {
+      "to": "kevin.gentzel@channelfactory.com",
+      "company": "Channel Factory",
+      "email_num": 2,
+      "subject": "Re: Kevin - who's writing for Channel Factory?",
+      "sent_at": "2026-07-20T01:46:05.838577"
+    },
+    {
+      "to": "alex.littlejohn@channelfactory.com",
+      "company": "Channel Factory",
+      "email_num": 2,
+      "subject": "Re: Alex - who's writing for Channel Factory?",
+      "sent_at": "2026-07-20T01:47:06.077307"
+    },
+    {
+      "to": "michael.araullo@channelfactory.com",
+      "company": "Channel Factory",
+      "email_num": 2,
+      "subject": "Re: Michael - who's writing for Channel Factory?",
+      "sent_at": "2026-07-20T01:48:06.322950"
+    },
+    {
+      "to": "phil.cowdell@channelfactory.com",
+      "company": "Channel Factory",
+      "email_num": 2,
+      "subject": "Re: Phil - who's writing for Channel Factory?",
+      "sent_at": "2026-07-20T01:49:06.615539"
+    },
+    {
+      "to": "khanh.trinh@cleverads.com.ph",
+      "company": "CleverAds",
+      "email_num": 2,
+      "subject": "Re: Khanh - who's writing for CleverAds?",
+      "sent_at": "2026-07-20T01:50:06.783930"
+    },
+    {
+      "to": "andylyn.gimena@cleverads.com.ph",
+      "company": "CleverAds",
+      "email_num": 2,
+      "subject": "Re: Andylyn - content output at CleverAds",
+      "sent_at": "2026-07-20T01:51:07.023871"
+    },
+    {
+      "to": "trang.anh@cleverads.com.ph",
+      "company": "CleverAds",
+      "email_num": 2,
+      "subject": "Re: Trang - content at CleverAds",
+      "sent_at": "2026-07-20T01:52:07.218186"
     }
   ]
 }
