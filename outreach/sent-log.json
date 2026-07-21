@@ -1875,6 +1875,62 @@
       "email_num": 2,
       "subject": "Re: Trang - content at CleverAds",
       "sent_at": "2026-07-20T01:52:07.218186"
+    },
+    {
+      "to": "joanne@alaskamilk.com",
+      "company": "Alaska Milk Corporation",
+      "email_num": 1,
+      "subject": "Joanne - content at Alaska Milk Corporation",
+      "sent_at": "2026-07-21T01:36:49.744373"
+    },
+    {
+      "to": "maurice@anytimefitness.ph",
+      "company": "Anytime Fitness",
+      "email_num": 1,
+      "subject": "Maurice - content output at Anytime Fitness",
+      "sent_at": "2026-07-21T01:37:50.008282"
+    },
+    {
+      "to": "kenan@beachborn.ph",
+      "company": "Beach Born",
+      "email_num": 1,
+      "subject": "Kenan - content output at Beach Born",
+      "sent_at": "2026-07-21T01:38:50.193718"
+    },
+    {
+      "to": "rhea@beautedermcorp.com",
+      "company": "Beautederm Corporation",
+      "email_num": 1,
+      "subject": "Rhea - content output at Beautederm Corporation",
+      "sent_at": "2026-07-21T01:39:50.341019"
+    },
+    {
+      "to": "vicki@beloessentials.com",
+      "company": "Belo Essentials",
+      "email_num": 1,
+      "subject": "Vicki - content output at Belo Essentials",
+      "sent_at": "2026-07-21T01:40:50.567058"
+    },
+    {
+      "to": "alexander@cosmetiqueasia.com",
+      "company": "Cosmetique Asia",
+      "email_num": 1,
+      "subject": "Alexander - content output at Cosmetique Asia",
+      "sent_at": "2026-07-21T01:41:50.728520"
+    },
+    {
+      "to": "nikki@dmarkbeauty.com",
+      "company": "DMark Beauty",
+      "email_num": 1,
+      "subject": "Nikki - content output at DMark Beauty",
+      "sent_at": "2026-07-21T01:42:50.912826"
+    },
+    {
+      "to": "ley@goldilocks.com.ph",
+      "company": "Goldilocks Bakeshop",
+      "email_num": 1,
+      "subject": "Ley - content at Goldilocks Bakeshop",
+      "sent_at": "2026-07-21T01:43:51.071033"
     }
   ]
 }
