@@ -1931,6 +1931,62 @@
       "email_num": 1,
       "subject": "Ley - content at Goldilocks Bakeshop",
       "sent_at": "2026-07-21T01:43:51.071033"
+    },
+    {
+      "to": "anna@humanheartnature.com",
+      "company": "Human Nature",
+      "email_num": 1,
+      "subject": "Anna - content output at Human Nature",
+      "sent_at": "2026-07-22T01:36:34.998711"
+    },
+    {
+      "to": "anna@luxeskin.com.ph",
+      "company": "Luxe Skin",
+      "email_num": 1,
+      "subject": "Anna - content output at Luxe Skin",
+      "sent_at": "2026-07-22T01:37:35.267801"
+    },
+    {
+      "to": "jim@maxsgroupinc.com",
+      "company": "Max's Group",
+      "email_num": 1,
+      "subject": "Jim - Max's Group's content output",
+      "sent_at": "2026-07-22T01:38:35.493876"
+    },
+    {
+      "to": "xandra@nationalbookstore.com",
+      "company": "National Bookstore",
+      "email_num": 1,
+      "subject": "Xandra - content output at National Bookstore",
+      "sent_at": "2026-07-22T01:39:35.718352"
+    },
+    {
+      "to": "alice@penshoppe.com",
+      "company": "Penshoppe",
+      "email_num": 1,
+      "subject": "Alice - content output at Penshoppe",
+      "sent_at": "2026-07-22T01:40:36.039026"
+    },
+    {
+      "to": "joagui@potatocorner.com",
+      "company": "Potato Corner",
+      "email_num": 1,
+      "subject": "Joagui - content at Potato Corner",
+      "sent_at": "2026-07-22T01:41:36.283517"
+    },
+    {
+      "to": "isabella@saipo.co",
+      "company": "Saipo",
+      "email_num": 1,
+      "subject": "Isabella - content output at Saipo",
+      "sent_at": "2026-07-22T01:42:36.572058"
+    },
+    {
+      "to": "chin@skin-poem.com",
+      "company": "Skin Poem",
+      "email_num": 1,
+      "subject": "Chin - content output at Skin Poem",
+      "sent_at": "2026-07-22T01:43:36.760902"
     }
   ]
 }
