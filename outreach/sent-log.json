@@ -1987,6 +1987,62 @@
       "email_num": 1,
       "subject": "Chin - content output at Skin Poem",
       "sent_at": "2026-07-22T01:43:36.760902"
+    },
+    {
+      "to": "albert@teviantbeauty.com",
+      "company": "Teviant Beauty",
+      "email_num": 1,
+      "subject": "Albert - content output at Teviant Beauty",
+      "sent_at": "2026-07-23T01:37:18.762872"
+    },
+    {
+      "to": "ana@vicecosmetics.com.ph",
+      "company": "Vice Cosmetics",
+      "email_num": 1,
+      "subject": "Ana - content output at Vice Cosmetics",
+      "sent_at": "2026-07-23T01:38:18.963177"
+    },
+    {
+      "to": "thomas@yellowcabpizza.com",
+      "company": "Yellow Cab Pizza Co.",
+      "email_num": 1,
+      "subject": "Thomas - content output at Yellow Cab Pizza Co.",
+      "sent_at": "2026-07-23T01:39:19.140211"
+    },
+    {
+      "to": "arthur@acesaatchi.com.ph",
+      "company": "Ace Saatchi & Saatchi",
+      "email_num": 1,
+      "subject": "Arthur - who's producing for Ace Saatchi & Saatchi's clients?",
+      "sent_at": "2026-07-23T01:40:19.338958"
+    },
+    {
+      "to": "francine@bbdoguerrero.com",
+      "company": "BBDO Guerrero",
+      "email_num": 1,
+      "subject": "Francine - who's producing for BBDO Guerrero's clients?",
+      "sent_at": "2026-07-23T01:41:19.517830"
+    },
+    {
+      "to": "joy@buensalido.com.ph",
+      "company": "Buensalido & Associates PR",
+      "email_num": 1,
+      "subject": "Joy - who's producing for Buensalido & Associates PR's clients?",
+      "sent_at": "2026-07-23T01:42:19.673234"
+    },
+    {
+      "to": "john@campaignsandgrey.net",
+      "company": "Campaigns & Grey",
+      "email_num": 1,
+      "subject": "John - who's producing for Campaigns & Grey's clients?",
+      "sent_at": "2026-07-23T01:43:19.915024"
+    },
+    {
+      "to": "martin@elevation.ph",
+      "company": "Elevation",
+      "email_num": 1,
+      "subject": "Martin - who's producing for Elevation's clients?",
+      "sent_at": "2026-07-23T01:44:20.346427"
     }
   ]
 }
