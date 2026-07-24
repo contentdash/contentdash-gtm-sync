@@ -2043,6 +2043,62 @@
       "email_num": 1,
       "subject": "Martin - who's producing for Elevation's clients?",
       "sent_at": "2026-07-23T01:44:20.346427"
+    },
+    {
+      "to": "tiendat.le@cleverads.com.ph",
+      "company": "CleverAds",
+      "email_num": 2,
+      "subject": "Re: Tien - who's writing for CleverAds?",
+      "sent_at": "2026-07-24T01:38:51.641005"
+    },
+    {
+      "to": "miko.david@davidandgolyat.com",
+      "company": "David & Golyat",
+      "email_num": 2,
+      "subject": "Re: Miko - who's writing for David & Golyat?",
+      "sent_at": "2026-07-24T01:39:51.827673"
+    },
+    {
+      "to": "audrey.alegre@davidandgolyat.com",
+      "company": "David & Golyat",
+      "email_num": 2,
+      "subject": "Re: Audrey - who's writing for David & Golyat?",
+      "sent_at": "2026-07-24T01:40:52.103730"
+    },
+    {
+      "to": "rodney.sol@davidandgolyat.com",
+      "company": "David & Golyat",
+      "email_num": 2,
+      "subject": "Re: Rodney - who's writing for David & Golyat?",
+      "sent_at": "2026-07-24T01:41:52.311482"
+    },
+    {
+      "to": "aileen.kim@davidandgolyat.com",
+      "company": "David & Golyat",
+      "email_num": 2,
+      "subject": "Re: Aileen - who's writing for David & Golyat?",
+      "sent_at": "2026-07-24T01:42:52.486315"
+    },
+    {
+      "to": "elaine.laoag@davidandgolyat.com",
+      "company": "David & Golyat",
+      "email_num": 2,
+      "subject": "Re: Elaine - content at David & Golyat",
+      "sent_at": "2026-07-24T01:43:52.673602"
+    },
+    {
+      "to": "karen.catapang@davidandgolyat.com",
+      "company": "David & Golyat",
+      "email_num": 2,
+      "subject": "Re: Karen - content at David & Golyat",
+      "sent_at": "2026-07-24T01:44:52.898825"
+    },
+    {
+      "to": "info@eon.com.ph",
+      "company": "EON Group",
+      "email_num": 2,
+      "subject": "Re: Junie - who's writing for EON Group?",
+      "sent_at": "2026-07-24T01:45:53.099618"
     }
   ]
 }
