@@ -2155,6 +2155,62 @@
       "email_num": 2,
       "subject": "Re: Vernice - content at Gruppo Integritas",
       "sent_at": "2026-07-27T01:46:50.744352"
+    },
+    {
+      "to": "lizette@fcbmanila.com",
+      "company": "FCB Manila",
+      "email_num": 1,
+      "subject": "Lizette - who's producing for FCB Manila's clients?",
+      "sent_at": "2026-07-28T01:35:07.454997"
+    },
+    {
+      "to": "paul@fccpr.ph",
+      "company": "Full Circle Communications",
+      "email_num": 1,
+      "subject": "Paul - who's producing for Full Circle Communications' clients?",
+      "sent_at": "2026-07-28T01:36:07.628199"
+    },
+    {
+      "to": "gil@ggcgroup.asia",
+      "company": "GGC Group Asia",
+      "email_num": 1,
+      "subject": "Gil - who's producing for GGC Group Asia's clients?",
+      "sent_at": "2026-07-28T01:37:07.839705"
+    },
+    {
+      "to": "herbert@gigil.com.ph",
+      "company": "GIGIL",
+      "email_num": 1,
+      "subject": "Herbert - who's producing for GIGIL's clients?",
+      "sent_at": "2026-07-28T01:38:08.043318"
+    },
+    {
+      "to": "norman@grupoagatep.com",
+      "company": "Grupo Agatep",
+      "email_num": 1,
+      "subject": "Norman - who's producing for Grupo Agatep's clients?",
+      "sent_at": "2026-07-28T01:39:08.286406"
+    },
+    {
+      "to": "raymund@thelennongroup.com",
+      "company": "Lennon Group",
+      "email_num": 1,
+      "subject": "Raymund - who's producing for Lennon Group's clients?",
+      "sent_at": "2026-07-28T01:40:08.475125"
+    },
+    {
+      "to": "nancy@ngpimc.com",
+      "company": "NGP Integrated Marketing Communications",
+      "email_num": 1,
+      "subject": "Nancy - who's producing for NGP Integrated Marketing Communications' clients?",
+      "sent_at": "2026-07-28T01:41:08.697239"
+    },
+    {
+      "to": "elly@ogilvy.com",
+      "company": "Ogilvy Manila",
+      "email_num": 1,
+      "subject": "Elly - who's producing for Ogilvy Manila's clients?",
+      "sent_at": "2026-07-28T01:42:08.911953"
     }
   ]
 }
