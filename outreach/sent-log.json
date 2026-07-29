@@ -2211,6 +2211,62 @@
       "email_num": 1,
       "subject": "Elly - who's producing for Ogilvy Manila's clients?",
       "sent_at": "2026-07-28T01:42:08.911953"
+    },
+    {
+      "to": "ricky@overthemoon.com.ph",
+      "company": "Over The Moon Communications",
+      "email_num": 1,
+      "subject": "Ricky - who's producing for Over The Moon Communications' clients?",
+      "sent_at": "2026-07-29T01:36:09.710386"
+    },
+    {
+      "to": "gary@propelrr.com",
+      "company": "Propelrr",
+      "email_num": 1,
+      "subject": "Gary - who's producing for Propelrr's clients?",
+      "sent_at": "2026-07-29T01:37:09.866529"
+    },
+    {
+      "to": "tats@publicisjimenezbasic.ph",
+      "company": "Publicis JimenezBasic",
+      "email_num": 1,
+      "subject": "Tats - who's producing for Publicis JimenezBasic's clients?",
+      "sent_at": "2026-07-29T01:38:10.121310"
+    },
+    {
+      "to": "teeny@sevenad.ph",
+      "company": "Seven A.D.",
+      "email_num": 1,
+      "subject": "Teeny - who's producing for Seven A.D.'s clients?",
+      "sent_at": "2026-07-29T01:39:10.308199"
+    },
+    {
+      "to": "hello@sigilbrand.com",
+      "company": "Sigil Digital",
+      "email_num": 1,
+      "subject": "Content for Sigil Digital's clients",
+      "sent_at": "2026-07-29T01:40:10.789839"
+    },
+    {
+      "to": "patrick@skyrocket.ph",
+      "company": "Skyrocket Studios",
+      "email_num": 1,
+      "subject": "Patrick - who's producing for Skyrocket Studios' clients?",
+      "sent_at": "2026-07-29T01:41:10.951270"
+    },
+    {
+      "to": "pierre@spiralytics.com",
+      "company": "Spiralytics",
+      "email_num": 1,
+      "subject": "Pierre - content output at Spiralytics",
+      "sent_at": "2026-07-29T01:42:11.111890"
+    },
+    {
+      "to": "paolo@tbwa-smp.com",
+      "company": "TBWA\\Santiago Mangada Puno",
+      "email_num": 1,
+      "subject": "Paolo - content for TBWA\\Santiago Mangada Puno's clients",
+      "sent_at": "2026-07-29T01:43:11.263024"
     }
   ]
 }
