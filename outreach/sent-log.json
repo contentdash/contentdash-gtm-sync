@@ -2267,6 +2267,34 @@
       "email_num": 1,
       "subject": "Paolo - content for TBWA\\Santiago Mangada Puno's clients",
       "sent_at": "2026-07-29T01:43:11.263024"
+    },
+    {
+      "to": "bea@teamasia.com",
+      "company": "TeamAsia",
+      "email_num": 1,
+      "subject": "Bea - who's producing for TeamAsia's clients?",
+      "sent_at": "2026-07-30T01:35:46.121196"
+    },
+    {
+      "to": "simon@thestudiobridge.com",
+      "company": "The Studio Bridge",
+      "email_num": 1,
+      "subject": "Simon - who's producing for The Studio Bridge's clients?",
+      "sent_at": "2026-07-30T01:36:46.386890"
+    },
+    {
+      "to": "talktous@treynagroup.com",
+      "company": "Treyna Group",
+      "email_num": 1,
+      "subject": "Talktous - content for Treyna Group's clients",
+      "sent_at": "2026-07-30T01:37:46.583883"
+    },
+    {
+      "to": "golda@vml.com",
+      "company": "VML",
+      "email_num": 1,
+      "subject": "Golda - who's producing for VML's clients?",
+      "sent_at": "2026-07-30T01:38:46.852691"
     }
   ]
 }
