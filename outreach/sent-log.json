@@ -2295,6 +2295,62 @@
       "email_num": 1,
       "subject": "Golda - who's producing for VML's clients?",
       "sent_at": "2026-07-30T01:38:46.852691"
+    },
+    {
+      "to": "jos.ortega@havasmediaortega.com",
+      "company": "HAVAS Ortega",
+      "email_num": 2,
+      "subject": "Re: Jos - who's writing for HAVAS Ortega?",
+      "sent_at": "2026-07-31T01:39:25.484883"
+    },
+    {
+      "to": "philip.tiongson@havasmediaortega.com",
+      "company": "HAVAS Ortega",
+      "email_num": 2,
+      "subject": "Re: Philip - who's writing for HAVAS Ortega?",
+      "sent_at": "2026-07-31T01:40:25.696753"
+    },
+    {
+      "to": "alex.pastor@havasmediaortega.com",
+      "company": "HAVAS Ortega",
+      "email_num": 2,
+      "subject": "Re: Alex - who's writing for HAVAS Ortega?",
+      "sent_at": "2026-07-31T01:41:25.854967"
+    },
+    {
+      "to": "hermie.deleon@havasmediaortega.com",
+      "company": "HAVAS Ortega",
+      "email_num": 2,
+      "subject": "Re: Hermie - who's writing for HAVAS Ortega?",
+      "sent_at": "2026-07-31T01:42:26.043142"
+    },
+    {
+      "to": "gian.delacruz@havasmediaortega.com",
+      "company": "HAVAS Ortega",
+      "email_num": 2,
+      "subject": "Re: Gian - who's writing for HAVAS Ortega?",
+      "sent_at": "2026-07-31T01:43:26.248068"
+    },
+    {
+      "to": "amor.magno@havasmediaortega.com",
+      "company": "HAVAS Ortega",
+      "email_num": 2,
+      "subject": "Re: Amor - who's writing for HAVAS Ortega?",
+      "sent_at": "2026-07-31T01:44:26.449388"
+    },
+    {
+      "to": "iea.nepomuceno@havasmediaortega.com",
+      "company": "HAVAS Ortega",
+      "email_num": 2,
+      "subject": "Re: Iea - who's writing for HAVAS Ortega?",
+      "sent_at": "2026-07-31T01:45:26.576422"
+    },
+    {
+      "to": "vivien.sussmilch@havasmediaortega.com",
+      "company": "HAVAS Ortega",
+      "email_num": 2,
+      "subject": "Re: Vivien - who's writing for HAVAS Ortega?",
+      "sent_at": "2026-07-31T01:46:26.805245"
     }
   ]
 }
