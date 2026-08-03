@@ -2351,6 +2351,62 @@
       "email_num": 2,
       "subject": "Re: Vivien - who's writing for HAVAS Ortega?",
       "sent_at": "2026-07-31T01:46:26.805245"
+    },
+    {
+      "to": "barbie.sison@havasmediaortega.com",
+      "company": "HAVAS Ortega",
+      "email_num": 2,
+      "subject": "Re: Barbie - content at HAVAS Ortega",
+      "sent_at": "2026-08-03T01:44:43.185192"
+    },
+    {
+      "to": "jade.ilagan@ideasxmachina.com",
+      "company": "IdeasXMachina Hakuhodo",
+      "email_num": 2,
+      "subject": "Re: Jade - who's writing for IdeasXMachina Hakuhodo?",
+      "sent_at": "2026-08-03T01:45:43.428701"
+    },
+    {
+      "to": "shayne.madamba@ideasxmachina.com",
+      "company": "IdeasXMachina Hakuhodo",
+      "email_num": 2,
+      "subject": "Re: Shayne - who's writing for IdeasXMachina Hakuhodo?",
+      "sent_at": "2026-08-03T01:46:45.440880"
+    },
+    {
+      "to": "patricia.panibio@ideasxmachina.com",
+      "company": "IdeasXMachina Hakuhodo",
+      "email_num": 2,
+      "subject": "Re: Patricia - content at IdeasXMachina Hakuhodo",
+      "sent_at": "2026-08-03T01:47:45.668727"
+    },
+    {
+      "to": "shai.avecilla-riofrio@ideasxmachina.com",
+      "company": "IdeasXMachina Hakuhodo",
+      "email_num": 2,
+      "subject": "Re: Shai - content output at IdeasXMachina Hakuhodo",
+      "sent_at": "2026-08-03T01:48:45.861460"
+    },
+    {
+      "to": "tobias.bernardo@ideasxmachina.com",
+      "company": "IdeasXMachina Hakuhodo",
+      "email_num": 2,
+      "subject": "Re: Tobias - content at IdeasXMachina Hakuhodo",
+      "sent_at": "2026-08-03T01:49:46.128820"
+    },
+    {
+      "to": "shu.takahashi@ideasxmachina.com",
+      "company": "IdeasXMachina Hakuhodo",
+      "email_num": 2,
+      "subject": "Re: Shu - content at IdeasXMachina Hakuhodo",
+      "sent_at": "2026-08-03T01:50:46.337379"
+    },
+    {
+      "to": "karen.parreno@ideasxmachina.com",
+      "company": "IdeasXMachina Hakuhodo",
+      "email_num": 2,
+      "subject": "Re: Karen - who's writing for IdeasXMachina Hakuhodo?",
+      "sent_at": "2026-08-03T01:51:46.532631"
     }
   ]
 }
