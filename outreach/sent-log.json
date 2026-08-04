@@ -2407,6 +2407,62 @@
       "email_num": 2,
       "subject": "Re: Karen - who's writing for IdeasXMachina Hakuhodo?",
       "sent_at": "2026-08-03T01:51:46.532631"
+    },
+    {
+      "to": "raymund@aboitizfoods.com",
+      "company": "Aboitiz Foods",
+      "email_num": 1,
+      "subject": "Raymund - Aboitiz Foods' content output",
+      "sent_at": "2026-08-04T01:36:49.869886"
+    },
+    {
+      "to": "ben@benchtm.com",
+      "company": "Bench / Suyen Corporation",
+      "email_num": 1,
+      "subject": "Ben - content output at Bench / Suyen Corporation",
+      "sent_at": "2026-08-04T01:37:53.167187"
+    },
+    {
+      "to": "candice@cebupacificair.com",
+      "company": "Cebu Pacific Air",
+      "email_num": 1,
+      "subject": "Candice - Cebu Pacific Air's content output",
+      "sent_at": "2026-08-04T01:38:53.390596"
+    },
+    {
+      "to": "jerry@cityofdreamsmanila.com",
+      "company": "City of Dreams Manila",
+      "email_num": 1,
+      "subject": "Jerry - City of Dreams Manila's content output",
+      "sent_at": "2026-08-04T01:39:53.642021"
+    },
+    {
+      "to": "sharon@delmonte-phil.com",
+      "company": "Del Monte",
+      "email_num": 1,
+      "subject": "Sharon - Del Monte's content output",
+      "sent_at": "2026-08-04T01:40:53.853991"
+    },
+    {
+      "to": "jogent@dominospizza.ph",
+      "company": "Domino's Pizza",
+      "email_num": 1,
+      "subject": "Jogent - Domino's Pizza's content output",
+      "sent_at": "2026-08-04T01:41:54.162250"
+    },
+    {
+      "to": "greg@emperadorinc.com",
+      "company": "Emperador Distillers",
+      "email_num": 1,
+      "subject": "Greg - Emperador Distillers' content output",
+      "sent_at": "2026-08-04T01:42:54.422034"
+    },
+    {
+      "to": "neil@mynt.com.ph",
+      "company": "GCash / Mynt",
+      "email_num": 1,
+      "subject": "Neil - GCash / Mynt's content output",
+      "sent_at": "2026-08-04T01:43:54.651053"
     }
   ]
 }
