@@ -2463,6 +2463,62 @@
       "email_num": 1,
       "subject": "Neil - GCash / Mynt's content output",
       "sent_at": "2026-08-04T01:43:54.651053"
+    },
+    {
+      "to": "roche@globe.com.ph",
+      "company": "Globe Telecom",
+      "email_num": 1,
+      "subject": "Roche - Globe Telecom's content output",
+      "sent_at": "2026-08-05T01:35:46.427755"
+    },
+    {
+      "to": "andrea@luckybeauty.com",
+      "company": "Lucky Beauty",
+      "email_num": 1,
+      "subject": "Andrea - content output at Lucky Beauty",
+      "sent_at": "2026-08-05T01:36:46.667452"
+    },
+    {
+      "to": "albet@megaprimefoods.com.ph",
+      "company": "Mega Prime Foods",
+      "email_num": 1,
+      "subject": "Albet - Mega Prime Foods' content output",
+      "sent_at": "2026-08-05T01:37:46.874278"
+    },
+    {
+      "to": "cleofe@megaworldhotels.com",
+      "company": "Megaworld Hotels & Resorts",
+      "email_num": 1,
+      "subject": "Cleofe - content output at Megaworld Hotels & Resorts",
+      "sent_at": "2026-08-05T01:38:47.069330"
+    },
+    {
+      "to": "lyle@mercurydrug.com",
+      "company": "Mercury Drug",
+      "email_num": 1,
+      "subject": "Lyle - content at Mercury Drug",
+      "sent_at": "2026-08-05T01:39:47.244443"
+    },
+    {
+      "to": "melissa@mondenissin.com",
+      "company": "Monde Nissin",
+      "email_num": 1,
+      "subject": "Melissa - Monde Nissin's content output",
+      "sent_at": "2026-08-05T01:40:47.407043"
+    },
+    {
+      "to": "ampy@nutriasia.com",
+      "company": "NutriAsia",
+      "email_num": 1,
+      "subject": "Ampy - NutriAsia's content output",
+      "sent_at": "2026-08-05T01:41:47.658402"
+    },
+    {
+      "to": "cielo@okadamanila.com",
+      "company": "Okada Manila",
+      "email_num": 1,
+      "subject": "Cielo - content at Okada Manila",
+      "sent_at": "2026-08-05T01:42:47.897531"
     }
   ]
 }
