@@ -2519,6 +2519,62 @@
       "email_num": 1,
       "subject": "Cielo - content at Okada Manila",
       "sent_at": "2026-08-05T01:42:47.897531"
+    },
+    {
+      "to": "jimmy@primergrp.com",
+      "company": "PRIMER Group of Companies",
+      "email_num": 1,
+      "subject": "Jimmy - content output at PRIMER Group of Companies",
+      "sent_at": "2026-08-13T15:00:16.050436"
+    },
+    {
+      "to": "roxanne@plainsandprints.com",
+      "company": "Plains & Prints",
+      "email_num": 1,
+      "subject": "Roxanne - content output at Plains & Prints",
+      "sent_at": "2026-08-13T15:01:16.410702"
+    },
+    {
+      "to": "ferdinand@puregold.com.ph",
+      "company": "Puregold Price Club",
+      "email_num": 1,
+      "subject": "Ferdinand - Puregold Price Club's content output",
+      "sent_at": "2026-08-13T15:02:16.689869"
+    },
+    {
+      "to": "eva@rfm.com.ph",
+      "company": "RFM Corporation",
+      "email_num": 1,
+      "subject": "Eva - content output at RFM Corporation",
+      "sent_at": "2026-08-13T15:03:17.013809"
+    },
+    {
+      "to": "victor@rebisco.com.ph",
+      "company": "Republic Biscuit Corporation",
+      "email_num": 1,
+      "subject": "Victor - Republic Biscuit Corporation's content output",
+      "sent_at": "2026-08-13T15:04:17.337392"
+    },
+    {
+      "to": "angela@robinsonsretailholdings.com.ph",
+      "company": "Robinsons Retail",
+      "email_num": 1,
+      "subject": "Angela - Robinsons Retail's content output",
+      "sent_at": "2026-08-13T15:05:17.600183"
+    },
+    {
+      "to": "joaquin@smsupermalls.com",
+      "company": "SM Supermalls",
+      "email_num": 1,
+      "subject": "Joaquin - SM Supermalls' content output",
+      "sent_at": "2026-08-13T15:06:17.867548"
+    },
+    {
+      "to": "anton@ssigroup.com.ph",
+      "company": "SSI Group",
+      "email_num": 1,
+      "subject": "Anton - content output at SSI Group",
+      "sent_at": "2026-08-13T15:07:18.108296"
     }
   ]
 }
