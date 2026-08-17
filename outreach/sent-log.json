@@ -2631,6 +2631,62 @@
       "email_num": 2,
       "subject": "Re: Who's writing for Origine Consulting Group?",
       "sent_at": "2026-08-14T01:41:21.393118"
+    },
+    {
+      "to": "admin@prometheus.ph",
+      "company": "Prometheus",
+      "email_num": 2,
+      "subject": "Re: Who's writing for Prometheus?",
+      "sent_at": "2026-08-17T01:34:55.249990"
+    },
+    {
+      "to": "careers@rush.ph",
+      "company": "RUSH Technologies",
+      "email_num": 2,
+      "subject": "Re: Careers - who's writing for RUSH Technologies?",
+      "sent_at": "2026-08-17T01:35:55.401941"
+    },
+    {
+      "to": "workwithus@sparkit.global",
+      "company": "Spark It",
+      "email_num": 2,
+      "subject": "Re: Workwithus - who's writing for Spark It?",
+      "sent_at": "2026-08-17T01:36:55.581995"
+    },
+    {
+      "to": "huixin.koey@airrlabs.com",
+      "company": "AIRR Labs",
+      "email_num": 2,
+      "subject": "Re: Huixin - content at AIRR Labs",
+      "sent_at": "2026-08-17T01:37:55.730964"
+    },
+    {
+      "to": "raymund@aboitizfoods.com",
+      "company": "Aboitiz Foods",
+      "email_num": 2,
+      "subject": "Re: Raymund - Aboitiz Foods' content output",
+      "sent_at": "2026-08-17T01:38:55.931165"
+    },
+    {
+      "to": "joanne@alaskamilk.com",
+      "company": "Alaska Milk Corporation",
+      "email_num": 2,
+      "subject": "Re: Joanne - content at Alaska Milk Corporation",
+      "sent_at": "2026-08-17T01:39:56.213131"
+    },
+    {
+      "to": "maurice@anytimefitness.ph",
+      "company": "Anytime Fitness",
+      "email_num": 2,
+      "subject": "Re: Maurice - content output at Anytime Fitness",
+      "sent_at": "2026-08-17T01:40:56.396644"
+    },
+    {
+      "to": "jorge@asiabrewery.com",
+      "company": "Asia Brewery",
+      "email_num": 2,
+      "subject": "Re: Jorge - content at Asia Brewery",
+      "sent_at": "2026-08-17T01:41:56.556405"
     }
   ]
 }
