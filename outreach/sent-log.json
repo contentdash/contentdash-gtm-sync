@@ -2687,6 +2687,62 @@
       "email_num": 2,
       "subject": "Re: Jorge - content at Asia Brewery",
       "sent_at": "2026-08-17T01:41:56.556405"
+    },
+    {
+      "to": "fernando@axa.com.ph",
+      "company": "AXA",
+      "email_num": 1,
+      "subject": "Fernando - AXA's content output",
+      "sent_at": "2026-08-18T01:29:38.984576"
+    },
+    {
+      "to": "dani@angkas.com",
+      "company": "Angkas",
+      "email_num": 1,
+      "subject": "Dani - content at Angkas",
+      "sent_at": "2026-08-18T01:30:39.254221"
+    },
+    {
+      "to": "patricia@bounty.com.ph",
+      "company": "Bounty Fresh Group",
+      "email_num": 1,
+      "subject": "Patricia - content at Bounty Fresh Group",
+      "sent_at": "2026-08-18T01:31:39.565158"
+    },
+    {
+      "to": "angela@convergeict.com",
+      "company": "Converge ICT Solutions",
+      "email_num": 1,
+      "subject": "Angela - content at Converge ICT Solutions",
+      "sent_at": "2026-08-18T01:32:39.854518"
+    },
+    {
+      "to": "diego@ellanacosmetics.com",
+      "company": "Ellana Cosmetics",
+      "email_num": 1,
+      "subject": "Diego - content output at Ellana Cosmetics",
+      "sent_at": "2026-08-18T01:33:40.195590"
+    },
+    {
+      "to": "chad@filinvestgroup.com",
+      "company": "Filinvest Development Corporation",
+      "email_num": 1,
+      "subject": "Chad - Filinvest Development Corporation's content output",
+      "sent_at": "2026-08-18T01:34:40.495450"
+    },
+    {
+      "to": "hana@filipinta.com",
+      "company": "Filipinta Beauty",
+      "email_num": 1,
+      "subject": "Hana - content output at Filipinta Beauty",
+      "sent_at": "2026-08-18T01:35:40.742107"
+    },
+    {
+      "to": "lizelle@gmanetwork.com",
+      "company": "GMA Network",
+      "email_num": 1,
+      "subject": "Lizelle - GMA Network's content output",
+      "sent_at": "2026-08-18T01:36:41.006721"
     }
   ]
 }
