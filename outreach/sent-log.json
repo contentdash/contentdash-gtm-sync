@@ -2743,6 +2743,62 @@
       "email_num": 1,
       "subject": "Lizelle - GMA Network's content output",
       "sent_at": "2026-08-18T01:36:41.006721"
+    },
+    {
+      "to": "ivana@ivanaskin.com",
+      "company": "Ivana Skin",
+      "email_num": 1,
+      "subject": "Ivana - content output at Ivana Skin",
+      "sent_at": "2026-08-19T01:29:02.530779"
+    },
+    {
+      "to": "rizza@lana.ph",
+      "company": "Lana PH",
+      "email_num": 1,
+      "subject": "Rizza - content output at Lana PH",
+      "sent_at": "2026-08-19T01:30:02.916524"
+    },
+    {
+      "to": "pepe@maya.ph",
+      "company": "Maya",
+      "email_num": 1,
+      "subject": "Pepe - Maya's content output",
+      "sent_at": "2026-08-19T01:31:03.205331"
+    },
+    {
+      "to": "eugene@pal.com.ph",
+      "company": "Philippine Airlines",
+      "email_num": 1,
+      "subject": "Eugene - Philippine Airlines' content output",
+      "sent_at": "2026-08-19T01:32:03.457430"
+    },
+    {
+      "to": "rozanne@prulifeuk.com.ph",
+      "company": "Pru Life UK",
+      "email_num": 1,
+      "subject": "Rozanne - Pru Life UK's content output",
+      "sent_at": "2026-08-19T01:33:03.764658"
+    },
+    {
+      "to": "tracey@e-rockwell.com",
+      "company": "Rockwell Land Corporation",
+      "email_num": 1,
+      "subject": "Tracey - Rockwell Land Corporation's content output",
+      "sent_at": "2026-08-19T01:34:04.047649"
+    },
+    {
+      "to": "neil@smhotels.com.ph",
+      "company": "SM Hotels and Conventions",
+      "email_num": 1,
+      "subject": "Neil - SM Hotels and Conventions' content output",
+      "sent_at": "2026-08-19T01:35:04.335772"
+    },
+    {
+      "to": "guia@santebarley.com.ph",
+      "company": "Sante",
+      "email_num": 1,
+      "subject": "Guia - Sante's content output",
+      "sent_at": "2026-08-19T01:36:04.680093"
     }
   ]
 }
