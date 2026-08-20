@@ -2799,6 +2799,62 @@
       "email_num": 1,
       "subject": "Guia - Sante's content output",
       "sent_at": "2026-08-19T01:36:04.680093"
+    },
+    {
+      "to": "melissa@sedahotels.com",
+      "company": "Seda Hotels",
+      "email_num": 1,
+      "subject": "Melissa - content at Seda Hotels",
+      "sent_at": "2026-08-20T01:29:06.300410"
+    },
+    {
+      "to": "kellda@shakeyspizza.ph",
+      "company": "Shakey's Pizza",
+      "email_num": 1,
+      "subject": "Kellda - content output at Shakey's Pizza",
+      "sent_at": "2026-08-20T01:30:07.387160"
+    },
+    {
+      "to": "anna@urc.com.ph",
+      "company": "Universal Robina Corporation",
+      "email_num": 1,
+      "subject": "Anna - Universal Robina Corporation's content output",
+      "sent_at": "2026-08-20T01:31:07.657451"
+    },
+    {
+      "to": "jackson@vikings.ph",
+      "company": "Vikings Luxury Buffet",
+      "email_num": 1,
+      "subject": "Jackson - content output at Vikings Luxury Buffet",
+      "sent_at": "2026-08-20T01:32:07.918535"
+    },
+    {
+      "to": "lorraine@wilcon.com.ph",
+      "company": "Wilcon Depot",
+      "email_num": 1,
+      "subject": "Lorraine - content output at Wilcon Depot",
+      "sent_at": "2026-08-20T01:33:08.267420"
+    },
+    {
+      "to": "alberto@wildflour.com.ph",
+      "company": "Wildflour Hospitality Group",
+      "email_num": 1,
+      "subject": "Alberto - Wildflour Hospitality Group's content output",
+      "sent_at": "2026-08-20T01:34:08.554156"
+    },
+    {
+      "to": "zark@zarksburgers.ph",
+      "company": "Zark's Burgers",
+      "email_num": 1,
+      "subject": "Rolandrei - content output at Zark's Burgers",
+      "sent_at": "2026-08-20T01:35:08.829309"
+    },
+    {
+      "to": "mc@agenix.digital",
+      "company": "AGENIX Digital",
+      "email_num": 1,
+      "subject": "Mc - who's producing for AGENIX Digital's clients?",
+      "sent_at": "2026-08-20T01:36:09.069338"
     }
   ]
 }
