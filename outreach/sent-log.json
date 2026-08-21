@@ -2855,6 +2855,62 @@
       "email_num": 1,
       "subject": "Mc - who's producing for AGENIX Digital's clients?",
       "sent_at": "2026-08-20T01:36:09.069338"
+    },
+    {
+      "to": "fernando@axa.com.ph",
+      "company": "AXA",
+      "email_num": 2,
+      "subject": "Re: Fernando - AXA's content output",
+      "sent_at": "2026-08-21T01:32:03.967681"
+    },
+    {
+      "to": "dani@angkas.com",
+      "company": "Angkas",
+      "email_num": 2,
+      "subject": "Re: Dani - content at Angkas",
+      "sent_at": "2026-08-21T01:33:04.169679"
+    },
+    {
+      "to": "virginia@asiantigersgroup.com",
+      "company": "Asian Tigers Group",
+      "email_num": 2,
+      "subject": "Re: Virginia - content output at Asian Tigers Group",
+      "sent_at": "2026-08-21T01:34:04.370250"
+    },
+    {
+      "to": "michelle@autohubgroup.com",
+      "company": "Autohub Group",
+      "email_num": 2,
+      "subject": "Re: Michelle - Autohub Group's content output",
+      "sent_at": "2026-08-21T01:35:04.574018"
+    },
+    {
+      "to": "kenan@beachborn.ph",
+      "company": "Beach Born",
+      "email_num": 2,
+      "subject": "Re: Kenan - content output at Beach Born",
+      "sent_at": "2026-08-21T01:36:04.789216"
+    },
+    {
+      "to": "rhea@beautedermcorp.com",
+      "company": "Beautederm Corporation",
+      "email_num": 2,
+      "subject": "Re: Rhea - content output at Beautederm Corporation",
+      "sent_at": "2026-08-21T01:37:05.111911"
+    },
+    {
+      "to": "vicki@beloessentials.com",
+      "company": "Belo Essentials",
+      "email_num": 2,
+      "subject": "Re: Vicki - content output at Belo Essentials",
+      "sent_at": "2026-08-21T01:38:05.327832"
+    },
+    {
+      "to": "ben@benchtm.com",
+      "company": "Bench / Suyen Corporation",
+      "email_num": 2,
+      "subject": "Re: Ben - content output at Bench / Suyen Corporation",
+      "sent_at": "2026-08-21T01:39:05.525801"
     }
   ]
 }
