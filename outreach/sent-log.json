@@ -2911,6 +2911,62 @@
       "email_num": 2,
       "subject": "Re: Ben - content output at Bench / Suyen Corporation",
       "sent_at": "2026-08-21T01:39:05.525801"
+    },
+    {
+      "to": "rommel@binalot.com",
+      "company": "Binalot Fiesta Foods",
+      "email_num": 2,
+      "subject": "Re: Rommel - content output at Binalot Fiesta Foods",
+      "sent_at": "2026-08-24T01:34:16.370492"
+    },
+    {
+      "to": "steve@boscoffee.com",
+      "company": "Bo's Coffee",
+      "email_num": 2,
+      "subject": "Re: Steve - content output at Bo's Coffee",
+      "sent_at": "2026-08-24T01:35:16.606923"
+    },
+    {
+      "to": "patricia@bounty.com.ph",
+      "company": "Bounty Fresh Group",
+      "email_num": 2,
+      "subject": "Re: Patricia - content at Bounty Fresh Group",
+      "sent_at": "2026-08-24T01:36:16.974571"
+    },
+    {
+      "to": "candice@cebupacificair.com",
+      "company": "Cebu Pacific Air",
+      "email_num": 2,
+      "subject": "Re: Candice - Cebu Pacific Air's content output",
+      "sent_at": "2026-08-24T01:37:17.201103"
+    },
+    {
+      "to": "robin.zieme@channelfactory.com",
+      "company": "Channel Factory",
+      "email_num": 2,
+      "subject": "Re: Robin - content at Channel Factory",
+      "sent_at": "2026-08-24T01:38:17.465187"
+    },
+    {
+      "to": "jerry@cityofdreamsmanila.com",
+      "company": "City of Dreams Manila",
+      "email_num": 2,
+      "subject": "Re: Jerry - City of Dreams Manila's content output",
+      "sent_at": "2026-08-24T01:39:17.652839"
+    },
+    {
+      "to": "nina@colourette.ph",
+      "company": "Colourette Cosmetics",
+      "email_num": 2,
+      "subject": "Re: Nina - content output at Colourette Cosmetics",
+      "sent_at": "2026-08-24T01:40:17.900639"
+    },
+    {
+      "to": "angela@convergeict.com",
+      "company": "Converge ICT Solutions",
+      "email_num": 2,
+      "subject": "Re: Angela - content at Converge ICT Solutions",
+      "sent_at": "2026-08-24T01:41:18.121407"
     }
   ]
 }
