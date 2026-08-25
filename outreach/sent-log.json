@@ -2967,6 +2967,62 @@
       "email_num": 2,
       "subject": "Re: Angela - content at Converge ICT Solutions",
       "sent_at": "2026-08-24T01:41:18.121407"
+    },
+    {
+      "to": "ana@ardent.com.ph",
+      "company": "ArdentComm",
+      "email_num": 1,
+      "subject": "Ana - who's producing for ArdentComm's clients?",
+      "sent_at": "2026-08-25T01:28:53.110206"
+    },
+    {
+      "to": "ramon@bigideasph.com",
+      "company": "Big Ideas Social Media",
+      "email_num": 1,
+      "subject": "Ramon - who's producing for Big Ideas Social Media's clients?",
+      "sent_at": "2026-08-25T01:29:53.327686"
+    },
+    {
+      "to": "paulus@brandcommasia.com",
+      "company": "BrandComm Asia",
+      "email_num": 1,
+      "subject": "Paulus - who's producing for BrandComm Asia's clients?",
+      "sent_at": "2026-08-25T01:30:53.530772"
+    },
+    {
+      "to": "carl@carlocab.com",
+      "company": "Carl Ocab Digital Marketing",
+      "email_num": 1,
+      "subject": "Carl - who's producing for Carl Ocab Digital Marketing's clients?",
+      "sent_at": "2026-08-25T01:31:53.795309"
+    },
+    {
+      "to": "will@centaurmarketing.co",
+      "company": "Centaur Marketing",
+      "email_num": 1,
+      "subject": "Will - who's producing for Centaur Marketing's clients?",
+      "sent_at": "2026-08-25T01:32:53.995135"
+    },
+    {
+      "to": "ferdinand@comcosea.com",
+      "company": "ComCo Southeast Asia",
+      "email_num": 1,
+      "subject": "Ferdinand - who's producing for ComCo Southeast Asia's clients?",
+      "sent_at": "2026-08-25T01:33:54.281265"
+    },
+    {
+      "to": "michael@dma.com.ph",
+      "company": "DM&A Co.",
+      "email_num": 1,
+      "subject": "Michael - who's producing for DM&A Co.'s clients?",
+      "sent_at": "2026-08-25T01:34:54.490858"
+    },
+    {
+      "to": "mel@dominguezmarketing.net",
+      "company": "Dominguez Marketing Communications",
+      "email_num": 1,
+      "subject": "Mel - who's producing for Dominguez Marketing Communications' clients?",
+      "sent_at": "2026-08-25T01:35:54.739483"
     }
   ]
 }
