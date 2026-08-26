@@ -3023,6 +3023,62 @@
       "email_num": 1,
       "subject": "Mel - who's producing for Dominguez Marketing Communications' clients?",
       "sent_at": "2026-08-25T01:35:54.739483"
+    },
+    {
+      "to": "john@ensightdigitalmarketing.com",
+      "company": "Ensight Digital Marketing",
+      "email_num": 1,
+      "subject": "John - who's producing for Ensight Digital Marketing's clients?",
+      "sent_at": "2026-08-26T01:29:33.082123"
+    },
+    {
+      "to": "patrick@exaweb.com.ph",
+      "company": "ExaWeb Corporation",
+      "email_num": 1,
+      "subject": "Patrick - who's producing for ExaWeb Corporation's clients?",
+      "sent_at": "2026-08-26T01:30:33.489827"
+    },
+    {
+      "to": "edd@fuentesmanila.com",
+      "company": "FuentesManila",
+      "email_num": 1,
+      "subject": "Edd - who's producing for FuentesManila's clients?",
+      "sent_at": "2026-08-26T01:31:33.779986"
+    },
+    {
+      "to": "leah@greenbulbpr.com",
+      "company": "Greenbulb Communications",
+      "email_num": 1,
+      "subject": "Leah - who's producing for Greenbulb Communications' clients?",
+      "sent_at": "2026-08-26T01:32:34.091950"
+    },
+    {
+      "to": "julio@huskeedigital.com",
+      "company": "Huskee Digital",
+      "email_num": 1,
+      "subject": "Julio - who's producing for Huskee Digital's clients?",
+      "sent_at": "2026-08-26T01:33:34.358276"
+    },
+    {
+      "to": "gilmar@infinityhub.com",
+      "company": "Infinity Hub",
+      "email_num": 1,
+      "subject": "Gilmar - who's producing for Infinity Hub's clients?",
+      "sent_at": "2026-08-26T01:34:34.586750"
+    },
+    {
+      "to": "gladys@intersections.com.ph",
+      "company": "Intersections Communications",
+      "email_num": 1,
+      "subject": "Gladys - who's producing for Intersections Communications' clients?",
+      "sent_at": "2026-08-26T01:35:34.802920"
+    },
+    {
+      "to": "gino@joynomedia.com",
+      "company": "JOYNO Media",
+      "email_num": 1,
+      "subject": "Gino - who's producing for JOYNO Media's clients?",
+      "sent_at": "2026-08-26T01:36:34.996541"
     }
   ]
 }
