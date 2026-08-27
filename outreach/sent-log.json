@@ -3079,6 +3079,62 @@
       "email_num": 1,
       "subject": "Gino - who's producing for JOYNO Media's clients?",
       "sent_at": "2026-08-26T01:36:34.996541"
+    },
+    {
+      "to": "ruben@licerainc.com",
+      "company": "LICERA Growth Marketing Group",
+      "email_num": 1,
+      "subject": "Ruben - who's producing for LICERA Growth Marketing Group's clients?",
+      "sent_at": "2026-08-27T02:31:42.799004"
+    },
+    {
+      "to": "doy@m2comms.com",
+      "company": "M2.0 Communications",
+      "email_num": 1,
+      "subject": "Doy - who's producing for M2.0 Communications' clients?",
+      "sent_at": "2026-08-27T02:32:43.052261"
+    },
+    {
+      "to": "mark@mcbrandsph.com",
+      "company": "MCBrands Studio",
+      "email_num": 1,
+      "subject": "Mark - who's producing for MCBrands Studio's clients?",
+      "sent_at": "2026-08-27T02:33:43.275014"
+    },
+    {
+      "to": "wendy@myoptimind.com",
+      "company": "Optimind Technology Solutions",
+      "email_num": 1,
+      "subject": "Wendy - who's producing for Optimind Technology Solutions' clients?",
+      "sent_at": "2026-08-27T02:34:43.624426"
+    },
+    {
+      "to": "ron@pageonegroup.ph",
+      "company": "PAGEONE Group",
+      "email_num": 1,
+      "subject": "Ron - who's producing for PAGEONE Group's clients?",
+      "sent_at": "2026-08-27T02:35:43.885830"
+    },
+    {
+      "to": "doris@prworksph.com",
+      "company": "PRWorks",
+      "email_num": 1,
+      "subject": "Doris - who's producing for PRWorks' clients?",
+      "sent_at": "2026-08-27T02:36:44.115606"
+    },
+    {
+      "to": "lloyd@pixelmojo.io",
+      "company": "Pixelmojo",
+      "email_num": 1,
+      "subject": "Lloyd - who's producing for Pixelmojo's clients?",
+      "sent_at": "2026-08-27T02:37:44.424724"
+    },
+    {
+      "to": "mark@stratworks.ph",
+      "company": "Stratworks",
+      "email_num": 1,
+      "subject": "Mark - who's producing for Stratworks' clients?",
+      "sent_at": "2026-08-27T02:38:44.681620"
     }
   ]
 }
