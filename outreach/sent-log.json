@@ -3135,6 +3135,62 @@
       "email_num": 1,
       "subject": "Mark - who's producing for Stratworks' clients?",
       "sent_at": "2026-08-27T02:38:44.681620"
+    },
+    {
+      "to": "alexander@cosmetiqueasia.com",
+      "company": "Cosmetique Asia",
+      "email_num": 2,
+      "subject": "Re: Alexander - content output at Cosmetique Asia",
+      "sent_at": "2026-08-28T03:46:24.098058"
+    },
+    {
+      "to": "nikki@dmarkbeauty.com",
+      "company": "DMark Beauty",
+      "email_num": 2,
+      "subject": "Re: Nikki - content output at DMark Beauty",
+      "sent_at": "2026-08-28T03:47:24.348469"
+    },
+    {
+      "to": "sharon@delmonte-phil.com",
+      "company": "Del Monte",
+      "email_num": 2,
+      "subject": "Re: Sharon - Del Monte's content output",
+      "sent_at": "2026-08-28T03:48:24.600522"
+    },
+    {
+      "to": "jogent@dominospizza.ph",
+      "company": "Domino's Pizza",
+      "email_num": 2,
+      "subject": "Re: Jogent - Domino's Pizza's content output",
+      "sent_at": "2026-08-28T03:49:24.866389"
+    },
+    {
+      "to": "diego@ellanacosmetics.com",
+      "company": "Ellana Cosmetics",
+      "email_num": 2,
+      "subject": "Re: Diego - content output at Ellana Cosmetics",
+      "sent_at": "2026-08-28T03:50:25.098709"
+    },
+    {
+      "to": "greg@emperadorinc.com",
+      "company": "Emperador Distillers",
+      "email_num": 2,
+      "subject": "Re: Greg - Emperador Distillers' content output",
+      "sent_at": "2026-08-28T03:51:25.332308"
+    },
+    {
+      "to": "denice.sy@everbilena.com.ph",
+      "company": "Ever Bilena",
+      "email_num": 2,
+      "subject": "Re: Denice - Ever Bilena's content output",
+      "sent_at": "2026-08-28T03:52:25.623518"
+    },
+    {
+      "to": "divina@figaro.ph",
+      "company": "Figaro Coffee Company",
+      "email_num": 2,
+      "subject": "Re: Divina - content output at Figaro Coffee Company",
+      "sent_at": "2026-08-28T03:53:25.924307"
     }
   ]
 }
