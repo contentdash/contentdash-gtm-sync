@@ -3191,6 +3191,62 @@
       "email_num": 2,
       "subject": "Re: Divina - content output at Figaro Coffee Company",
       "sent_at": "2026-08-28T03:53:25.924307"
+    },
+    {
+      "to": "chad@filinvestgroup.com",
+      "company": "Filinvest Development Corporation",
+      "email_num": 2,
+      "subject": "Re: Chad - Filinvest Development Corporation's content output",
+      "sent_at": "2026-08-31T01:28:50.593045"
+    },
+    {
+      "to": "hana@filipinta.com",
+      "company": "Filipinta Beauty",
+      "email_num": 2,
+      "subject": "Re: Hana - content output at Filipinta Beauty",
+      "sent_at": "2026-08-31T01:29:50.827711"
+    },
+    {
+      "to": "neil@mynt.com.ph",
+      "company": "GCash / Mynt",
+      "email_num": 2,
+      "subject": "Re: Neil - GCash / Mynt's content output",
+      "sent_at": "2026-08-31T01:30:51.077728"
+    },
+    {
+      "to": "lizelle@gmanetwork.com",
+      "company": "GMA Network",
+      "email_num": 2,
+      "subject": "Re: Lizelle - GMA Network's content output",
+      "sent_at": "2026-08-31T01:31:51.410738"
+    },
+    {
+      "to": "mae@grwmcosmetics.com",
+      "company": "GRWM Cosmetics",
+      "email_num": 2,
+      "subject": "Re: Mae - content output at GRWM Cosmetics",
+      "sent_at": "2026-08-31T01:32:51.658529"
+    },
+    {
+      "to": "roche@globe.com.ph",
+      "company": "Globe Telecom",
+      "email_num": 2,
+      "subject": "Re: Roche - Globe Telecom's content output",
+      "sent_at": "2026-08-31T01:33:51.954510"
+    },
+    {
+      "to": "ley@goldilocks.com.ph",
+      "company": "Goldilocks Bakeshop",
+      "email_num": 2,
+      "subject": "Re: Ley - content at Goldilocks Bakeshop",
+      "sent_at": "2026-08-31T01:34:52.174000"
+    },
+    {
+      "to": "rai.dizon@havasmediaortega.com",
+      "company": "HAVAS Ortega",
+      "email_num": 2,
+      "subject": "Re: Raymond - content output at HAVAS Ortega",
+      "sent_at": "2026-08-31T01:35:52.425838"
     }
   ]
 }
