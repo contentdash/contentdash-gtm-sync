@@ -3247,6 +3247,62 @@
       "email_num": 2,
       "subject": "Re: Raymond - content output at HAVAS Ortega",
       "sent_at": "2026-08-31T01:35:52.425838"
+    },
+    {
+      "to": "glenda@brilliantskinessentials.ph",
+      "company": "Brilliant Skin Essentials",
+      "email_num": 1,
+      "subject": "Glenda - content output at Brilliant Skin Essentials",
+      "sent_at": "2026-09-01T01:24:15.617724"
+    },
+    {
+      "to": "alex@dalaglobal.com",
+      "company": "Dala Global",
+      "email_num": 1,
+      "subject": "Alex - content output at Dala Global",
+      "sent_at": "2026-09-01T01:25:15.773027"
+    },
+    {
+      "to": "margaux@dermtropics.com",
+      "company": "Dermtropics",
+      "email_num": 1,
+      "subject": "Margaux - content output at Dermtropics",
+      "sent_at": "2026-09-01T01:26:15.980769"
+    },
+    {
+      "to": "enrico@foodeeglobal.ph",
+      "company": "FooDee Global Concepts",
+      "email_num": 1,
+      "subject": "Enrico - content output at FooDee Global Concepts",
+      "sent_at": "2026-09-01T01:27:16.161982"
+    },
+    {
+      "to": "avin@fredleygroup.com",
+      "company": "Fredley Group of Companies",
+      "email_num": 1,
+      "subject": "Avin - content output at Fredley Group of Companies",
+      "sent_at": "2026-09-01T01:28:16.353118"
+    },
+    {
+      "to": "andrew@gogym.ph",
+      "company": "GoGym",
+      "email_num": 1,
+      "subject": "Andrew - content output at GoGym",
+      "sent_at": "2026-09-01T01:29:16.513401"
+    },
+    {
+      "to": "janina@jradiance.com",
+      "company": "JRadiance Corporation",
+      "email_num": 1,
+      "subject": "Janina - content output at JRadiance Corporation",
+      "sent_at": "2026-09-01T01:30:16.689604"
+    },
+    {
+      "to": "kathy@newportworldresorts.com",
+      "company": "Newport World Resorts",
+      "email_num": 1,
+      "subject": "Kathy - content at Newport World Resorts",
+      "sent_at": "2026-09-01T01:31:16.882957"
     }
   ]
 }
