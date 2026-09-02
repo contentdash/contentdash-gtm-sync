@@ -3303,6 +3303,62 @@
       "email_num": 1,
       "subject": "Kathy - content at Newport World Resorts",
       "sent_at": "2026-09-01T01:31:16.882957"
+    },
+    {
+      "to": "almay@ohsohealthy.com",
+      "company": "OSH! Oh So Healthy",
+      "email_num": 1,
+      "subject": "Almay - content output at OSH! Oh So Healthy",
+      "sent_at": "2026-09-02T01:17:07.526344"
+    },
+    {
+      "to": "tyff@oeorganics.com",
+      "company": "One Earth Organics",
+      "email_num": 1,
+      "subject": "Tyff - content output at One Earth Organics",
+      "sent_at": "2026-09-02T01:18:07.710259"
+    },
+    {
+      "to": "dowan@poshskin.ph",
+      "company": "Posh Skin Co.",
+      "email_num": 1,
+      "subject": "Dowan - content output at Posh Skin Co.",
+      "sent_at": "2026-09-02T01:19:07.853257"
+    },
+    {
+      "to": "jessica@sooperbeaute.com",
+      "company": "Sooper Beaute",
+      "email_num": 1,
+      "subject": "Jessica - content output at Sooper Beaute",
+      "sent_at": "2026-09-02T01:20:08.018371"
+    },
+    {
+      "to": "eliza@momentgroup.ph",
+      "company": "The Moment Group",
+      "email_num": 1,
+      "subject": "Eliza - content output at The Moment Group",
+      "sent_at": "2026-09-02T01:21:08.268865"
+    },
+    {
+      "to": "aica@worldbalance.com.ph",
+      "company": "World Balance",
+      "email_num": 1,
+      "subject": "Aica - World Balance's content output",
+      "sent_at": "2026-09-02T01:22:08.502426"
+    },
+    {
+      "to": "jeorge@arcadefilmfactory.com",
+      "company": "Arcade Film Factory",
+      "email_num": 1,
+      "subject": "Jeorge - who's producing for Arcade Film Factory's clients?",
+      "sent_at": "2026-09-02T01:23:08.746856"
+    },
+    {
+      "to": "jomer@digitalmarketingphilippines.com",
+      "company": "Digital Marketing",
+      "email_num": 1,
+      "subject": "Jomer - who's producing for Digital Marketing's clients?",
+      "sent_at": "2026-09-02T01:24:08.952076"
     }
   ]
 }
