@@ -3359,6 +3359,62 @@
       "email_num": 1,
       "subject": "Jomer - who's producing for Digital Marketing's clients?",
       "sent_at": "2026-09-02T01:24:08.952076"
+    },
+    {
+      "to": "ruben@estrat360.com",
+      "company": "ESTRAT360",
+      "email_num": 1,
+      "subject": "Ruben - who's producing for ESTRAT360's clients?",
+      "sent_at": "2026-09-03T01:20:44.816705"
+    },
+    {
+      "to": "dionie@leronleronsinta.com",
+      "company": "Leron Leron Sinta",
+      "email_num": 1,
+      "subject": "Dionie - who's producing for Leron Leron Sinta's clients?",
+      "sent_at": "2026-09-03T01:21:45.020317"
+    },
+    {
+      "to": "hector@madelephantph.com",
+      "company": "MAD Elephant PH",
+      "email_num": 1,
+      "subject": "Hector - who's producing for MAD Elephant PH's clients?",
+      "sent_at": "2026-09-03T01:22:45.250902"
+    },
+    {
+      "to": "ron@roc.ph",
+      "company": "ROC.PH",
+      "email_num": 1,
+      "subject": "Ron - who's producing for ROC.PH's clients?",
+      "sent_at": "2026-09-03T01:23:45.428920"
+    },
+    {
+      "to": "camille@tbcmanila.com",
+      "company": "TBC Manila Design House",
+      "email_num": 1,
+      "subject": "Camille - who's producing for TBC Manila Design House's clients?",
+      "sent_at": "2026-09-03T01:24:45.612885"
+    },
+    {
+      "to": "ricka@thedigitalauthority.io",
+      "company": "The Digital Authority",
+      "email_num": 1,
+      "subject": "Ricka - who's producing for The Digital Authority's clients?",
+      "sent_at": "2026-09-03T01:25:45.813496"
+    },
+    {
+      "to": "itamar@truelogic.com.ph",
+      "company": "Truelogic",
+      "email_num": 1,
+      "subject": "Itamar - who's producing for Truelogic's clients?",
+      "sent_at": "2026-09-03T01:26:46.042624"
+    },
+    {
+      "to": "dean@uniquecornpr.com",
+      "company": "Uniquecorn Strategies",
+      "email_num": 1,
+      "subject": "Dean - who's producing for Uniquecorn Strategies' clients?",
+      "sent_at": "2026-09-03T01:27:46.229179"
     }
   ]
 }
