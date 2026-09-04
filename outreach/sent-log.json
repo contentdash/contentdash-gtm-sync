@@ -3415,6 +3415,62 @@
       "email_num": 1,
       "subject": "Dean - who's producing for Uniquecorn Strategies' clients?",
       "sent_at": "2026-09-03T01:27:46.229179"
+    },
+    {
+      "to": "jacqe@happyskincosmetics.com",
+      "company": "Happy Skin",
+      "email_num": 2,
+      "subject": "Re: Jacqe - content output at Happy Skin",
+      "sent_at": "2026-09-04T01:18:47.032538"
+    },
+    {
+      "to": "anna@humanheartnature.com",
+      "company": "Human Nature",
+      "email_num": 2,
+      "subject": "Re: Anna - content output at Human Nature",
+      "sent_at": "2026-09-04T01:19:47.254728"
+    },
+    {
+      "to": "tatsuro.osuga@ideasxmachina.com",
+      "company": "IdeasXMachina Hakuhodo",
+      "email_num": 2,
+      "subject": "Re: Tatsuro - content output at IdeasXMachina Hakuhodo",
+      "sent_at": "2026-09-04T01:20:47.452889"
+    },
+    {
+      "to": "rey.leuterio@ideasxmachina.com",
+      "company": "IdeasXMachina Hakuhodo",
+      "email_num": 2,
+      "subject": "Re: Rey - content output at IdeasXMachina Hakuhodo",
+      "sent_at": "2026-09-04T01:21:47.637073"
+    },
+    {
+      "to": "jasmine@issycosmetics.com",
+      "company": "Issy Cosmetics",
+      "email_num": 2,
+      "subject": "Re: Jasmine - content output at Issy Cosmetics",
+      "sent_at": "2026-09-04T01:22:47.761826"
+    },
+    {
+      "to": "ivana@ivanaskin.com",
+      "company": "Ivana Skin",
+      "email_num": 2,
+      "subject": "Re: Ivana - content output at Ivana Skin",
+      "sent_at": "2026-09-04T01:23:47.978286"
+    },
+    {
+      "to": "kate@jollibee.com.ph",
+      "company": "Jollibee",
+      "email_num": 2,
+      "subject": "Re: Kate - Jollibee's content output",
+      "sent_at": "2026-09-04T01:24:48.155894"
+    },
+    {
+      "to": "marc@juliesbakeshop.com.ph",
+      "company": "Julie's Bakeshop",
+      "email_num": 2,
+      "subject": "Re: Marc - Julie's Bakeshop's content output",
+      "sent_at": "2026-09-04T01:25:48.439438"
     }
   ]
 }
